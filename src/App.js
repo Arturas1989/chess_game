@@ -19,7 +19,6 @@ function MoveList(){
 function Board() {
   return (
     <div className="Board">
-      aaa
       {Array.from({length: 64}, (_,i) => <Square key={i} index={i} />)}
     </div>
   );

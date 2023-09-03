@@ -26,7 +26,7 @@ function Board() {
 
 function Square({ index }){
   return (
-    <div className={index % 2 === 0 ? 'blackSquare' : 'whiteSquare'}></div>
+    <div className={index % 2 === 0 ? 'Square black' : 'Square white'}></div>
   )
 }
 

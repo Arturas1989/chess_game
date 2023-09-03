@@ -1,38 +1,95 @@
-.App {
-  text-align: center;
+:root{
+  --board-margin: 30px;
+  --MoveList-margin: 30px;
+  --GameContainerMarginTop: 20px;
+  --GameContainerMarginLeft: 200px;
+  --GameContainerRemainingWidth: calc(100vw - var(--GameContainerMarginLeft)*2);
+  --GameContainerHeight: 590px;
+  --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) - var(--board-margin) * 2) );
+  --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
+  --MoveListWidth: calc(
+    var(--GameContainerRemainingWidth) - var(--BoardWidth)
+    - 2 * (var(--board-margin) + var(--MoveList-margin))
+    );
+  --MoveListHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+
+
+
+
+.GameContainer{
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  border: 1px solid black;
+  margin-top: var(--GameContainerMarginTop);
+  margin-bottom: var(--GameContainerMarginTop);
+  margin-left: var(--GameContainerMarginLeft);
+  margin-right: var(--GameContainerMarginLeft);
+  width: var(--GameContainerRemainingWidth);
+  min-height: var(--GameContainerHeight);
 }
 
-.App-link {
-  color: #61dafb;
+.MoveList{
+  border: 1px solid black;
+  margin: var(--MoveList-margin);
+  width: var(--MoveListWidth);
+  min-height: var(--MoveListHeight);
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.Board{
+  display: flex;
+  width: var(--BoardWidth);
+  height: var(--BoardWidth);
+  border: 1px solid black;
+  margin: var(--board-margin);
+}
+
+/* .Square{
+
+}
+
+.white{
+
+}
+
+.black{
+
+} */
+@media (max-width: 1290px){
+  :root{
+    --GameContainerMarginLeft: 20px;
   }
 }
+
+@media (max-width: 960px){
+  :root{
+    --MoveListWidth: calc(var(--GameContainerRemainingWidth) - 2 *  var(--MoveList-margin));
+  }
+  .GameContainer{
+    flex-direction: column;
+  }
+  .Board{
+    align-self: center;
+  }
+}
+@media (max-width: 300px){
+  .Board{
+    min-width: 200px;
+    min-height: 200px;
+    align-self: normal;
+  }
+
+  .MoveList{
+    min-width: 200px;
+  }
+
+  .GameContainer{
+    min-width: 300px;
+  }
+}
+
+
+
+

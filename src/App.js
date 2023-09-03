@@ -19,6 +19,7 @@ function MoveList(){
 function Board() {
   return (
     <div className="Board">
+      aaa
       {Array.from({length: 64}, (_,i) => <Square key={i} index={i} />)}
     </div>
   );
@@ -26,7 +27,7 @@ function Board() {
 
 function Square({ index }){
   return (
-    <div className={index % 2 === 0 ? 'blackSquare' : 'whiteSquare'}></div>
+    <div className={index % 2 === 0 ? 'Square black' : 'Square white'}></div>
   )
 }
 

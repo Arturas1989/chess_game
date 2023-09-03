@@ -1,25 +1,33 @@
-import logo from './logo.svg';
+
 import './App.css';
 
-function App() {
+function GameContainer() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="GameContainer">
+      <Board />
+      <MoveList />
     </div>
   );
 }
 
-export default App;
+function MoveList(){
+  return (
+    <div className="MoveList"></div>
+  );
+}
+
+function Board() {
+  return (
+    <div className="Board">
+      {Array.from({length: 64}, (_,i) => <Square key={i} index={i} />)}
+    </div>
+  );
+}
+
+function Square({ index }){
+  return (
+    <div className={index % 2 === 0 ? 'blackSquare' : 'whiteSquare'}></div>
+  )
+}
+
+export default GameContainer;

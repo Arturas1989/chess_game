@@ -14,12 +14,6 @@
   --MoveListHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
 }
 
-
-
-
-
-
-
 .GameContainer{
   display: flex;
   border: 1px solid black;
@@ -40,23 +34,26 @@
 
 .Board{
   display: flex;
+  flex-wrap: wrap;
   width: var(--BoardWidth);
   height: var(--BoardWidth);
   border: 1px solid black;
   margin: var(--board-margin);
 }
 
-/* .Square{
-
+.Square{
+  width: 12.5%;
 }
 
-.white{
 
+
+.white{
+  background-color:rgb(235, 235, 204);
 }
 
 .black{
-
-} */
+  background-color:black;
+}
 @media (max-width: 1290px){
   :root{
     --GameContainerMarginLeft: 20px;

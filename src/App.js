@@ -25,8 +25,11 @@ function Board() {
 }
 
 function Square({ index }){
+  const row = Math.floor(index / 8);
+  const mod = row % 2;
+  console.log(row, mod);
   return (
-    <div className={index % 2 === 0 ? 'Square black' : 'Square white'}></div>
+    <div className={index % 2 === mod ? 'Square white' : 'Square black'}></div>
   )
 }
 

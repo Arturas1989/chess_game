@@ -1,6 +1,9 @@
 
 import './App.css';
+import themes from './themes/themes.js';
 
+const pieces = themes.standard.pieces;
+const squareColors = themes.standard.colors; 
 function GameContainer() {
   return (
     <div className="GameContainer">
@@ -27,9 +30,13 @@ function Board() {
 function Square({ index }){
   const row = Math.floor(index / 8);
   const mod = row % 2;
-  console.log(row, mod);
+  console.log(themes['standard']);
+  const style = {
+    backgroundColor: index % 2 === mod ? squareColors.white : squareColors.black,
+  };
+
   return (
-    <div className={index % 2 === mod ? 'Square white' : 'Square black'}></div>
+    <div className='Square' style={style}><img src={pieces['k']} alt="chess piece"/></div>
   )
 }
 

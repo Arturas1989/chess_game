@@ -45,15 +45,6 @@
   width: 12.5%;
 }
 
-
-
-.white{
-  background-color:rgb(235, 235, 204);
-}
-
-.black{
-  background-color:black;
-}
 @media (max-width: 1290px){
   :root{
     --GameContainerMarginLeft: 20px;
@@ -71,6 +62,7 @@
     align-self: center;
   }
 }
+
 @media (max-width: 300px){
   .Board{
     min-width: 200px;

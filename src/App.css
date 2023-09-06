@@ -42,7 +42,17 @@
 }
 
 .Square{
+  display: flex;
   width: 12.5%;
+  height: 12.5%;
+}
+
+img{
+  cursor: grab
+}
+
+.dragging{
+  cursor: grabbing
 }
 
 @media (max-width: 1290px){

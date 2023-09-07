@@ -1,7 +1,7 @@
 
 import './App.css';
 import themes from './themes/themes.js';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 
 const pieces = themes.standard.pieces;
@@ -31,13 +31,27 @@ function Board() {
       '6,0' : 'p', '6,1' : 'p', '6,2' : 'p', '6,3' : 'p', '6,4' : 'p', '6,5' : 'p', '6,6' : 'p', '6,7' : 'p'
     }
   );
+
+  const elementRef = useRef(null);
+
+  // Function to get the element boundaries
+  const getElementBoundaries = () => {
+    if (elementRef.current) {
+      const boardBoundaries = elementRef.current.getBoundingClientRect();
+      return boardBoundaries;
+    }
+  };
+
+
   return (
-    <div className="Board">
+    <div ref={elementRef} className="Board">
+      
       {Array.from({length: 64}, (_,i) => <Square 
         key={i} 
         index={i} 
         piecePositions={piecePositions}
-        onPiecePositionsChange={setPiecePositions} 
+        onPiecePositionsChange={setPiecePositions}
+        onDragFinish={getElementBoundaries} 
       />)}
     </div>
   );
@@ -47,7 +61,7 @@ function Board() {
 
 
 
-function Square({ index, piecePositions, onPiecePositionsChange }){
+function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish }){
   const row = Math.floor(index / 8);
   const mod = row % 2;
   const revRow = 7 - row;
@@ -60,8 +74,19 @@ function Square({ index, piecePositions, onPiecePositionsChange }){
 
   const handleDragEnd = (e, info) => {
     const { point } = info;
-    console.log(e.target);
-    console.log('Element dropped at:', point.x, point.y);
+    const boardBoundaries = onDragFinish();
+    const squareWidth = boardBoundaries.width / 8
+    const dropRow = 8 - Math.ceil((point.y - boardBoundaries.y) / squareWidth);
+    const dropCol = Math.ceil((point.x - boardBoundaries.x) / squareWidth) - 1;
+
+    let newPiecePositions = {...piecePositions};
+    const piece = newPiecePositions[e.target.id];
+    delete newPiecePositions[e.target.id];
+    newPiecePositions[dropRow + ',' + dropCol] = piece;
+    onPiecePositionsChange(newPiecePositions);
+    
+    console.log(e.target, boardBoundaries, point);
+    console.log('Element dropped at:', dropRow, dropCol);
   }
 
   const [isDragging, setIsDragging] = useState(false);

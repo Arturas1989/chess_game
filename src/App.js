@@ -57,10 +57,6 @@ function Board() {
   );
 }
 
-
-
-
-
 function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish }){
   const row = Math.floor(index / 8);
   const mod = row % 2;
@@ -75,18 +71,16 @@ function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish })
   const handleDragEnd = (e, info) => {
     const { point } = info;
     const boardBoundaries = onDragFinish();
-    const squareWidth = boardBoundaries.width / 8
+    const squareWidth = (boardBoundaries.width) / 8;
     const dropRow = 8 - Math.ceil((point.y - boardBoundaries.y) / squareWidth);
     const dropCol = Math.ceil((point.x - boardBoundaries.x) / squareWidth) - 1;
-
+    const pos = dropRow + ',' + dropCol;
     let newPiecePositions = {...piecePositions};
     const piece = newPiecePositions[e.target.id];
     delete newPiecePositions[e.target.id];
-    newPiecePositions[dropRow + ',' + dropCol] = piece;
+    newPiecePositions[pos] = piece;
+
     onPiecePositionsChange(newPiecePositions);
-    
-    console.log(e.target, boardBoundaries, point);
-    console.log('Element dropped at:', dropRow, dropCol);
   }
 
   const [isDragging, setIsDragging] = useState(false);
@@ -104,18 +98,21 @@ function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish })
       className='Square' 
       style={style}
     >
-      <motion.img
-        drag
-        className={isDragging ? 'dragging' : ''}
-        // dragConstraints = {{left: 10, right: 10, top: 10, bottom: 10}}
-        transition = {{duration: 0.3}}
-        onDragEnd = {handleDragEnd}
-        onMouseDown = {handleMouseDown}
-        onMouseUp = {handleMouseUp}
-        id={pos}
-        src={pieces[piece]} 
-        alt={pieces[piece]}
-      />
+      {pieces[piece] &&
+        <motion.img
+          drag
+          className={isDragging ? 'dragging' : ''}
+          // dragConstraints = {{left: 10, right: 10, top: 10, bottom: 10}}
+          // transition = {{duration: 0.3}}
+          onDragEnd = {handleDragEnd}
+          onMouseDown = {handleMouseDown}
+          onMouseUp = {handleMouseUp}
+          id={pos}
+          src={pieces[piece]} 
+          alt={pieces[piece]}
+        />
+      }
+      
     </div>
   )
 }

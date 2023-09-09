@@ -1,7 +1,7 @@
 
 import './App.css';
 import themes from './themes/themes.js';
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 
 const pieces = themes.standard.pieces;
@@ -32,46 +32,134 @@ function Board() {
     }
   );
 
+  const [isDragging, setIsDragging] = useState(false);
+  
+
+  const handleDragStart = (start) => {
+    console.log(1)
+    setIsDragging(true);
+  }
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+    console.log('drag and drop event occured');
+  }
+
+  const handleDragUpdate = (update) => {
+    console.log(update);
+  }
 
   return (
-    <div className="Board">
+    <DragDropContext onDragEnd = {handleDragEnd} onDragStart = {handleDragStart} onDragUpdate = {handleDragUpdate}>
       
-      {Array.from({length: 64}, (_,i) => <Square 
-        key={i} 
-        index={i} 
-        piecePositions={piecePositions}
-        onPiecePositionsChange={setPiecePositions}
-      />)}
-    </div>
+      <div className="Board">
+        
+        {Array.from({length: 64}, (_,i) => {
+
+          const row = Math.floor(i / 8);
+          const mod = row % 2;
+          const revRow = 7 - row;
+          const col = i % 8;
+          const pos = revRow + ',' + col;
+          const isWhite = i % 2 === mod;
+
+          return (
+            <Droppable droppableId={pos} type='Square' key={pos}>
+              {(provided) => (
+                <div className='Square-contaner' {...provided.droppableProps} ref={provided.innerRef}>
+
+                  <Square
+                    key={i}
+                    index={i} 
+                    pos={pos}
+                    isWhite={isWhite}
+                    isDragging={isDragging} 
+                    piecePositions={piecePositions}
+                    onPiecePositionsChange={setPiecePositions}
+                  />
+                  <div className='hidden'>
+                    {provided.placeholder}
+                  </div>
+                </div>
+                
+                
+              )}
+              
+            </Droppable>
+          )
+           
+
+        })}
+      </div>
+    </DragDropContext>
+    
   );
 }
 
-function Square({ index, piecePositions, onPiecePositionsChange }){
-  const row = Math.floor(index / 8);
-  const mod = row % 2;
-  const revRow = 7 - row;
-  const col = index % 8;
-  const pos = revRow + ',' + col;
+const Square = forwardRef(({ index, pos, isWhite, isDragging, piecePositions, onPiecePositionsChange }, ref) => {
+  
+  
   const piece = piecePositions[pos] || '';
   const style = {
-    backgroundColor: index % 2 === mod ? squareColors.white : squareColors.black,
+    backgroundColor: isWhite ? squareColors.white : squareColors.black,
   };
 
+  const handleDragOver = () => {
+    console.log('abc');
+  }
+  
+  const [activePiece, setActivePiece] = useState('');
+  const handleMouseEnter = (e) => {
+
+    if(!isDragging){
+      console.log('set',e.target.id)
+      setActivePiece(e.target.id);
+    }
+     
+  }
+
+  const handleMouseLeave = (e) => {
+
+    if(!isDragging){
+      console.log('set',e.target.id)
+      setActivePiece('');
+    }
+     
+  }
+
+  
+
+  console.log(activePiece, isDragging)
+  
   return (
-    <div 
-      className='Square'
-      id={pos} 
-      style={style}
-    >
-      {pieces[piece] &&
-        <img
-          src={pieces[piece]} 
-          alt={pieces[piece]}
-        />
-      }
-      
-    </div>
-  )
-}
+    <div className='Square' style={style}>
+      {pos === activePiece ? (
+        <Draggable draggableId={pos} key={pos} index={index}>
+          {(provided, snapshot) => (
+            <img
+              {...provided.dragHandleProps}
+              {...provided.draggableProps} 
+              ref={provided.innerRef}
+              id={pos}
+              src={pieces[piece]} 
+              alt={pieces[piece]}
+              onMouseEnter={(e) => handleMouseEnter(e)}
+              onMouseLeave={(e) => handleMouseLeave(e)}
+            />
+          )}
+        </Draggable>
+      ) : (
+        pieces[piece] && (
+          <img
+            id={pos}
+            src={pieces[piece]} 
+            alt={pieces[piece]}
+            onMouseEnter={(e) => handleMouseEnter(e)}
+          />
+        )
+      )}
+    </div> 
+  );
+})
 
 export default GameContainer;

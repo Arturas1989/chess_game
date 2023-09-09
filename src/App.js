@@ -33,11 +33,13 @@ function Board() {
   );
 
   const [isDragging, setIsDragging] = useState(false);
+  const [draggablePiece, setDraggablePiece] = useState('');
   
 
   const handleDragStart = (start) => {
     console.log(1)
     setIsDragging(true);
+    setDraggablePiece(start.draggableId);
   }
 
   const handleDragEnd = () => {
@@ -46,9 +48,9 @@ function Board() {
   }
 
   const handleDragUpdate = (update) => {
-    console.log(update);
+    // console.log(update);
   }
-
+  console.log(draggablePiece)
   return (
     <DragDropContext onDragEnd = {handleDragEnd} onDragStart = {handleDragStart} onDragUpdate = {handleDragUpdate}>
       
@@ -61,8 +63,10 @@ function Board() {
           const revRow = 7 - row;
           const col = i % 8;
           const pos = revRow + ',' + col;
-          const isWhite = i % 2 === mod;
-
+          const style = {
+            backgroundColor: i % 2 === mod ? squareColors.white : squareColors.black,
+          };
+          if(pos === draggablePiece && isDragging) style.backgroundColor='yellow';
           return (
             <Droppable droppableId={pos} type='Square' key={pos}>
               {(provided) => (
@@ -72,7 +76,7 @@ function Board() {
                     key={i}
                     index={i} 
                     pos={pos}
-                    isWhite={isWhite}
+                    style={style}
                     isDragging={isDragging} 
                     piecePositions={piecePositions}
                     onPiecePositionsChange={setPiecePositions}
@@ -96,13 +100,11 @@ function Board() {
   );
 }
 
-const Square = forwardRef(({ index, pos, isWhite, isDragging, piecePositions, onPiecePositionsChange }, ref) => {
+const Square = forwardRef(({ index, pos, style, isDragging, piecePositions, onPiecePositionsChange }, ref) => {
   
   
   const piece = piecePositions[pos] || '';
-  const style = {
-    backgroundColor: isWhite ? squareColors.white : squareColors.black,
-  };
+  
 
   const handleDragOver = () => {
     console.log('abc');
@@ -127,13 +129,11 @@ const Square = forwardRef(({ index, pos, isWhite, isDragging, piecePositions, on
      
   }
 
-  
-
   console.log(activePiece, isDragging)
   
   return (
     <div className='Square' style={style}>
-      {pos === activePiece ? (
+      {pos === activePiece || activePiece === '' ? (
         <Draggable draggableId={pos} key={pos} index={index}>
           {(provided, snapshot) => (
             <img

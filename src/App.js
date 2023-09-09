@@ -1,8 +1,8 @@
 
 import './App.css';
 import themes from './themes/themes.js';
-import { useState, useRef } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 
 const pieces = themes.standard.pieces;
 const squareColors = themes.standard.colors; 
@@ -32,32 +32,21 @@ function Board() {
     }
   );
 
-  const elementRef = useRef(null);
-
-  // Function to get the element boundaries
-  const getElementBoundaries = () => {
-    if (elementRef.current) {
-      const boardBoundaries = elementRef.current.getBoundingClientRect();
-      return boardBoundaries;
-    }
-  };
-
 
   return (
-    <div ref={elementRef} className="Board">
+    <div className="Board">
       
       {Array.from({length: 64}, (_,i) => <Square 
         key={i} 
         index={i} 
         piecePositions={piecePositions}
         onPiecePositionsChange={setPiecePositions}
-        onDragFinish={getElementBoundaries} 
       />)}
     </div>
   );
 }
 
-function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish }){
+function Square({ index, piecePositions, onPiecePositionsChange }){
   const row = Math.floor(index / 8);
   const mod = row % 2;
   const revRow = 7 - row;
@@ -68,46 +57,14 @@ function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish })
     backgroundColor: index % 2 === mod ? squareColors.white : squareColors.black,
   };
 
-  const handleDragEnd = (e, info) => {
-    const { point } = info;
-    const boardBoundaries = onDragFinish();
-    const squareWidth = (boardBoundaries.width) / 8;
-    const dropRow = 8 - Math.ceil((point.y - boardBoundaries.y) / squareWidth);
-    const dropCol = Math.ceil((point.x - boardBoundaries.x) / squareWidth) - 1;
-    const pos = dropRow + ',' + dropCol;
-    let newPiecePositions = {...piecePositions};
-    const piece = newPiecePositions[e.target.id];
-    delete newPiecePositions[e.target.id];
-    newPiecePositions[pos] = piece;
-
-    onPiecePositionsChange(newPiecePositions);
-  }
-
-  const [isDragging, setIsDragging] = useState(false);
-
-  const handleMouseDown = () => {
-    setIsDragging(true);
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
   return (
     <div 
-      className='Square' 
+      className='Square'
+      id={pos} 
       style={style}
     >
       {pieces[piece] &&
-        <motion.img
-          drag
-          className={isDragging ? 'dragging' : ''}
-          // dragConstraints = {{left: 10, right: 10, top: 10, bottom: 10}}
-          // transition = {{duration: 0.3}}
-          onDragEnd = {handleDragEnd}
-          onMouseDown = {handleMouseDown}
-          onMouseUp = {handleMouseUp}
-          id={pos}
+        <img
           src={pieces[piece]} 
           alt={pieces[piece]}
         />

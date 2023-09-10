@@ -1,8 +1,7 @@
-
 import './App.css';
 import themes from './themes/themes.js';
-import { useState, forwardRef } from 'react';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
+import { useState, useRef } from 'react';
+import { motion } from 'framer-motion';
 
 const pieces = themes.standard.pieces;
 const squareColors = themes.standard.colors; 
@@ -32,123 +31,108 @@ function Board() {
     }
   );
 
-  const [isDragging, setIsDragging] = useState(false);
-  const [draggablePiece, setDraggablePiece] = useState('');
-  
+  const elementRef = useRef(null);
 
-  const handleDragStart = (start) => {
-    setIsDragging(true);
-    setDraggablePiece(start.draggableId);
-  }
+  // Function to get the element boundaries
+  const getElementBoundaries = () => {
+    if (elementRef.current) {
+      const boardBoundaries = elementRef.current.getBoundingClientRect();
+      return boardBoundaries;
+    }
+  };
 
-  const handleDragEnd = () => {
-    setIsDragging(false);
-    console.log('drag and drop event occured');
-  }
 
-  const handleDragUpdate = (update) => {
-    // console.log(update);
-  }
-  console.log(draggablePiece)
   return (
-    <DragDropContext onDragEnd = {handleDragEnd} onDragStart = {handleDragStart} onDragUpdate = {handleDragUpdate}>
+    <div ref={elementRef} className="Board">
       
-      <div className="Board">
-        
-        {Array.from({length: 64}, (_,i) => {
-
-          const row = Math.floor(i / 8);
-          const mod = row % 2;
-          const revRow = 7 - row;
-          const col = i % 8;
-          const pos = revRow + ',' + col;
-          const style = {
-            backgroundColor: i % 2 === mod ? squareColors.white : squareColors.black,
-          };
-          if(pos === draggablePiece && isDragging) style.backgroundColor='yellow';
-          console.log(i)
-          return (
-            <Square
-              key={i}
-              index={i} 
-              pos={pos}
-              style={style}
-              isDragging={isDragging} 
-              piecePositions={piecePositions}
-              onPiecePositionsChange={setPiecePositions}
-            /> 
-          )
-        })}
-      </div>
-    </DragDropContext>
-    
+      {Array.from({length: 64}, (_,i) => <Square 
+        key={i} 
+        index={i} 
+        piecePositions={piecePositions}
+        onPiecePositionsChange={setPiecePositions}
+        onDragFinish={getElementBoundaries} 
+      />)}
+    </div>
   );
 }
 
-function Square ({ index, pos, style, isDragging, piecePositions, onPiecePositionsChange }){
-
+function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish }){
+  const row = Math.floor(index / 8);
+  const mod = row % 2;
+  const revRow = 7 - row;
+  const col = index % 8;
+  const pos = revRow + ',' + col;
   const piece = piecePositions[pos] || '';
+  const style = {
+    backgroundColor: index % 2 === mod ? squareColors.white : squareColors.black,
+  };
 
-  const [activePiece, setActivePiece] = useState('');
+  // const handleDragEnd = (e, info) => {
+  //   const { point } = info;
+  //   const boardBoundaries = onDragFinish();
+  //   const squareWidth = (boardBoundaries.width) / 8;
+  //   const dropRow = 8 - Math.ceil((point.y - boardBoundaries.y) / squareWidth);
+  //   const dropCol = Math.ceil((point.x - boardBoundaries.x) / squareWidth) - 1;
+  //   const pos = dropRow + ',' + dropCol;
+  //   let newPiecePositions = {...piecePositions};
+  //   const piece = newPiecePositions[e.target.id];
+  //   delete newPiecePositions[e.target.id];
+  //   newPiecePositions[pos] = piece;
 
-  const handleMouseEnter = (e) => {
+  //   onPiecePositionsChange(newPiecePositions);
+  // }
 
-    if(!isDragging){
-      console.log('set',e.target.id)
-      setActivePiece(e.target.id);
-    }
-     
-  }
+  const [isDragging, setIsDragging] = useState(false);
 
-  const handleMouseLeave = (e) => {
+  const handleMouseDown = (e) => {
+    
+    setIsDragging(true);
+  };
 
-    if(!isDragging){
-      console.log('set',e.target.id)
-      setActivePiece('');
-    }
-     
-  }
+  const handleMouseUp = (e) => {
+    const matches = e.target.style.transform.match(/-*\d+\.*\d*/g);
+    if(!matches || matches.length < 2) return;
+    const [x, y] = matches;
+    const [currRow, currCol] = e.target.id.split(',');
 
-  console.log(activePiece, isDragging)
+    const boardBoundaries = onDragFinish();
+    const squareWidth = (boardBoundaries.width) / 8;
+    const dropRow = +currRow + Math.round(y * (-1) / squareWidth);
+    const dropCol = +currCol - Math.round(x * (-1) / squareWidth);
+    // const pos = dropRow + ',' + dropCol;
+    console.log(x,y, dropRow, dropCol)
+    const pos = dropRow + ',' + dropCol;
+    let newPiecePositions = {...piecePositions};
+    const piece = newPiecePositions[e.target.id];
+    delete newPiecePositions[e.target.id];
+    newPiecePositions[pos] = piece;
+
+    onPiecePositionsChange(newPiecePositions);
+    setIsDragging(false);
+  };
+
   return (
-    <Droppable droppableId={pos} type='Square' key={pos}>
-    
-      {(provided) => (
-        <div className='Square' {...provided.droppableProps} ref={provided.innerRef} style={style}>
-          {pos === activePiece || activePiece === '' ? (
-            <Draggable draggableId={pos} key={pos} index={index}>
-              {(provided, snapshot) => (
-                <img
-                  {...provided.dragHandleProps}
-                  {...provided.draggableProps} 
-                  ref={provided.innerRef}
-                  id={pos}
-                  src={pieces[piece]} 
-                  alt={pieces[piece]}
-                  onMouseEnter={(e) => handleMouseEnter(e)}
-                  onMouseLeave={(e) => handleMouseLeave(e)}
-                />
-              )}
-            </Draggable>
-          ) : (
-            pieces[piece] && (
-              <img
-                id={pos}
-                src={pieces[piece]} 
-                alt={pieces[piece]}
-                onMouseEnter={(e) => handleMouseEnter(e)}
-              />
-            )
-          )}
-          <div className='hidden'>
-             {provided.placeholder}
-          </div>
-        </div>
-
-      )}
-    
-    </Droppable> 
-  );
+    <div 
+      className='Square' 
+      style={style}
+    >
+      {pieces[piece] &&
+        <motion.img
+          drag
+          className={isDragging ? 'dragging' : ''}
+          // dragConstraints = {{left: 10, right: 10, top: 10, bottom: 10}}
+          // transition = {{duration: 0.3}}
+          // onDragEnd = {handleDragEnd}
+          onMouseDown = {handleMouseDown}
+          onMouseUp = {handleMouseUp}
+          id={pos}
+          src={pieces[piece]} 
+          alt={pieces[piece]}
+        />
+      }
+      
+    </div>
+  )
 }
 
 export default GameContainer;

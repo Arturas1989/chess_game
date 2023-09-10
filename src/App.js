@@ -37,7 +37,6 @@ function Board() {
   
 
   const handleDragStart = (start) => {
-    console.log(1)
     setIsDragging(true);
     setDraggablePiece(start.draggableId);
   }
@@ -67,32 +66,18 @@ function Board() {
             backgroundColor: i % 2 === mod ? squareColors.white : squareColors.black,
           };
           if(pos === draggablePiece && isDragging) style.backgroundColor='yellow';
+          console.log(i)
           return (
-            <Droppable droppableId={pos} type='Square' key={pos}>
-              {(provided) => (
-                <div className='Square-contaner' {...provided.droppableProps} ref={provided.innerRef}>
-
-                  <Square
-                    key={i}
-                    index={i} 
-                    pos={pos}
-                    style={style}
-                    isDragging={isDragging} 
-                    piecePositions={piecePositions}
-                    onPiecePositionsChange={setPiecePositions}
-                  />
-                  <div className='hidden'>
-                    {provided.placeholder}
-                  </div>
-                </div>
-                
-                
-              )}
-              
-            </Droppable>
+            <Square
+              key={i}
+              index={i} 
+              pos={pos}
+              style={style}
+              isDragging={isDragging} 
+              piecePositions={piecePositions}
+              onPiecePositionsChange={setPiecePositions}
+            /> 
           )
-           
-
         })}
       </div>
     </DragDropContext>
@@ -100,17 +85,12 @@ function Board() {
   );
 }
 
-const Square = forwardRef(({ index, pos, style, isDragging, piecePositions, onPiecePositionsChange }, ref) => {
-  
-  
-  const piece = piecePositions[pos] || '';
-  
+function Square ({ index, pos, style, isDragging, piecePositions, onPiecePositionsChange }){
 
-  const handleDragOver = () => {
-    console.log('abc');
-  }
-  
+  const piece = piecePositions[pos] || '';
+
   const [activePiece, setActivePiece] = useState('');
+
   const handleMouseEnter = (e) => {
 
     if(!isDragging){
@@ -130,36 +110,45 @@ const Square = forwardRef(({ index, pos, style, isDragging, piecePositions, onPi
   }
 
   console.log(activePiece, isDragging)
-  
   return (
-    <div className='Square' style={style}>
-      {pos === activePiece || activePiece === '' ? (
-        <Draggable draggableId={pos} key={pos} index={index}>
-          {(provided, snapshot) => (
-            <img
-              {...provided.dragHandleProps}
-              {...provided.draggableProps} 
-              ref={provided.innerRef}
-              id={pos}
-              src={pieces[piece]} 
-              alt={pieces[piece]}
-              onMouseEnter={(e) => handleMouseEnter(e)}
-              onMouseLeave={(e) => handleMouseLeave(e)}
-            />
+    <Droppable droppableId={pos} type='Square' key={pos}>
+    
+      {(provided) => (
+        <div className='Square' {...provided.droppableProps} ref={provided.innerRef} style={style}>
+          {pos === activePiece || activePiece === '' ? (
+            <Draggable draggableId={pos} key={pos} index={index}>
+              {(provided, snapshot) => (
+                <img
+                  {...provided.dragHandleProps}
+                  {...provided.draggableProps} 
+                  ref={provided.innerRef}
+                  id={pos}
+                  src={pieces[piece]} 
+                  alt={pieces[piece]}
+                  onMouseEnter={(e) => handleMouseEnter(e)}
+                  onMouseLeave={(e) => handleMouseLeave(e)}
+                />
+              )}
+            </Draggable>
+          ) : (
+            pieces[piece] && (
+              <img
+                id={pos}
+                src={pieces[piece]} 
+                alt={pieces[piece]}
+                onMouseEnter={(e) => handleMouseEnter(e)}
+              />
+            )
           )}
-        </Draggable>
-      ) : (
-        pieces[piece] && (
-          <img
-            id={pos}
-            src={pieces[piece]} 
-            alt={pieces[piece]}
-            onMouseEnter={(e) => handleMouseEnter(e)}
-          />
-        )
+          <div className='hidden'>
+             {provided.placeholder}
+          </div>
+        </div>
+
       )}
-    </div> 
+    
+    </Droppable> 
   );
-})
+}
 
 export default GameContainer;

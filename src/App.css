@@ -41,25 +41,12 @@
   margin: var(--board-margin);
 }
 
-.Square-contaner{
+.Square{
   display: flex;
   width: 12.5%;
   height: 12.5%;
 }
 
-.Square{
-  display: flex;
-  width: 100%;
-  height: 100%;
-}
-
-/* img{
-  cursor: grab
-}
-
-.dragging{
-  cursor: grabbing
-} */
 .hidden{
   display: none;
 }

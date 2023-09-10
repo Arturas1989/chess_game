@@ -67,21 +67,6 @@ function Square({ index, piecePositions, onPiecePositionsChange, onDragFinish })
     backgroundColor: index % 2 === mod ? squareColors.white : squareColors.black,
   };
 
-  // const handleDragEnd = (e, info) => {
-  //   const { point } = info;
-  //   const boardBoundaries = onDragFinish();
-  //   const squareWidth = (boardBoundaries.width) / 8;
-  //   const dropRow = 8 - Math.ceil((point.y - boardBoundaries.y) / squareWidth);
-  //   const dropCol = Math.ceil((point.x - boardBoundaries.x) / squareWidth) - 1;
-  //   const pos = dropRow + ',' + dropCol;
-  //   let newPiecePositions = {...piecePositions};
-  //   const piece = newPiecePositions[e.target.id];
-  //   delete newPiecePositions[e.target.id];
-  //   newPiecePositions[pos] = piece;
-
-  //   onPiecePositionsChange(newPiecePositions);
-  // }
-
   const [isDragging, setIsDragging] = useState(false);
 
   const handleMouseDown = (e) => {

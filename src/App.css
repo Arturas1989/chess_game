@@ -51,6 +51,7 @@
   display: none;
 }
 
+
 @media (max-width: 1290px){
   :root{
     --GameContainerMarginLeft: 20px;

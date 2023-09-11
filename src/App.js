@@ -22,6 +22,7 @@ function MoveList(){
 
 function Board() {
 
+  // 2 dimensional array is used for an easier debugging.
   const [piecePositions, setPiecePositions] = useState(
     [
       ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
@@ -35,10 +36,13 @@ function Board() {
     ]
   );
 
+  // using useRef to create reference to the board component
   const boardRef = useRef(null);
+
   const [boardBoundaries, setBoardBoundaries] = useState(null);
 
-
+  // it's not guaranteed that the Board component is rendered, it might be null
+  //useEffect is used that, when boardRef changes (Board component is rendered) boardBoundaries will be set
   useEffect(() => {
     if (boardRef.current) {
       setBoardBoundaries(boardRef.current.getBoundingClientRect());
@@ -67,24 +71,29 @@ function Square({ index, piecePositions, onPiecePositionsChange, boardBoundaries
   const col = index % 8;
   const pos = revRow + ',' + col;
   const piece = piecePositions[row][col] || '';
+  const boundaries = boardBoundaries || {}
+  const boardWidth = boundaries.width || 0
+  const squareWidth = boardWidth / 8;
 
+  //drag constrains
+  const left = (col + 0.3) * squareWidth * -1;
+  const right = (7 - col + 0.3) * squareWidth;
+  const top = (7 - revRow + 0.3) * squareWidth * -1;
+  const bottom = (revRow + 0.3) * squareWidth;
+
+  //square color
   const style = {
     backgroundColor: index % 2 === mod ? squareColors.white : squareColors.black,
   };
 
-  const [isDragging, setIsDragging] = useState(false);
   const [dragEnabled, setDragEnabled] = useState(false);
 
   const handleMouseEnter = (e) => {
-    
+    // enable drag on mouse enter, when its disabled on mouse up
     setDragEnabled(true);
   };
 
-  const handleMouseDown = (e) => {
-    
-    setIsDragging(true);
-  };
-
+  //make a copy of pieces array
   const getNewPieces = (pieces) => {
     let newPieces = [];
     for(const row of pieces){
@@ -92,37 +101,75 @@ function Square({ index, piecePositions, onPiecePositionsChange, boardBoundaries
     }
     return newPieces;
   }
+
+  // using for registering and clearing event listener on the document
+  // handleMouseUp is used for event on mouseup (in case the pointer is outside the element)
+  useEffect(() => {
+    const handleMouseUp = (e) => {handlePiecePositions(e)}
+
+    document.addEventListener('mouseup', handleMouseUp);
+    
+    return () => {
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  });
+
+  // based on the current position and square width and moved pointer calculating and setting new piece position
   
-  const handleMouseUp = (e) => {
+  const handlePiecePositions = (e) => {
+
+    // finding move values in the transform property
     const matches = e.target.style.transform.match(/-*\d+\.*\d*/g);
-    if(!matches || matches.length < 2) return;
+    if(!matches || matches.length < 2){
+      setDragEnabled(false);
+      return;
+    }
+
+    //current pointer move values from the previous position
     const [x, y] = matches;
+
+    // assigning previous coordinates
     let [currRow, currCol] = e.target.id.split(',');
 
+
     const squareWidth = (boardBoundaries.width) / 8;
+
+    // new row and col position based on calculations on the pointer movement
     let dropRow = +currRow + Math.round(y * (-1) / squareWidth);
     const dropCol = +currCol - Math.round(x * (-1) / squareWidth);
 
+    // position used in id
     const pos = dropRow + ',' + dropCol;
+
+    //if it's the same position, disable drag and return early
     if(pos === e.target.id){
       setDragEnabled(false);
-      setIsDragging(false);
       return;
     } 
-    console.log(pos);
+    
+    // reverse rows, because initial chess board state is reversed
     currRow = 7 - currRow;
     dropRow = 7 - dropRow;
+
+    // make a new copy of chess piece positions to avoid mutations
     let newPiecePositions = getNewPieces(piecePositions);
-    
+
+    // get movement piece
     const piece = newPiecePositions[currRow][currCol];
+
+    //replace it with empty '..'
     newPiecePositions[currRow][currCol] = '..';
+
+    // assign piece to a new position
     newPiecePositions[dropRow][dropCol] = piece;
-    console.log(newPiecePositions)
-    // console.log(piecePositions, newPiecePositions, e.target.style.transform)
+
+    // set new positions state
     onPiecePositionsChange(newPiecePositions);
-    setIsDragging(false);
-  };
-  // const {left, right, top, bottom} = boardBoundaries;
+
+    //finish by disabling drag, it will be enabled on mouse enter event
+    setDragEnabled(false);
+  }
+
   return (
     <div 
       className='Square' 
@@ -131,26 +178,28 @@ function Square({ index, piecePositions, onPiecePositionsChange, boardBoundaries
       {dragEnabled ? (
         pieces[piece] && (
           <motion.img
+            style={{cursor: 'grab'}}
             drag
-            dragConstraints={{ boardBoundaries }}
-            // transition = {{duration: 0.3}}
-            // onDragEnd = {handleDragEnd}
+            dragConstraints={{
+              left: left, 
+              right: right, 
+              top: top, 
+              bottom: bottom }}
+            whileTap={{cursor: 'grabbing'}}
+            dragElastic={0}
             onMouseEnter={handleMouseEnter}
-            onMouseUp={handleMouseUp}
-            onMouseDown={handleMouseDown}
             id={pos}
             src={pieces[piece]} 
-            alt={pieces[piece]}
+            alt='chess_piece'
           />
         )
       ) : (
         pieces[piece] && (
           <img
             onMouseEnter={handleMouseEnter}
-            onMouseUp={handleMouseUp}
             id={pos}
             src={pieces[piece]} 
-            alt={pieces[piece]}
+            alt='chess_piece'
           />
         )
       )}

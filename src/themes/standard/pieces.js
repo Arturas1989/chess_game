@@ -14,18 +14,18 @@ import WhiteKing from './pieces/WhiteKing.svg';
 const standard  = {
 
     pieces : {
-        b : BlackBishop,
-        n : BlackKnight,
-        p : BlackPawn,
-        q : BlackQueen,
-        r : BlackRook,
-        k : BlackKing,
-        B : WhiteBishop,
-        N : WhiteKnight,
-        P : WhitePawn,
-        Q : WhiteQueen,
-        R : WhiteRook,
-        K : WhiteKing
+        '♝' : BlackBishop,
+        '♞' : BlackKnight,
+        '♟' : BlackPawn,
+        '♛' : BlackQueen,
+        '♜' : BlackRook,
+        '♚' : BlackKing,
+        '♗' : WhiteBishop,
+        '♘' : WhiteKnight,
+        '♙' : WhitePawn,
+        '♕' : WhiteQueen,
+        '♖' : WhiteRook,
+        '♔' : WhiteKing
     },
 
     colors : {

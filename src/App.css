@@ -45,10 +45,15 @@
   display: flex;
   width: 12.5%;
   height: 12.5%;
+  box-sizing: border-box;
 }
 
 .hidden{
   display: none;
+}
+
+svg{
+  width: 80%;
 }
 
 

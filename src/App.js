@@ -222,11 +222,11 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
       const [prevRow, prevCol] = initialPos.prevPos.split(',');
       const prevIndex = (7 - +prevRow) * 8 + +prevCol;
       const newIndex = (7 - nextRow) * 8 + nextCol;
-      let border = '2px solid ';
-      border += newIndex % 2 === nextRow % 2 ? squareColors.white : squareColors.black;
+      let boxShadow = 'inset 0 0 0 2px ';
+      boxShadow += newIndex % 2 === nextRow % 2 ? squareColors.white : squareColors.black;
       let newStyles = [...styles];
-      const prevSquareStyle = {...newStyles[prevIndex], border : ''};
-      const newSquareStyle = {...newStyles[newIndex], border : border};
+      const prevSquareStyle = {...newStyles[prevIndex], boxShadow : ''};
+      const newSquareStyle = {...newStyles[newIndex], boxShadow : boxShadow};
       newStyles[prevIndex] = {...prevSquareStyle};
       newStyles[newIndex] = {...newSquareStyle};
       

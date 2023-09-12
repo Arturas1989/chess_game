@@ -52,11 +52,6 @@
   display: none;
 }
 
-svg{
-  width: 80%;
-}
-
-
 @media (max-width: 1290px){
   :root{
     --GameContainerMarginLeft: 20px;

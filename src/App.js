@@ -107,47 +107,20 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     }
     return newPieces;
   }
-
-  // using for registering and clearing event listener on the document
-  // mouseUp event used when mouse is released
-  // registered on the document (in case the pointer is outside the element)
-  useEffect(() => {
-    const handleMouseUp = (e) => {handlePiecePositions(e)}
-
-    document.addEventListener('mouseup', handleMouseUp);
-    
-    return () => {
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  });
-
-  // based on the current position and square width and moved pointer calculating and setting new piece position
   
   const handlePiecePositions = (e) => {
-    
-    // finding move values in the transform property
-    const matches = e.target.style.transform.match(/-*\d+\.*\d*/g);
-    if(!matches || matches.length < 2){
-      
-      setDragEnabled(false);
-      setIsDragging(false);
-      return;
-    }
 
     //current pointer move values from the previous position
-    const [x, y] = matches;
+    const {x, y} = currentTransform;
 
     // assigning previous coordinates
     let [currRow, currCol] = e.target.id.split(',');
-    currRow = parseInt(currRow);
-    currCol = parseInt(currCol);
-
 
     const squareWidth = (boardBoundaries.width) / 8;
 
     // new row and col position based on calculations on the pointer movement
-    let dropRow = currRow + Math.round(y * (-1) / squareWidth);
-    const dropCol = currCol - Math.round(x * (-1) / squareWidth);
+    let dropRow = parseInt(currRow) + Math.round(y * (-1) / squareWidth);
+    const dropCol = parseInt(currCol) - Math.round(x * (-1) / squareWidth);
 
     // position used in id
     const pos = dropRow + ',' + dropCol;
@@ -156,22 +129,13 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     currRow = 7 - currRow;
     dropRow = 7 - dropRow;
 
-    // const dropIndex = dropRow * 8  + dropCol;
-    // let newStyles = [...styles];
-    // newStyles[dropIndex] = { ...newStyles[dropIndex], border: '' };
-
     //if it's the same position, disable drag and return early
     if(pos === e.target.id){
-      // Update styles state
-      console.log(1)
-      // onStylesChange(newStyles);
 
       setDragEnabled(false);
       setIsDragging(false);
       return;
     } 
-    
-    
 
     // make a new copy of chess piece positions to avoid mutations
     let newPiecePositions = getNewPieces(piecePositions);
@@ -194,13 +158,12 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     //drag is finished
     setIsDragging(false);
 
-    // onStylesChange(newStyles);
-
   }
 
+  const [currentTransform, setCurrentTransform] = useState({x: 0, y: 0})
   const [isDragging, setIsDragging] = useState(false);
   const [initialPos, setInitialPos] = useState({});
-  const handleMouseDown = (e) => {
+  const handleDragStart = (e) => {
     setIsDragging(true);
     setInitialPos({
       ...initialPos,
@@ -211,27 +174,26 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     })
   }
 
-  const handleMouseMove = (e) => {
+  const handleDrag = (e) => {
     if(isDragging){
-      let [row, col] = initialPos.pos.split(',');
-      row = parseInt(row);
-      col = parseInt(col);
-      const nextRow = row + Math.round((initialPos.y - e.clientY) / squareWidth);
-      const nextCol = col + Math.round((e.clientX - initialPos.x) / squareWidth);
+      const [row, col] = initialPos.pos.split(',');
+      const nextRow = parseInt(row) + Math.round((initialPos.y - e.clientY) / squareWidth);
+      const nextCol = parseInt(col) + Math.round((e.clientX - initialPos.x) / squareWidth);
 
       const [prevRow, prevCol] = initialPos.prevPos.split(',');
-      const prevIndex = (7 - +prevRow) * 8 + +prevCol;
+      const prevIndex = (7 - parseInt(prevRow)) * 8 + parseInt(prevCol);
       const newIndex = (7 - nextRow) * 8 + nextCol;
-      let boxShadow = 'inset 0 0 0 2px ';
-      boxShadow += newIndex % 2 === nextRow % 2 ? squareColors.white : squareColors.black;
+      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? squareColors.white : squareColors.black);
       let newStyles = [...styles];
-      const prevSquareStyle = {...newStyles[prevIndex], boxShadow : ''};
-      const newSquareStyle = {...newStyles[newIndex], boxShadow : boxShadow};
-      newStyles[prevIndex] = {...prevSquareStyle};
-      newStyles[newIndex] = {...newSquareStyle};
+      newStyles[prevIndex] = {...newStyles[prevIndex], boxShadow : ''};
+      newStyles[newIndex] = {...newStyles[newIndex], boxShadow : boxShadow};
       
-      // console.log(prevRow, prevCol, prevIndex, initialPos)
-      onStylesChange(newStyles)
+      setCurrentTransform({
+        x: e.clientX - initialPos.x,
+        y: e.clientY - initialPos.y
+      })
+      
+      onStylesChange(newStyles);
       setInitialPos({
         ...initialPos,
         prevPos : nextRow + ',' + nextCol
@@ -239,6 +201,19 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     }
   }
 
+  const handleDragEnd = (e) => {
+    handlePiecePositions(e);
+    
+    const [row, col] = initialPos.prevPos.split(',');
+    const index = (7 - parseInt(row)) * 8 + parseInt(col);
+
+    let newStyles = [...styles];
+    newStyles[index] = {...newStyles[index], boxShadow : ''};
+    onStylesChange(newStyles);
+
+  }
+
+  
   return (
     <div 
       className='Square' 
@@ -256,9 +231,10 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
               bottom: bottom }}
             whileTap={{cursor: 'grabbing'}}
             dragElastic={0}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
             onMouseEnter={handleMouseEnter}
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
+            onDrag={handleDrag}
             id={pos}
             src={pieces[piece]} 
             alt='chess_piece'

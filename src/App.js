@@ -130,18 +130,20 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     // new row and col position based on calculations on the pointer movement
     let dropRow = parseInt(currRow) - Math.round(y * (-1) / squareWidth);
     const dropCol = parseInt(currCol) - Math.round(x * (-1) / squareWidth);
-    if(isNaN(dropRow) || isNaN(dropCol) || !piecePositions[dropRow][dropCol]) return;
+    
+    if(isNaN(dropRow) || isNaN(dropCol) || dropRow < 0 || dropCol < 0 || dropRow > 7 || dropCol > 7)return; 
 
     // position used in id
     const pos = dropRow + ',' + dropCol;
 
     //if it's the same position, disable drag and return early
-    if(pos === e.target.id) return; 
+    if(pos === e.target.id) return
 
     // make a new copy of chess piece positions to avoid mutations
     let newPiecePositions = getNewPieces(piecePositions);
 
     // get movement piece
+    
     const piece = newPiecePositions[currRow][currCol];
 
     //replace it with empty '..'
@@ -152,6 +154,10 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
 
     // set new positions state
     onPiecePositionsChange(newPiecePositions);
+    onPieceClick({
+      ...pieceClicked,
+      prevPos : pos
+    });
   }
 
   const [currentTransform, setCurrentTransform] = useState({x: 0, y: 0})
@@ -214,12 +220,14 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
       
       onPieceClick({
         ...pieceClicked,
-        wasPieceClicked : true,
+        wasPieceClicked : !pieceClicked.wasPieceClicked,
         prevPos : e.target.id
       });
     }
+
     
-    if(pieceClicked.wasPieceClicked){
+    
+    if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
       
       let newPiecePositions = getNewPieces(piecePositions);
       const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
@@ -238,6 +246,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
         ...pieceClicked,
         wasPieceClicked : false
       });
+      console.log(e.target.id, pieceClicked,newPiecePositions)
     }
 
   }

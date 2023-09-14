@@ -1,16 +1,19 @@
 import './App.css';
 import themes from './themes/themes.js';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext, createContext } from 'react';
 import { motion } from 'framer-motion';
 
-const pieces = themes.standard.pieces;
-const squareColors = themes.standard.colors; 
+// const pieces = themes.standard.pieces;
+// const squareColors = themes.standard.colors;
+const ThemeContext = createContext();
 function GameContainer() {
   return (
-    <div className="GameContainer">
-      <Board />
-      <MoveList />
-    </div>
+    <ThemeContext.Provider value={themes}>
+      <div className="GameContainer">
+        <Board />
+        <MoveList />
+      </div>
+    </ThemeContext.Provider>
   );
 }
 
@@ -22,6 +25,8 @@ function MoveList(){
 
 function Board() {
 
+  const themes = useContext(ThemeContext);
+  const squareColors = themes.standard.squareColors;
   // 2 dimensional array is used for an easier debugging.
   const [piecePositions, setPiecePositions] = useState(
     [
@@ -57,7 +62,7 @@ function Board() {
     })
   );
 
-
+  const [pieceClicked, setPieceClicked] = useState({});
   return (
     <div ref={boardRef} className="Board">
       
@@ -69,16 +74,21 @@ function Board() {
         onPiecePositionsChange={setPiecePositions}
         onStylesChange={setStyles}
         boardBoundaries={boardBoundaries}
+        pieceClicked={pieceClicked}
+        onPieceClick={setPieceClicked}
       />)}
     </div>
   );
 }
 
-function Square({ index, styles, piecePositions, onPiecePositionsChange, onStylesChange, boardBoundaries }){
+function Square({ index, styles, piecePositions, onPiecePositionsChange, onStylesChange, boardBoundaries, pieceClicked, onPieceClick }){
+  
+  const themes = useContext(ThemeContext);
+  const {pieces, dragHighlights} = themes.standard; 
+
   const row = Math.floor(index / 8);
-  const revRow = 7 - row;
   const col = index % 8;
-  const pos = revRow + ',' + col;
+  const pos = row + ',' + col;
   const piece = piecePositions[row][col] || '';
   const boundaries = boardBoundaries || {}
   const boardWidth = boundaries.width || 0
@@ -87,16 +97,15 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
   //drag constrains
   const left = (col + 0.3) * squareWidth * -1;
   const right = (7 - col + 0.3) * squareWidth;
-  const top = (7 - revRow + 0.3) * squareWidth * -1;
-  const bottom = (revRow + 0.3) * squareWidth;
+  const top = (row + 0.3) * squareWidth * -1;
+  const bottom = (7 - row + 0.3) * squareWidth;
 
   
+  const [dragInfo, setDragInfo]= useState({});
 
-  const [dragEnabled, setDragEnabled] = useState(false);
-
-  const handleMouseEnter = (e) => {
-    // enable drag on mouse enter, when its disabled on mouse up
-    setDragEnabled(true);
+  const handleMouseEnter = () => {
+    // enable drag on mouse enter, when its disabled on drag end
+    setDragInfo({...dragInfo, dragEnabled : true});
   };
 
   //make a copy of pieces array
@@ -109,8 +118,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
   }
   
   const handlePiecePositions = (e) => {
-    setDragEnabled(false);
-      setIsDragging(false);
+    setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
     //current pointer move values from the previous position
     const {x, y} = currentTransform;
 
@@ -120,17 +128,12 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     const squareWidth = (boardBoundaries.width) / 8;
 
     // new row and col position based on calculations on the pointer movement
-    let dropRow = parseInt(currRow) + Math.round(y * (-1) / squareWidth);
+    let dropRow = parseInt(currRow) - Math.round(y * (-1) / squareWidth);
     const dropCol = parseInt(currCol) - Math.round(x * (-1) / squareWidth);
     if(isNaN(dropRow) || isNaN(dropCol) || !piecePositions[dropRow][dropCol]) return;
-    
 
     // position used in id
     const pos = dropRow + ',' + dropCol;
-
-    // reverse rows, because initial chess board state is reversed
-    currRow = 7 - currRow;
-    dropRow = 7 - dropRow;
 
     //if it's the same position, disable drag and return early
     if(pos === e.target.id) return; 
@@ -152,30 +155,30 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
   }
 
   const [currentTransform, setCurrentTransform] = useState({x: 0, y: 0})
-  const [isDragging, setIsDragging] = useState(false);
+  
   const [initialPos, setInitialPos] = useState({});
   const handleDragStart = (e) => {
-    setIsDragging(true);
+    setDragInfo({...dragInfo, isDragging : true});
     setInitialPos({
       ...initialPos,
       x : e.clientX,
       y : e.clientY,
       pos : e.target.id,
-      prevPos : e.target.id
+      prevPos : e.target.id,
+      wasPieceClicked : false
     })
   }
 
   const handleDrag = (e) => {
-    // console.log(e.target.id)
-    if(isDragging){
+    if(dragInfo.isDragging){
       const [row, col] = initialPos.pos.split(',');
-      const nextRow = parseInt(row) + Math.round((initialPos.y - e.clientY) / squareWidth);
+      const nextRow = parseInt(row) + Math.round((e.clientY - initialPos.y) / squareWidth);
       const nextCol = parseInt(col) + Math.round((e.clientX - initialPos.x) / squareWidth);
 
       const [prevRow, prevCol] = initialPos.prevPos.split(',');
-      const prevIndex = (7 - parseInt(prevRow)) * 8 + parseInt(prevCol);
-      const newIndex = (7 - nextRow) * 8 + nextCol;
-      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? squareColors.white : squareColors.black);
+      const prevIndex = parseInt(prevRow) * 8 + parseInt(prevCol);
+      const newIndex = nextRow * 8 + nextCol;
+      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.black : dragHighlights.white);
       let newStyles = [...styles];
       newStyles[prevIndex] = {...newStyles[prevIndex], boxShadow : ''};
       newStyles[newIndex] = {...newStyles[newIndex], boxShadow : boxShadow};
@@ -197,7 +200,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     handlePiecePositions(e);
     
     const [row, col] = initialPos.prevPos.split(',');
-    const index = (7 - parseInt(row)) * 8 + parseInt(col);
+    const index = parseInt(row) * 8 + parseInt(col);
 
     let newStyles = [...styles];
     newStyles[index] = {...newStyles[index], boxShadow : ''};
@@ -205,14 +208,51 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
 
   }
 
+  
+  const handleSquareClick = (e) => {
+    if(e.target.tagName === 'IMG'){
+      
+      onPieceClick({
+        ...pieceClicked,
+        wasPieceClicked : true,
+        prevPos : e.target.id
+      });
+    }
+    
+    if(pieceClicked.wasPieceClicked){
+      
+      let newPiecePositions = getNewPieces(piecePositions);
+      const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
+
+      // get movement piece
+      const piece = newPiecePositions[prevRow][prevCol];
+
+      //replace it with empty '..'
+      newPiecePositions[prevRow][prevCol] = '..';
+
+      // assign piece to a new position
+      const [newRow, newCol] = e.target.id.split(',');
+      newPiecePositions[newRow][newCol] = piece;
+      onPiecePositionsChange(newPiecePositions);
+      onPieceClick({
+        ...pieceClicked,
+        wasPieceClicked : false
+      });
+    }
+
+  }
+  
   return (
-    <div 
+    <div
+      id={pos}
       className='Square' 
       style={styles[index]}
+      onClick={handleSquareClick}
     >
-      {dragEnabled ? (
+      {dragInfo.dragEnabled ? (
         pieces[piece] && (
           <motion.img
+            id={pos}
             style={{cursor: 'grab'}}
             drag
             dragConstraints={{
@@ -226,7 +266,6 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
             onDragEnd={handleDragEnd}
             onMouseEnter={handleMouseEnter}
             onDrag={handleDrag}
-            id={pos}
             src={pieces[piece]} 
             alt='chess_piece'
           />

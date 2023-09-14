@@ -1,16 +1,19 @@
 import './App.css';
 import themes from './themes/themes.js';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useContext, createContext } from 'react';
 import { motion } from 'framer-motion';
 
-const pieces = themes.standard.pieces;
-const squareColors = themes.standard.colors; 
+// const pieces = themes.standard.pieces;
+// const squareColors = themes.standard.colors;
+const ThemeContext = createContext();
 function GameContainer() {
   return (
-    <div className="GameContainer">
-      <Board />
-      <MoveList />
-    </div>
+    <ThemeContext.Provider value={themes}>
+      <div className="GameContainer">
+        <Board />
+        <MoveList />
+      </div>
+    </ThemeContext.Provider>
   );
 }
 
@@ -22,6 +25,8 @@ function MoveList(){
 
 function Board() {
 
+  const themes = useContext(ThemeContext);
+  const squareColors = themes.standard.squareColors;
   // 2 dimensional array is used for an easier debugging.
   const [piecePositions, setPiecePositions] = useState(
     [
@@ -75,6 +80,9 @@ function Board() {
 }
 
 function Square({ index, styles, piecePositions, onPiecePositionsChange, onStylesChange, boardBoundaries }){
+  const themes = useContext(ThemeContext);
+  const {pieces, dragHighlights} = themes.standard; 
+
   const row = Math.floor(index / 8);
   const revRow = 7 - row;
   const col = index % 8;
@@ -175,7 +183,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
       const [prevRow, prevCol] = initialPos.prevPos.split(',');
       const prevIndex = (7 - parseInt(prevRow)) * 8 + parseInt(prevCol);
       const newIndex = (7 - nextRow) * 8 + nextCol;
-      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? squareColors.white : squareColors.black);
+      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.black : dragHighlights.white);
       let newStyles = [...styles];
       newStyles[prevIndex] = {...newStyles[prevIndex], boxShadow : ''};
       newStyles[newIndex] = {...newStyles[newIndex], boxShadow : boxShadow};

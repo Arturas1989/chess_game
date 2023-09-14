@@ -217,10 +217,9 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
         wasPieceClicked : true,
         prevPos : e.target.id
       });
-      return;
     }
     
-    if(pieceClicked.wasPieceClicked && e.target.tagName === 'DIV'){
+    if(pieceClicked.wasPieceClicked){
       
       let newPiecePositions = getNewPieces(piecePositions);
       const [prevRow, prevCol] = pieceClicked.prevPos.split(',');

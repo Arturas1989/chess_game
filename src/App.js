@@ -109,7 +109,8 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
   }
   
   const handlePiecePositions = (e) => {
-
+    setDragEnabled(false);
+      setIsDragging(false);
     //current pointer move values from the previous position
     const {x, y} = currentTransform;
 
@@ -121,6 +122,8 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     // new row and col position based on calculations on the pointer movement
     let dropRow = parseInt(currRow) + Math.round(y * (-1) / squareWidth);
     const dropCol = parseInt(currCol) - Math.round(x * (-1) / squareWidth);
+    if(isNaN(dropRow) || isNaN(dropCol) || !piecePositions[dropRow][dropCol]) return;
+    
 
     // position used in id
     const pos = dropRow + ',' + dropCol;
@@ -130,12 +133,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
     dropRow = 7 - dropRow;
 
     //if it's the same position, disable drag and return early
-    if(pos === e.target.id){
-
-      setDragEnabled(false);
-      setIsDragging(false);
-      return;
-    } 
+    if(pos === e.target.id) return; 
 
     // make a new copy of chess piece positions to avoid mutations
     let newPiecePositions = getNewPieces(piecePositions);
@@ -151,13 +149,6 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
 
     // set new positions state
     onPiecePositionsChange(newPiecePositions);
-
-    //finish by disabling drag, it will be enabled on mouse enter event
-    setDragEnabled(false);
-
-    //drag is finished
-    setIsDragging(false);
-
   }
 
   const [currentTransform, setCurrentTransform] = useState({x: 0, y: 0})
@@ -175,6 +166,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
   }
 
   const handleDrag = (e) => {
+    // console.log(e.target.id)
     if(isDragging){
       const [row, col] = initialPos.pos.split(',');
       const nextRow = parseInt(row) + Math.round((initialPos.y - e.clientY) / squareWidth);
@@ -213,7 +205,6 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
 
   }
 
-  
   return (
     <div 
       className='Square' 

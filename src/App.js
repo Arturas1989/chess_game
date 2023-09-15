@@ -184,7 +184,7 @@ function Square({ index, styles, piecePositions, onPiecePositionsChange, onStyle
       const [prevRow, prevCol] = initialPos.prevPos.split(',');
       const prevIndex = parseInt(prevRow) * 8 + parseInt(prevCol);
       const newIndex = nextRow * 8 + nextCol;
-      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.black : dragHighlights.white);
+      const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.white : dragHighlights.black);
       let newStyles = [...styles];
       newStyles[prevIndex] = {...newStyles[prevIndex], boxShadow : ''};
       newStyles[newIndex] = {...newStyles[newIndex], boxShadow : boxShadow};

@@ -1,6 +1,7 @@
 import { useState, useContext} from 'react';
 import { ChessPiece, DragEnablingPiece } from './ChessPieces.jsx';
-import { ThemeContext } from '../themes/themes.js'
+import { ThemeContext } from '../themes/themes.js';
+import makePiecesCopy from '../utilities/utilities.js';
 
 
 const Square = (props) => {
@@ -39,15 +40,6 @@ const Square = (props) => {
       // enable drag on mouse enter, when its disabled on drag end
       setDragInfo({...dragInfo, dragEnabled : true});
     };
-  
-    //make a copy of pieces array
-    const getNewPieces = (pieces) => {
-      let newPieces = [];
-      for(const row of pieces){
-        newPieces.push([...row]);
-      }
-      return newPieces;
-    }
     
     const handlePiecePositions = (e) => {
       setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
@@ -72,7 +64,7 @@ const Square = (props) => {
       if(pos === e.target.id) return
   
       // make a new copy of chess piece positions to avoid mutations
-      let newPiecePositions = getNewPieces(piecePositions);
+      let newPiecePositions = makePiecesCopy(piecePositions);
   
       // get movement piece
       
@@ -161,7 +153,7 @@ const Square = (props) => {
       
       if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
         
-        let newPiecePositions = getNewPieces(piecePositions);
+        let newPiecePositions = makePiecesCopy(piecePositions);
         const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
   
         // get movement piece

@@ -6,7 +6,7 @@ import makePiecesCopy from '../utilities/utilities.js';
 const changeStyles = (row, col, colors, newStyles) => {
   const index = parseInt(row) * 8 + parseInt(col);
   const color = index % 2 === row % 2 ? colors.white : colors.black;
-  newStyles[index] = {...newStyles[index], ...color};
+  newStyles[index] = {...color};
 }
 
 const Square = (props) => {

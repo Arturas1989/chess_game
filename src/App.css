@@ -45,7 +45,21 @@
   display: flex;
   width: 12.5%;
   height: 12.5%;
+  /* position: relative; */
 }
+
+/* img{
+  display: flex;
+  flex-grow: 1;
+  position: absolute;
+  z-index: 1;
+} */
+
+
+
+
+
+
 
 .hidden{
   display: none;

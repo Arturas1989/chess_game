@@ -107,9 +107,8 @@ const Square = (props) => {
         x : e.clientX,
         y : e.clientY,
         start : e.target.id,
-        end : e.target.id,
         pos : e.target.id,
-        prevPos : e.target.id
+        destination : e.target.id
       })
     }
 
@@ -123,8 +122,8 @@ const Square = (props) => {
         let newStyles = [...styles];
 
         //change previous cell color back to original
-        if(initialPos.prevPos !== initialPos.start){
-          const [prevRow, prevCol] = initialPos.prevPos.split(',');
+        if(initialPos.destination !== initialPos.start){
+          const [prevRow, prevCol] = initialPos.destination.split(',');
           changeStyles(prevRow, prevCol, squareStyles, newStyles);
         }
         
@@ -151,7 +150,7 @@ const Square = (props) => {
         
         setInitialPos({
           ...initialPos,
-          prevPos : nextId
+          destination : nextId
         })
       }
     }
@@ -161,7 +160,7 @@ const Square = (props) => {
 
       let newStyles = [...styles];
       
-      const [row, col] = initialPos.prevPos.split(',');
+      const [row, col] = initialPos.destination.split(',');
       changeStyles(row, col, dragStartEndStyles, newStyles);
       onStylesChange(newStyles);
 
@@ -169,6 +168,8 @@ const Square = (props) => {
         ...initialPos,
         end : e.target.id
       })
+
+      console.log(initialPos);
   
     }
   

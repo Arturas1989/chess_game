@@ -28,24 +28,40 @@ const standard  = {
         '♔' : WhiteKing
     },
 
-    squareColors : {
-        white : 'rgb(235, 235, 204)',
-        black : 'rgb(89, 31, 31)'
+    squareStyles : {
+        white : {
+            backgroundColor :  'rgb(235, 235, 204)'
+        },
+        black : {
+            backgroundColor :  'rgb(89, 31, 31)'
+        },
     },
 
-    draggingHighlights : {
-        white : 'rgb(131,147,107)',
-        black : 'rgb(131,147,107)'
-    },
-    
-    dragHighlights : {
-        white : 'rgb(242,196,92)',
-        black : 'rgb(242,196,92)'
+    draggingStyles : {
+        white : {
+            backgroundColor :  'rgb(131,147,107)'
+        },
+        black : {
+            backgroundColor :  'rgb(131,147,107)'
+        },
     },
 
-    clickHighlights : {
-        white : 'rgb(242,196,92)',
-        black : 'rgb(242,196,92)'
+    dragStartEndStyles : {
+        white : {
+            backgroundColor :  'rgb(242,196,92)'
+        },
+        black : {
+            backgroundColor :  'rgb(242,196,92)'
+        },
+    },
+
+    clickStartEndStyles : {
+        white : {
+            backgroundColor :  'rgb(242,196,92)'
+        },
+        black : {
+            backgroundColor :  'rgb(242,196,92)'
+        },
     }
 }
 

@@ -3,10 +3,10 @@ import { ChessPiece, DragEnablingPiece } from './ChessPiece.jsx';
 import { ThemeContext } from '../themes/themes.js';
 import makePiecesCopy from '../utilities/utilities.js';
 
-const changeBackgroundColor = (row, col, white, black, colors, newStyles) => {
+const changeStyles = (row, col, colors, newStyles) => {
   const index = parseInt(row) * 8 + parseInt(col);
-  const color = index % 2 === row % 2 ? colors[white] : colors[black];
-  newStyles[index] = {...newStyles[index], backgroundColor : color};
+  const color = index % 2 === row % 2 ? colors.white : colors.black;
+  newStyles[index] = {...newStyles[index], ...color};
 }
 
 const Square = (props) => {
@@ -23,7 +23,7 @@ const Square = (props) => {
     } = props;
   
     const themes = useContext(ThemeContext);
-    const {pieces, squareColors, draggingHighlights, dragHighlights, clickHighlights} = themes.standard; 
+    const {pieces, squareStyles, draggingStyles, dragStartEndStyles, clickStartEndStyles} = themes.standard; 
   
     const row = Math.floor(index / 8);
     const col = index % 8;
@@ -98,7 +98,7 @@ const Square = (props) => {
       let newStyles = [...initialStyles];
 
       const [row, col] = e.target.id.split(',');
-      changeBackgroundColor(row, col, 'white', 'black', dragHighlights, newStyles);
+      changeStyles(row, col, dragStartEndStyles, newStyles);
 
       onStylesChange(newStyles);
       setDragInfo({...dragInfo, isDragging : true});
@@ -118,14 +118,14 @@ const Square = (props) => {
     const handleDrag = (e) => {
       if(dragInfo.isDragging){
 
-        // const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.white : dragHighlights.black);
+        // const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragStartEndStyles.white : dragStartEndStyles.black);
         
         let newStyles = [...styles];
 
         //change previous cell color back to original
         if(initialPos.prevPos !== initialPos.start){
           const [prevRow, prevCol] = initialPos.prevPos.split(',');
-          changeBackgroundColor(prevRow, prevCol, 'white', 'black', squareColors, newStyles);
+          changeStyles(prevRow, prevCol, squareStyles, newStyles);
         }
         
 
@@ -136,7 +136,7 @@ const Square = (props) => {
         const nextId = nextRow + ',' + nextCol;
 
         if(initialPos.start !== nextId){
-          changeBackgroundColor(nextRow, nextCol, 'white', 'black', draggingHighlights, newStyles);
+          changeStyles(nextRow, nextCol, draggingStyles, newStyles);
         }
         
         
@@ -160,7 +160,7 @@ const Square = (props) => {
       let newStyles = [...styles];
       
       const [row, col] = initialPos.prevPos.split(',');
-      changeBackgroundColor(row, col, 'white', 'black', dragHighlights, newStyles);
+      changeStyles(row, col, dragStartEndStyles, newStyles);
       onStylesChange(newStyles);
 
       setInitialPos({
@@ -177,11 +177,11 @@ const Square = (props) => {
         if(e.target.tagName === 'IMG'){
           
           const [row, col] = e.target.id.split(',');
-          changeBackgroundColor(row, col, 'white', 'black', clickHighlights, newStyles);
+          changeStyles(row, col, clickStartEndStyles, newStyles);
           
           if(pieceClicked.wasPieceClicked && pieceClicked.prevPos === e.target.id){
             const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
-            changeBackgroundColor(prevRow, prevCol, 'white', 'black', squareColors, newStyles);
+            changeStyles(prevRow, prevCol, squareStyles, newStyles);
           }
 
           onPieceClick({
@@ -189,7 +189,7 @@ const Square = (props) => {
             wasPieceClicked : !pieceClicked.wasPieceClicked,
             prevPos : e.target.id
           });
-             
+
         }
         
         if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
@@ -206,7 +206,7 @@ const Square = (props) => {
           // assign piece to a new position
           const [newRow, newCol] = e.target.id.split(',');
           newPiecePositions[newRow][newCol] = piece;
-          changeBackgroundColor(newRow, newCol, 'white', 'black', clickHighlights, newStyles);
+          changeStyles(newRow, newCol, clickStartEndStyles, newStyles);
           onPiecePositionsChange(newPiecePositions);
           onPieceClick({
             ...pieceClicked,

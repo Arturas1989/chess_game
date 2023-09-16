@@ -32,10 +32,10 @@ const standard  = {
         white : 'rgb(235, 235, 204)',
         black : 'rgb(89, 31, 31)'
     },
-
+    
     dragHighlights : {
-        white : 'rgb(89, 31, 31)',
-        black : 'rgb(235, 235, 204)'
+        white : 'rgba(0, 113, 0, 0.5)',
+        black : 'rgba(0, 113, 0, 0.5)'
     }
 }
 

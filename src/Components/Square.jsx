@@ -1,5 +1,5 @@
 import { useState, useContext} from 'react';
-import { ChessPiece, DragEnablingPiece } from './ChessPieces.jsx';
+import { ChessPiece, DragEnablingPiece } from './ChessPiece.jsx';
 import { ThemeContext } from '../themes/themes.js';
 import makePiecesCopy from '../utilities/utilities.js';
 
@@ -17,7 +17,7 @@ const Square = (props) => {
     } = props;
   
     const themes = useContext(ThemeContext);
-    const {pieces, dragHighlights} = themes.standard; 
+    const {pieces, squareColors, dragHighlights} = themes.standard; 
   
     const row = Math.floor(index / 8);
     const col = index % 8;
@@ -34,7 +34,7 @@ const Square = (props) => {
     const bottom = (7 - row + 0.3) * squareWidth;
   
     
-    const [dragInfo, setDragInfo]= useState({});
+    const [dragInfo, setDragInfo] = useState({ dragEnabled : false, isDragging : false});
   
     const handleMouseEnter = () => {
       // enable drag on mouse enter, when its disabled on drag end
@@ -61,6 +61,7 @@ const Square = (props) => {
       const pos = dropRow + ',' + dropCol;
   
       //if it's the same position, disable drag and return early
+      // console.log(pos, e.target.id)
       if(pos === e.target.id) return
   
       // make a new copy of chess piece positions to avoid mutations
@@ -108,10 +109,12 @@ const Square = (props) => {
         const [prevRow, prevCol] = initialPos.prevPos.split(',');
         const prevIndex = parseInt(prevRow) * 8 + parseInt(prevCol);
         const newIndex = nextRow * 8 + nextCol;
-        const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.white : dragHighlights.black);
+        // const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragHighlights.white : dragHighlights.black);
+        const newColor = newIndex % 2 === nextRow % 2 ? dragHighlights.white : dragHighlights.black;
+        const prevColor = prevIndex % 2 === prevRow % 2 ? squareColors.white : squareColors.black;
         let newStyles = [...styles];
-        newStyles[prevIndex] = {...newStyles[prevIndex], boxShadow : ''};
-        newStyles[newIndex] = {...newStyles[newIndex], boxShadow : boxShadow};
+        newStyles[prevIndex] = {...newStyles[prevIndex], backgroundColor : prevColor};
+        newStyles[newIndex] = {...newStyles[newIndex], backgroundColor : newColor};
         
         setCurrentTransform({
           x: e.clientX - initialPos.x,
@@ -131,47 +134,50 @@ const Square = (props) => {
       
       const [row, col] = initialPos.prevPos.split(',');
       const index = parseInt(row) * 8 + parseInt(col);
+      const color = index % 2 === row % 2 ? squareColors.white : squareColors.black;
   
       let newStyles = [...styles];
-      newStyles[index] = {...newStyles[index], boxShadow : ''};
+      newStyles[index] = {...newStyles[index], backgroundColor : color};
       onStylesChange(newStyles);
   
     }
   
     
     const handleSquareClick = (e) => {
-      if(e.target.tagName === 'IMG'){
+      if(!dragInfo.isDragging){
+
+        if(e.target.tagName === 'IMG'){
         
-        onPieceClick({
-          ...pieceClicked,
-          wasPieceClicked : !pieceClicked.wasPieceClicked,
-          prevPos : e.target.id
-        });
-      }
-  
-      
-      
-      if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
+          onPieceClick({
+            ...pieceClicked,
+            wasPieceClicked : !pieceClicked.wasPieceClicked,
+            prevPos : e.target.id
+          });
+        }
+    
+        console.log(e.target.id, pieceClicked.prevPos, dragInfo)
         
-        let newPiecePositions = makePiecesCopy(piecePositions);
-        const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
-  
-        // get movement piece
-        const piece = newPiecePositions[prevRow][prevCol];
-  
-        //replace it with empty '..'
-        newPiecePositions[prevRow][prevCol] = '..';
-  
-        // assign piece to a new position
-        const [newRow, newCol] = e.target.id.split(',');
-        newPiecePositions[newRow][newCol] = piece;
-        onPiecePositionsChange(newPiecePositions);
-        onPieceClick({
-          ...pieceClicked,
-          wasPieceClicked : false
-        });
+        if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
+          
+          let newPiecePositions = makePiecesCopy(piecePositions);
+          const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
+    
+          // get movement piece
+          const piece = newPiecePositions[prevRow][prevCol];
+    
+          //replace it with empty '..'
+          newPiecePositions[prevRow][prevCol] = '..';
+    
+          // assign piece to a new position
+          const [newRow, newCol] = e.target.id.split(',');
+          newPiecePositions[newRow][newCol] = piece;
+          onPiecePositionsChange(newPiecePositions);
+          onPieceClick({
+            ...pieceClicked,
+            wasPieceClicked : false
+          });
+        }
       }
-  
     }
     
     return (

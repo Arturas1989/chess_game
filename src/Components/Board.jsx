@@ -34,12 +34,11 @@ const Board = () => {
     }, [boardRef]);
   
     //square styles
-    const [styles, setStyles] = useState(
-      Array.from({length: 64}, (_,i) => {
-        const row = Math.floor(i / 8);
-        return {backgroundColor: i % 2 === row % 2 ? squareColors.white : squareColors.black}
-      })
-    );
+    const initialStyles = Array.from({length: 64}, (_,i) => {
+      const row = Math.floor(i / 8);
+      return {backgroundColor: i % 2 === row % 2 ? squareColors.white : squareColors.black}
+    })
+    const [styles, setStyles] = useState([...initialStyles]);
   
     const [pieceClicked, setPieceClicked] = useState({});
     return (
@@ -49,7 +48,8 @@ const Board = () => {
             <Square 
                 key={i} 
                 index={i}
-                styles={styles} 
+                styles={styles}
+                initialStyles={initialStyles} 
                 piecePositions={piecePositions}
                 onPiecePositionsChange={setPiecePositions}
                 onStylesChange={setStyles}

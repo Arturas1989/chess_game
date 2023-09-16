@@ -32,10 +32,20 @@ const standard  = {
         white : 'rgb(235, 235, 204)',
         black : 'rgb(89, 31, 31)'
     },
+
+    draggingHighlights : {
+        white : 'rgb(131,147,107)',
+        black : 'rgb(131,147,107)'
+    },
     
     dragHighlights : {
-        white : 'rgba(0, 113, 0, 0.5)',
-        black : 'rgba(0, 113, 0, 0.5)'
+        white : 'rgb(242,196,92)',
+        black : 'rgb(242,196,92)'
+    },
+
+    clickHighlights : {
+        white : 'rgb(242,196,92)',
+        black : 'rgb(242,196,92)'
     }
 }
 

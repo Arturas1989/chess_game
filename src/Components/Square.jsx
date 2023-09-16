@@ -134,8 +134,10 @@ const Square = (props) => {
         const nextRow = parseInt(row) + Math.round((e.clientY - initialPos.y) / squareWidth);
         const nextCol = parseInt(col) + Math.round((e.clientX - initialPos.x) / squareWidth);
         const nextId = nextRow + ',' + nextCol;
+        
+        if(nextRow < 0 || nextCol < 0 || nextRow > 7 || nextCol > 7) return;
 
-        if(initialPos.start !== nextId){
+        if(initialPos.start !== nextId && nextCol>0){
           changeStyles(nextRow, nextCol, draggingStyles, newStyles);
         }
         

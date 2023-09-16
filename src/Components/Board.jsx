@@ -5,7 +5,7 @@ import { themes, ThemeContext } from '../themes/themes.js'
 const Board = () => {
 
     const themes = useContext(ThemeContext);
-    const squareColors = themes.standard.squareColors;
+    const squareColors = themes.standard.squareStyles;
     // 2 dimensional array is used for an easier debugging.
     const [piecePositions, setPiecePositions] = useState(
       [
@@ -36,7 +36,7 @@ const Board = () => {
     //square styles
     const initialStyles = Array.from({length: 64}, (_,i) => {
       const row = Math.floor(i / 8);
-      return {backgroundColor: i % 2 === row % 2 ? squareColors.white : squareColors.black}
+      return i % 2 === row % 2 ? squareColors.white : squareColors.black;
     })
     const [styles, setStyles] = useState([...initialStyles]);
   

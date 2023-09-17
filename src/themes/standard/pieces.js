@@ -29,18 +29,23 @@ const standard  = {
     },
 
     pieces : {
-        'bb' : BlackBishop,
-        'nb' : BlackKnight,
-        'pb' : BlackPawn,
-        'qb' : BlackQueen,
-        'rb' : BlackRook,
-        'kb' : BlackKing,
-        'bw' : WhiteBishop,
-        'nw' : WhiteKnight,
-        'pw' : WhitePawn,
-        'qw' : WhiteQueen,
-        'rw' : WhiteRook,
-        'kw' : WhiteKing
+        w : {
+            b : WhiteBishop,
+            n : WhiteKnight,
+            p : WhitePawn,
+            q : WhiteQueen,
+            r : WhiteRook,
+            k : WhiteKing
+        },
+
+        b : {
+            b : BlackBishop,
+            n : BlackKnight,
+            p : BlackPawn,
+            q : BlackQueen,
+            r : BlackRook,
+            k : BlackKing
+        } 
     },
 
     squareStyles : {

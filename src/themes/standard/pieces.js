@@ -13,7 +13,7 @@ import WhiteKing from './pieces/WhiteKing.svg';
 
 const standard  = {
 
-    pieces : {
+    pieces2 : {
         '♝' : BlackBishop,
         '♞' : BlackKnight,
         '♟' : BlackPawn,
@@ -26,6 +26,21 @@ const standard  = {
         '♕' : WhiteQueen,
         '♖' : WhiteRook,
         '♔' : WhiteKing
+    },
+
+    pieces : {
+        'bb' : BlackBishop,
+        'nb' : BlackKnight,
+        'pb' : BlackPawn,
+        'qb' : BlackQueen,
+        'rb' : BlackRook,
+        'kb' : BlackKing,
+        'bw' : WhiteBishop,
+        'nw' : WhiteKnight,
+        'pw' : WhitePawn,
+        'qw' : WhiteQueen,
+        'rw' : WhiteRook,
+        'kw' : WhiteKing
     },
 
     squareStyles : {

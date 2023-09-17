@@ -7,4 +7,20 @@ const makePiecesCopy = (pieces) => {
     return newPieces;
   }
 
-export default makePiecesCopy;
+const getCoord = (id, isReverse) => {
+  
+  const cols = 'abcdefgh';
+  let [row, col] = id.split(',').map(str=>parseInt(str));
+
+  if(isReverse){
+    row++;
+    col = 8 - col;
+  } else {
+    row = 8 - row;
+    col++;
+  }
+  
+  return cols[col-1] + row;
+}
+
+export  { makePiecesCopy, getCoord };

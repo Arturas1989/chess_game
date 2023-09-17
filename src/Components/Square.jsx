@@ -1,7 +1,7 @@
 import { useState, useContext} from 'react';
 import { ChessPiece, DragEnablingPiece } from './ChessPiece.jsx';
 import { ThemeContext } from '../themes/themes.js';
-import makePiecesCopy from '../utilities/utilities.js';
+import { makePiecesCopy, getCoord } from '../utilities/utilities.js';
 
 const changeStyles = (row, col, colors, newStyles) => {
   const index = parseInt(row) * 8 + parseInt(col);
@@ -13,9 +13,10 @@ const Square = (props) => {
     const { 
       index, 
       styles,
+      chess,
+      onChessChange,
+      isReversed,
       initialStyles, 
-      piecePositions, 
-      onPiecePositionsChange, 
       onStylesChange, 
       boardBoundaries, 
       pieceClicked, 
@@ -25,12 +26,13 @@ const Square = (props) => {
     const themes = useContext(ThemeContext);
     const {pieces, squareStyles, draggingStyles, dragStartEndStyles, clickStartEndStyles} = themes.standard; 
   
+    const board = chess.board();
     const row = Math.floor(index / 8);
     const col = index % 8;
     const pos = row + ',' + col;
-    const piece = piecePositions[row][col] || '';
-    const boundaries = boardBoundaries || {}
-    const boardWidth = boundaries.width || 0
+    const piece = board[row][col] ? board[row][col].type + board[row][col].color : '';
+    const boundaries = boardBoundaries || {};
+    const boardWidth = boundaries.width || 0;
     const squareWidth = boardWidth / 8;
   
     //drag constrains
@@ -54,30 +56,27 @@ const Square = (props) => {
       const [dropRow, dropCol] = initialPos.destination.split(',');
       
       // position used in id
-      const pos = dropRow + ',' + dropCol;
+      const dropPos = dropRow + ',' + dropCol;
       
       //if it's the same position, disable drag and return early
-      if(pos === initialPos.start) return
+      if(dropPos === initialPos.start) return
   
-      // make a new copy of chess piece positions to avoid mutations
-      let newPiecePositions = makePiecesCopy(piecePositions);
+      // move piece
+      const [prevCoord, dropCoord] = [getCoord(initialPos.start), getCoord(dropPos)];
+      try {
+        chess.move({from: prevCoord, to: dropCoord});
+      } catch(e) {
+        const newStyles = [...initialStyles];
+        onStylesChange(newStyles);
+        return false;
+      }
+      
   
-      // get movement piece
-      const [currRow, currCol] = initialPos.start.split(',');
-      const piece = newPiecePositions[currRow][currCol];
-  
-      //replace it with empty '..'
-      newPiecePositions[currRow][currCol] = '..';
-  
-      // assign piece to a new position
-      newPiecePositions[dropRow][dropCol] = piece;
-  
-      // set new positions state
-      onPiecePositionsChange(newPiecePositions);
       onPieceClick({
         ...pieceClicked,
-        prevPos : pos
+        prevPos : dropPos
       });
+      return true;
     }
     
     const [initialPos, setInitialPos] = useState({});
@@ -101,8 +100,6 @@ const Square = (props) => {
       })
     }
 
-    
-  
     const handleDrag = (e) => {
       if(dragInfo.isDragging){
         
@@ -126,7 +123,7 @@ const Square = (props) => {
         if(initialPos.start !== nextId && nextCol>0){
           changeStyles(nextRow, nextCol, draggingStyles, newStyles);
         }
-        
+
         onStylesChange(newStyles);
         
         setInitialPos({
@@ -137,7 +134,8 @@ const Square = (props) => {
     }
   
     const handleDragEnd = (e) => {
-      handlePiecePositions(e);
+      const result = handlePiecePositions(e);
+      if(!result) return;
 
       let newStyles = [...styles];
       
@@ -150,7 +148,6 @@ const Square = (props) => {
         end : e.target.id
       })
 
-      // console.log(initialPos)
       if(initialPos.destination === initialPos.start){
         onPieceClick({
           ...pieceClicked,
@@ -183,26 +180,25 @@ const Square = (props) => {
         }
         
         if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
-          
-          let newPiecePositions = makePiecesCopy(piecePositions);
-          const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
-    
-          // get movement piece
-          const piece = newPiecePositions[prevRow][prevCol];
-    
-          //replace it with empty '..'
-          newPiecePositions[prevRow][prevCol] = '..';
-    
-          // assign piece to a new position
-          const [newRow, newCol] = e.target.id.split(',');
-          newPiecePositions[newRow][newCol] = piece;
-          changeStyles(newRow, newCol, clickStartEndStyles, newStyles);
-          onPiecePositionsChange(newPiecePositions);
           onPieceClick({
             ...pieceClicked,
             wasPieceClicked : false,
             pos : e.target.id
           });
+
+          const [prevCoord, dropCoord] = [getCoord(pieceClicked.prevPos), getCoord(e.target.id)];
+
+          try {
+            chess.move({from: prevCoord, to: dropCoord});
+          } catch(e) {
+            newStyles = [...initialStyles];
+            onStylesChange(newStyles);
+            return false;
+          }
+
+          const [newRow, newCol] = e.target.id.split(',');
+          changeStyles(newRow, newCol, clickStartEndStyles, newStyles);
+          
         }
         
         onStylesChange(newStyles);

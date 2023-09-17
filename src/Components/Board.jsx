@@ -1,29 +1,19 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import Square from './Square.jsx';
-import { themes, ThemeContext } from '../themes/themes.js'
+import { ThemeContext } from '../themes/themes.js';
+import { Chess } from 'chess.js';
 
 const Board = () => {
-
+  
     const themes = useContext(ThemeContext);
     const squareColors = themes.standard.squareStyles;
-    // 2 dimensional array is used for an easier debugging.
-    const [piecePositions, setPiecePositions] = useState(
-      [
-        ['♜', '♞', '♝', '♛', '♚', '♝', '♞', '♜'],
-        ['♟', '♟', '♟', '♟', '♟', '♟', '♟', '♟'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['..', '..', '..', '..', '..', '..', '..', '..'],
-        ['♙', '♙', '♙', '♙', '♙', '♙', '♙', '♙'],
-        ['♖', '♘', '♗', '♕', '♔', '♗', '♘', '♖']
-      ]
-    );
-  
+    
+    const [chess, setChess] = useState(new Chess());
+    const [isReversed, setIsReversed] = useState(false);
+    const [boardBoundaries, setBoardBoundaries] = useState(null);
+
     // using useRef to create reference to the board component
     const boardRef = useRef(null);
-  
-    const [boardBoundaries, setBoardBoundaries] = useState(null);
   
     // it's not guaranteed that the Board component is rendered, it might be null
     //useEffect is used that, when boardRef changes (Board component is rendered) boardBoundaries will be set
@@ -49,9 +39,10 @@ const Board = () => {
                 key={i} 
                 index={i}
                 styles={styles}
-                initialStyles={initialStyles} 
-                piecePositions={piecePositions}
-                onPiecePositionsChange={setPiecePositions}
+                chess={chess}
+                onChessChange={setChess}
+                isReversed={isReversed}
+                initialStyles={initialStyles}
                 onStylesChange={setStyles}
                 boardBoundaries={boardBoundaries}
                 pieceClicked={pieceClicked}

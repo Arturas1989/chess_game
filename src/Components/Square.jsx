@@ -30,7 +30,7 @@ const Square = (props) => {
     const row = Math.floor(index / 8);
     const col = index % 8;
     const pos = row + ',' + col;
-    const piece = board[row][col] ? board[row][col].type + board[row][col].color : '';
+    const source = board[row][col] ? pieces[board[row][col].color][board[row][col].type] : '';
     const boundaries = boardBoundaries || {};
     const boardWidth = boundaries.width || 0;
     const squareWidth = boardWidth / 8;
@@ -219,7 +219,7 @@ const Square = (props) => {
               right={right}
               top={top}
               bottom={bottom}
-              piece={pieces[piece]}
+              piece={source}
               handleMouseEnter={handleMouseEnter}
               handleDragStart={handleDragStart}
               handleDragEnd={handleDragEnd}
@@ -227,7 +227,7 @@ const Square = (props) => {
             />
          : 
           <DragEnablingPiece
-            piece={pieces[piece]}
+            piece={source}
             handleMouseEnter={handleMouseEnter}
             pos={pos}
           />

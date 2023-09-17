@@ -169,8 +169,13 @@ const Square = (props) => {
         end : e.target.id
       })
 
-      console.log(initialPos);
-  
+      if(initialPos.destination === initialPos.start){
+        onPieceClick({
+          ...pieceClicked,
+          wasPieceClicked : true,
+          prevPos : initialPos.destination
+        });
+      }
     }
   
     

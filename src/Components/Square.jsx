@@ -49,30 +49,21 @@ const Square = (props) => {
     
     const handlePiecePositions = (e) => {
       setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
-      //current pointer move values from the previous position
-      const {x, y} = currentTransform;
   
-      // assigning previous coordinates
-      let [currRow, currCol] = e.target.id.split(',');
-  
-      const squareWidth = (boardBoundaries.width) / 8;
-  
-      // new row and col position based on calculations on the pointer movement
-      let dropRow = parseInt(currRow) - Math.round(y * (-1) / squareWidth);
-      const dropCol = parseInt(currCol) - Math.round(x * (-1) / squareWidth);
+      // assigning destination coordinates
+      const [dropRow, dropCol] = initialPos.destination.split(',');
       
-      if(isNaN(dropRow) || isNaN(dropCol) || dropRow < 0 || dropCol < 0 || dropRow > 7 || dropCol > 7)return; 
-  
       // position used in id
       const pos = dropRow + ',' + dropCol;
-  
+      
       //if it's the same position, disable drag and return early
-      if(pos === e.target.id) return
+      if(pos === initialPos.start) return
   
       // make a new copy of chess piece positions to avoid mutations
       let newPiecePositions = makePiecesCopy(piecePositions);
   
       // get movement piece
+      const [currRow, currCol] = initialPos.start.split(',');
       const piece = newPiecePositions[currRow][currCol];
   
       //replace it with empty '..'
@@ -88,8 +79,6 @@ const Square = (props) => {
         prevPos : pos
       });
     }
-  
-    const [currentTransform, setCurrentTransform] = useState({x: 0, y: 0})
     
     const [initialPos, setInitialPos] = useState({});
     
@@ -116,8 +105,6 @@ const Square = (props) => {
   
     const handleDrag = (e) => {
       if(dragInfo.isDragging){
-
-        // const boxShadow = 'inset 0 0 0 2px ' + (newIndex % 2 === nextRow % 2 ? dragStartEndStyles.white : dragStartEndStyles.black);
         
         let newStyles = [...styles];
 
@@ -140,13 +127,7 @@ const Square = (props) => {
           changeStyles(nextRow, nextCol, draggingStyles, newStyles);
         }
         
-        
         onStylesChange(newStyles);
-
-        setCurrentTransform({
-          x: e.clientX - initialPos.x,
-          y: e.clientY - initialPos.y
-        })
         
         setInitialPos({
           ...initialPos,
@@ -169,6 +150,7 @@ const Square = (props) => {
         end : e.target.id
       })
 
+      // console.log(initialPos)
       if(initialPos.destination === initialPos.start){
         onPieceClick({
           ...pieceClicked,

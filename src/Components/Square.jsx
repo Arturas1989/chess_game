@@ -1,12 +1,12 @@
 import { useState, useContext} from 'react';
 import { ChessPiece, DragEnablingPiece } from './ChessPiece.jsx';
 import { ThemeContext } from '../themes/themes.js';
-import { makePiecesCopy, getCoord } from '../utilities/utilities.js';
+import { preComputed } from '../utilities/utilities.js';
 
-const changeStyles = (row, col, colors, newStyles) => {
+const changeStyles = (id, row, col, colors, newStyles) => {
   const index = parseInt(row) * 8 + parseInt(col);
   const color = index % 2 === row % 2 ? colors.white : colors.black;
-  newStyles[index] = {...color};
+  newStyles[id] = {...color};
 }
 
 const Square = (props) => {
@@ -24,12 +24,16 @@ const Square = (props) => {
     } = props;
   
     const themes = useContext(ThemeContext);
-    const {pieces, squareStyles, draggingStyles, dragStartEndStyles, clickStartEndStyles} = themes.standard; 
+    const { pieces, squareStyles, draggingStyles, dragStartEndStyles, clickStartEndStyles } = themes.standard;
+    const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord} = preComputed;
+    const [coordList, coordToIdList, idToCoordList] = isReversed ? 
+    [revCoords, revCoordToId, revIdToCoord] : [coords, coordToId, idToCoord];
+    // console.log(idToCoordList)
   
     const board = chess.board();
     const row = Math.floor(index / 8);
     const col = index % 8;
-    const pos = row + ',' + col;
+    const pos = idToCoordList[row + ',' + col];
     const source = board[row][col] ? pieces[board[row][col].color][board[row][col].type] : '';
     const boundaries = boardBoundaries || {};
     const boardWidth = boundaries.width || 0;
@@ -51,20 +55,12 @@ const Square = (props) => {
     
     const handlePiecePositions = (e) => {
       setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
-  
-      // assigning destination coordinates
-      const [dropRow, dropCol] = initialPos.destination.split(',');
-      
-      // position used in id
-      const dropPos = dropRow + ',' + dropCol;
       
       //if it's the same position, disable drag and return early
-      if(dropPos === initialPos.start) return
+      if(initialPos.destination === initialPos.start) return
   
-      // move piece
-      const [prevCoord, dropCoord] = [getCoord(initialPos.start), getCoord(dropPos)];
       try {
-        chess.move({from: prevCoord, to: dropCoord});
+        chess.move({from: initialPos.start, to: initialPos.destination});
       } catch(e) {
         const newStyles = [...initialStyles];
         onStylesChange(newStyles);
@@ -74,7 +70,7 @@ const Square = (props) => {
   
       onPieceClick({
         ...pieceClicked,
-        prevPos : dropPos
+        prevPos : initialPos.destination
       });
       return true;
     }
@@ -83,10 +79,10 @@ const Square = (props) => {
     
     const handleDragStart = (e) => {
 
-      let newStyles = [...initialStyles];
+      let newStyles = {...initialStyles};
 
-      const [row, col] = e.target.id.split(',');
-      changeStyles(row, col, dragStartEndStyles, newStyles);
+      const [row, col] = coordToIdList[e.target.id].split(',');
+      changeStyles(e.target.id, row, col, dragStartEndStyles, newStyles);
 
       onStylesChange(newStyles);
       setDragInfo({...dragInfo, isDragging : true});
@@ -103,32 +99,32 @@ const Square = (props) => {
     const handleDrag = (e) => {
       if(dragInfo.isDragging){
         
-        let newStyles = [...styles];
+        let newStyles = {...styles};
 
         //change previous cell color back to original
         if(initialPos.destination !== initialPos.start){
-          const [prevRow, prevCol] = initialPos.destination.split(',');
-          changeStyles(prevRow, prevCol, squareStyles, newStyles);
+          const [prevRow, prevCol] = coordToIdList[initialPos.destination].split(',');
+          changeStyles(initialPos.destination, prevRow, prevCol, squareStyles, newStyles);
         }
         
 
         //highlight new cell
-        const [row, col] = initialPos.pos.split(',');
+        const [row, col] = coordToIdList[initialPos.pos].split(',');
         const nextRow = parseInt(row) + Math.round((e.clientY - initialPos.y) / squareWidth);
         const nextCol = parseInt(col) + Math.round((e.clientX - initialPos.x) / squareWidth);
         const nextId = nextRow + ',' + nextCol;
         
         if(nextRow < 0 || nextCol < 0 || nextRow > 7 || nextCol > 7) return;
 
-        if(initialPos.start !== nextId && nextCol>0){
-          changeStyles(nextRow, nextCol, draggingStyles, newStyles);
+        if(initialPos.start !== initialPos.destination && nextCol>0){
+          changeStyles(idToCoordList[nextId], nextRow, nextCol, draggingStyles, newStyles);
         }
 
         onStylesChange(newStyles);
         
         setInitialPos({
           ...initialPos,
-          destination : nextId
+          destination : idToCoordList[nextId]
         })
       }
     }
@@ -137,10 +133,10 @@ const Square = (props) => {
       const result = handlePiecePositions(e);
       if(!result) return;
 
-      let newStyles = [...styles];
+      let newStyles = {...styles};
       
-      const [row, col] = initialPos.destination.split(',');
-      changeStyles(row, col, dragStartEndStyles, newStyles);
+      const [row, col] = coordToIdList[initialPos.destination].split(',');
+      changeStyles(initialPos.destination, row, col, dragStartEndStyles, newStyles);
       onStylesChange(newStyles);
 
       setInitialPos({
@@ -160,15 +156,15 @@ const Square = (props) => {
     
     const handleSquareClick = (e) => {
       if(!dragInfo.isDragging){
-        let newStyles = !pieceClicked.wasPieceClicked ? [...initialStyles] : [...styles];
+        let newStyles = !pieceClicked.wasPieceClicked ? {...initialStyles} : {...styles};
         if(e.target.tagName === 'IMG'){
           
-          const [row, col] = e.target.id.split(',');
-          changeStyles(row, col, clickStartEndStyles, newStyles);
+          const [row, col] = coordToIdList[e.target.id].split(',');
+          changeStyles(e.target.id, row, col, clickStartEndStyles, newStyles);
           
           if(pieceClicked.wasPieceClicked && pieceClicked.prevPos === e.target.id){
-            const [prevRow, prevCol] = pieceClicked.prevPos.split(',');
-            changeStyles(prevRow, prevCol, squareStyles, newStyles);
+            const [prevRow, prevCol] = coordToIdList[pieceClicked.prevPos].split(',');
+            changeStyles(pieceClicked.prevPos, prevRow, prevCol, squareStyles, newStyles);
           }
 
           onPieceClick({
@@ -186,18 +182,16 @@ const Square = (props) => {
             pos : e.target.id
           });
 
-          const [prevCoord, dropCoord] = [getCoord(pieceClicked.prevPos), getCoord(e.target.id)];
-
           try {
-            chess.move({from: prevCoord, to: dropCoord});
+            chess.move({from: pieceClicked.prevPos, to: e.target.id});
           } catch(e) {
             newStyles = [...initialStyles];
             onStylesChange(newStyles);
             return false;
           }
 
-          const [newRow, newCol] = e.target.id.split(',');
-          changeStyles(newRow, newCol, clickStartEndStyles, newStyles);
+          const [newRow, newCol] = coordToIdList[e.target.id].split(',');
+          changeStyles(e.target.id, newRow, newCol, clickStartEndStyles, newStyles);
           
         }
         
@@ -209,7 +203,7 @@ const Square = (props) => {
       <div
         id={pos}
         className='Square' 
-        style={styles[index]}
+        style={styles[pos]}
         onClick={handleSquareClick}
       >
         {dragInfo.dragEnabled ? 

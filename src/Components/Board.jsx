@@ -2,11 +2,14 @@ import { useState, useRef, useEffect, useContext } from 'react';
 import Square from './Square.jsx';
 import { ThemeContext } from '../themes/themes.js';
 import { Chess } from 'chess.js';
+import { preComputed } from '../utilities/utilities.js';
 
 const Board = () => {
   
     const themes = useContext(ThemeContext);
     const squareColors = themes.standard.squareStyles;
+    const { coords} = preComputed;
+    
     
     const [chess, setChess] = useState(new Chess());
     const [isReversed, setIsReversed] = useState(false);
@@ -24,11 +27,16 @@ const Board = () => {
     }, [boardRef]);
   
     //square styles
-    const initialStyles = Array.from({length: 64}, (_,i) => {
+    let initialStyles = {};
+    let i = 0;
+    for(const coord of coords){
       const row = Math.floor(i / 8);
-      return i % 2 === row % 2 ? squareColors.white : squareColors.black;
-    })
-    const [styles, setStyles] = useState([...initialStyles]);
+      
+      initialStyles[coord] = i % 2 === row % 2 ? squareColors.black : squareColors.white;
+      i++;
+    }
+    const [styles, setStyles] = useState({...initialStyles});
+    // console.log(styles)
   
     const [pieceClicked, setPieceClicked] = useState({});
     return (

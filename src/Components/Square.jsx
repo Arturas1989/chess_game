@@ -62,7 +62,7 @@ const Square = (props) => {
       try {
         chess.move({from: initialPos.start, to: initialPos.destination});
       } catch(e) {
-        const newStyles = [...initialStyles];
+        const newStyles = {...initialStyles};
         onStylesChange(newStyles);
         return false;
       }
@@ -185,7 +185,7 @@ const Square = (props) => {
           try {
             chess.move({from: pieceClicked.prevPos, to: e.target.id});
           } catch(e) {
-            newStyles = [...initialStyles];
+            newStyles = {...initialStyles};
             onStylesChange(newStyles);
             return false;
           }

@@ -53,7 +53,9 @@ const Square = (props) => {
       const row = Math.floor(index / 8);
       const col = index % 8;
       const pos = coordToIdList[row + ',' + col];
-      const source = board[row][col] ? pieces[board[row][col].color][board[row][col].type] : '';
+      console.log(board[row][col], pos)
+      const squareInfo = chess.get(pos);
+      const source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
       const boundaries = boardBoundaries || {};
       const boardWidth = boundaries.width || 0;
       const squareWidth = boardWidth / 8;

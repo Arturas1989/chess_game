@@ -88,10 +88,10 @@ const standard  = {
 
     validMovesEmptyStyles : {
         white : {
-            background: 'radial-gradient( rgba(242,196,92, 0.8) 29%, rgb(235, 235, 204) 30%)'
+            background: 'radial-gradient( rgba(242,196,92, 0.8) 19%, rgb(235, 235, 204) 20%)'
         },
         black : {
-            background: 'radial-gradient( rgba(242,196,92, 0.8) 29%, rgb(89, 31, 31) 30%)'
+            background: 'radial-gradient( rgba(242,196,92, 0.8) 19%, rgb(89, 31, 31) 20%)'
         },
     },
 

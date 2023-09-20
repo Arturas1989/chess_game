@@ -12,7 +12,7 @@ const Board = () => {
     
     
     const [chess, setChess] = useState(new Chess());
-    const [isReversed, setIsReversed] = useState(false);
+    const [isReversed, setIsReversed] = useState(true);
     const [boardBoundaries, setBoardBoundaries] = useState(null);
 
     // using useRef to create reference to the board component
@@ -29,12 +29,14 @@ const Board = () => {
     //square styles
     let initialStyles = {};
     let i = 0;
+    
     for(const coord of coords){
       const row = Math.floor(i / 8);
       
       initialStyles[coord] = i % 2 === row % 2 ? squareColors.black : squareColors.white;
       i++;
     }
+    // console.log(initialStyles)
     const [styles, setStyles] = useState({...initialStyles});
     // console.log(styles)
   

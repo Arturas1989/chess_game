@@ -55,7 +55,11 @@
   z-index: 1;
 } */
 
-
+.HighLight{
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
 
 
 

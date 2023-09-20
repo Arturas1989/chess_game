@@ -59,28 +59,60 @@ const standard  = {
 
     draggingStyles : {
         white : {
-            backgroundColor :  'rgb(131,147,107)'
+            backgroundColor :  'rgba(131,147,107,0.7)'
         },
         black : {
-            backgroundColor :  'rgb(131,147,107)'
+            backgroundColor :  'rgba(131,147,107,0.7)'
         },
     },
 
     dragStartEndStyles : {
         white : {
-            backgroundColor :  'rgb(242,196,92)'
+            backgroundColor :  'rgb(242,196,92)',
+            // opacity: '0.8',
         },
         black : {
-            backgroundColor :  'rgb(242,196,92)'
+            backgroundColor :  'rgb(242,196,92)',
+            // opacity: '0.8',
         },
     },
 
     clickStartEndStyles : {
         white : {
-            backgroundColor :  'rgb(242,196,92)'
+            backgroundColor :  'rgba(242,196,92,0.8)'
         },
         black : {
-            backgroundColor :  'rgb(242,196,92)'
+            backgroundColor :  'rgba(242,196,92,0.8)'
+        },
+    },
+
+    validMovesEmptyStyles : {
+        white : {
+            backgroundColor :  'rgba(242,196,92,0.8)',
+            borderRadius: '50%',
+            width: '40%',
+            height: '40%',
+            display: 'flex',
+            alignSelf: 'center',
+            margin: '0 auto'
+        },
+        black : {
+            backgroundColor :  'rgba(242,196,92,0.8)',
+            borderRadius: '50%',
+            width: '40%',
+            height: '40%',
+            display: 'flex',
+            alignSelf: 'center',
+            margin: '0 auto'
+        },
+    },
+
+    validMovesTakeStyles : {
+        white : {
+            background: 'radial-gradient(transparent 0%, transparent 79%, rgba(242,196,92, 0.8) 80%)'
+        },
+        black : {
+            background :  'radial-gradient(transparent 0%, transparent 79%, rgba(242,196,92, 0.8) 80%)'
         },
     }
 }

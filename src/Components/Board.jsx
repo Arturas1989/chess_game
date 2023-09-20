@@ -8,7 +8,7 @@ const Board = () => {
   
     const themes = useContext(ThemeContext);
     const squareColors = themes.standard.squareStyles;
-    const { coords} = preComputed;
+    const { coords } = preComputed;
     
     
     const [chess, setChess] = useState(new Chess());
@@ -43,7 +43,7 @@ const Board = () => {
       <div ref={boardRef} className="Board">
         
         {Array.from({length: 64}, (_,i) => 
-            <Square 
+            <Square
                 key={i} 
                 index={i}
                 styles={styles}

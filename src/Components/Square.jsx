@@ -1,4 +1,7 @@
+
+
 import SquareHighLight from './SquareHighLight.jsx';
+import { preComputed } from '../utilities/utilities.js';
 
 const Square = (props) => {
     const { 
@@ -12,11 +15,21 @@ const Square = (props) => {
       boardBoundaries, 
       pieceClicked, 
       onPieceClick 
-    } = props; 
+    } = props;
+
+    const row = Math.floor(index / 8);
+    const col = index % 8;
+    const { coordToId, revCoordToId} = preComputed;
+    const coordToIdList = isReversed ? revCoordToId : coordToId;
+    const pos = coordToIdList[row + ',' + col];
+    
     
     return (
-      <div className="Square">
-        <SquareHighLight  
+      <div className="Square"  id={pos} style={initialStyles[pos]}>
+        <SquareHighLight
+          pos={pos}
+          row={row}
+          col={col}
           index={index}
           styles={styles}
           chess={chess}

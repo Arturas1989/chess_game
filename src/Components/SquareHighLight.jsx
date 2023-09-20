@@ -9,9 +9,21 @@ const changeStyles = (id, row, col, colors, newStyles) => {
     newStyles[id] = {...color};
 }
 
+const highlightValidMoves = (chess, id, idToCoord, emptyColors, pieceColors, newStyles) => {
+  const validMoves = chess.moves({ square: id, verbose: true });
+  for(const move of validMoves){
+    const [row, col] = idToCoord[move.to].split(',').map(el=>parseInt(el));
+    chess.get(move.to) ? changeStyles(move.to, row, col, pieceColors, newStyles) : 
+    changeStyles(move.to, row, col, emptyColors, newStyles);
+  }
+}
+
 const SquareHighLight = (props) => {
-    const { 
-        index, 
+    const {
+        index,
+        pos,
+        row,
+        col,
         styles,
         chess,
         onChessChange,
@@ -24,16 +36,23 @@ const SquareHighLight = (props) => {
       } = props;
     
       const themes = useContext(ThemeContext);
-      const { pieces, squareStyles, draggingStyles, dragStartEndStyles, clickStartEndStyles } = themes.standard;
+      const { 
+        pieces, 
+        squareStyles, 
+        draggingStyles, 
+        dragStartEndStyles, 
+        clickStartEndStyles,
+        validMovesEmptyStyles,
+        validMovesTakeStyles
+
+      } = themes.standard;
+
       const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord} = preComputed;
       const [coordList, coordToIdList, idToCoordList] = isReversed ? 
       [revCoords, revCoordToId, revIdToCoord] : [coords, coordToId, idToCoord];
       // console.log(idToCoordList)
     
       const board = chess.board();
-      const row = Math.floor(index / 8);
-      const col = index % 8;
-      const pos = idToCoordList[row + ',' + col];
       const source = board[row][col] ? pieces[board[row][col].color][board[row][col].type] : '';
       const boundaries = boardBoundaries || {};
       const boardWidth = boundaries.width || 0;
@@ -78,10 +97,15 @@ const SquareHighLight = (props) => {
       const [initialPos, setInitialPos] = useState({});
       
       const handleDragStart = (e) => {
+        
+        console.log(chess.moves({square: e.target.id, verbose: true}))
   
         let newStyles = {...initialStyles};
+
+        console.log(coordToIdList)
+        highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyStyles, validMovesTakeStyles, newStyles);
   
-        const [row, col] = coordToIdList[e.target.id].split(',');
+        const [row, col] = idToCoordList[e.target.id].split(',');
         changeStyles(e.target.id, row, col, dragStartEndStyles, newStyles);
   
         onStylesChange(newStyles);
@@ -103,28 +127,28 @@ const SquareHighLight = (props) => {
   
           //change previous cell color back to original
           if(initialPos.destination !== initialPos.start){
-            const [prevRow, prevCol] = coordToIdList[initialPos.destination].split(',');
+            const [prevRow, prevCol] = idToCoordList[initialPos.destination].split(',');
             changeStyles(initialPos.destination, prevRow, prevCol, squareStyles, newStyles);
           }
           
   
           //highlight new cell
-          const [row, col] = coordToIdList[initialPos.pos].split(',');
+          const [row, col] = idToCoordList[initialPos.pos].split(',');
           const nextRow = parseInt(row) + Math.round((e.clientY - initialPos.y) / squareWidth);
           const nextCol = parseInt(col) + Math.round((e.clientX - initialPos.x) / squareWidth);
-          const nextId = nextRow + ',' + nextCol;
+          const nextCoord = nextRow + ',' + nextCol;
           
           if(nextRow < 0 || nextCol < 0 || nextRow > 7 || nextCol > 7) return;
   
           if(initialPos.start !== initialPos.destination && nextCol>0){
-            changeStyles(idToCoordList[nextId], nextRow, nextCol, draggingStyles, newStyles);
+            changeStyles(coordToIdList[nextCoord], nextRow, nextCol, draggingStyles, newStyles);
           }
   
           onStylesChange(newStyles);
           
           setInitialPos({
             ...initialPos,
-            destination : idToCoordList[nextId]
+            destination : coordToIdList[nextCoord]
           })
         }
       }
@@ -135,7 +159,7 @@ const SquareHighLight = (props) => {
   
         let newStyles = {...styles};
         
-        const [row, col] = coordToIdList[initialPos.destination].split(',');
+        const [row, col] = idToCoordList[initialPos.destination].split(',');
         changeStyles(initialPos.destination, row, col, dragStartEndStyles, newStyles);
         onStylesChange(newStyles);
   
@@ -159,11 +183,11 @@ const SquareHighLight = (props) => {
           let newStyles = !pieceClicked.wasPieceClicked ? {...initialStyles} : {...styles};
           if(e.target.tagName === 'IMG'){
             
-            const [row, col] = coordToIdList[e.target.id].split(',');
+            const [row, col] = idToCoordList[e.target.id].split(',');
             changeStyles(e.target.id, row, col, clickStartEndStyles, newStyles);
             
             if(pieceClicked.wasPieceClicked && pieceClicked.prevPos === e.target.id){
-              const [prevRow, prevCol] = coordToIdList[pieceClicked.prevPos].split(',');
+              const [prevRow, prevCol] = idToCoordList[pieceClicked.prevPos].split(',');
               changeStyles(pieceClicked.prevPos, prevRow, prevCol, squareStyles, newStyles);
             }
   
@@ -190,7 +214,7 @@ const SquareHighLight = (props) => {
               return false;
             }
   
-            const [newRow, newCol] = coordToIdList[e.target.id].split(',');
+            const [newRow, newCol] = idToCoordList[e.target.id].split(',');
             changeStyles(e.target.id, newRow, newCol, clickStartEndStyles, newStyles);
             
           }

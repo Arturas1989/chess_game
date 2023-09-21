@@ -97,10 +97,10 @@ const standard  = {
 
     validMovesTakeStyles : {
         white : {
-            background: 'radial-gradient(transparent 0%, transparent 79%, rgba(242,196,92, 0.8) 80%)'
+            background: 'radial-gradient(rgb(235, 235, 204) 79%, rgba(242,196,92, 0.8) 80%)'
         },
         black : {
-            background :  'radial-gradient(transparent 0%, transparent 79%, rgba(242,196,92, 0.8) 80%)'
+            background :  'radial-gradient(rgb(89, 31, 31) 79%, rgba(242,196,92, 0.8) 80%)'
         },
     }
 }

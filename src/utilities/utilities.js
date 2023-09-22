@@ -13,8 +13,30 @@ const preComputed = {
 
   revCoordToId : { "0,0": "h1", "0,1": "g1", "0,2": "f1", "0,3": "e1", "0,4": "d1", "0,5": "c1", "0,6": "b1", "0,7": "a1", "1,0": "h2", "1,1": "g2", "1,2": "f2", "1,3": "e2", "1,4": "d2", "1,5": "c2", "1,6": "b2", "1,7": "a2", "2,0": "h3", "2,1": "g3", "2,2": "f3", "2,3": "e3", "2,4": "d3", "2,5": "c3", "2,6": "b3", "2,7": "a3", "3,0": "h4", "3,1": "g4", "3,2": "f4", "3,3": "e4", "3,4": "d4", "3,5": "c4", "3,6": "b4", "3,7": "a4", "4,0": "h5", "4,1": "g5", "4,2": "f5", "4,3": "e5", "4,4": "d5", "4,5": "c5", "4,6": "b5", "4,7": "a5", "5,0": "h6", "5,1": "g6", "5,2": "f6", "5,3": "e6", "5,4": "d6", "5,5": "c6", "5,6": "b6", "5,7": "a6", "6,0": "h7", "6,1": "g7", "6,2": "f7", "6,3": "e7", "6,4": "d7", "6,5": "c7", "6,6": "b7", "6,7": "a7", "7,0": "h8", "7,1": "g8", "7,2": "f8", "7,3": "e8", "7,4": "d8", "7,5": "c8", "7,6": "b8", "7,7": "a8"
   }
-  
-
 }
 
-export  { preComputed };
+const changeStyles = (id, row, col, colors, newStyles) => {
+  const index = parseInt(row) * 8 + parseInt(col);
+  const color = index % 2 === row % 2 ? colors.white : colors.black;
+  newStyles[id] = {...color};
+}
+
+const highlightValidMoves = (chess, id, idToCoord, emptyColors, pieceColors, newStyles) => {
+const validMoves = chess.moves({ square: id, verbose: true });
+for(const move of validMoves){
+  const [row, col] = idToCoord[move.to].split(',').map(el=>parseInt(el));
+  chess.get(move.to) ? changeStyles(move.to, row, col, pieceColors, newStyles) : 
+  changeStyles(move.to, row, col, emptyColors, newStyles);
+}
+}
+
+const isMoveValid = (chess, fromSquare, moveSquare) => {
+if(!fromSquare || !moveSquare) return false;
+const moves = chess.moves({ square: fromSquare, verbose: true });
+for(const move of moves){
+  if(move.to === moveSquare) return true;
+}
+return false;
+}
+
+export  { preComputed, changeStyles, highlightValidMoves, isMoveValid };

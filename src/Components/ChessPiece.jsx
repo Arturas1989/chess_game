@@ -37,10 +37,10 @@ const ChessPiece = (props) => {
     );
   }
 
-  function DragEnablingPiece({ piece, handleMouseEnter, pos }){
+  function DragEnablingPiece({ piece, handleMouseEnter, handlerArgs, pos }){
     return piece && (
       <img
-        onMouseEnter={handleMouseEnter}
+        onMouseEnter={handleMouseEnter(handlerArgs)}
         id={pos}
         src={piece} 
         alt='chess_piece'

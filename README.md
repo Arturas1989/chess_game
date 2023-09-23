@@ -1,4 +1,10 @@
-# Getting Started with Create React App
+# Libraries and frameworks
+
+- React.js
+- Chess.js
+- lodash
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 

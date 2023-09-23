@@ -1,5 +1,7 @@
 import { changeStyles, highlightValidMoves, isMoveValid } from '../utilities/utilities.js';
 
+const cloneDeep = require('lodash/cloneDeep');
+
 const handleSquareClick = (e, handlerArgs) => {
     const { 
         initialStyles, 
@@ -11,6 +13,7 @@ const handleSquareClick = (e, handlerArgs) => {
         dragInfo,
         pieceClicked,
         onPieceClick,
+        onChessChange
     } = handlerArgs;
 
     const {
@@ -54,6 +57,8 @@ const handleSquareClick = (e, handlerArgs) => {
 
         if( isMoveValid(chess, pieceClicked.prevPos, e.target.id) ){
           chess.move({ from: pieceClicked.prevPos, to: e.target.id });
+          const chessClone = cloneDeep(chess);
+          onChessChange(chessClone);
         } else {
           newStyles = {...initialStyles};
           onStylesChange(newStyles);

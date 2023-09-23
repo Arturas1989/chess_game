@@ -1,5 +1,7 @@
 import { changeStyles, highlightValidMoves, isMoveValid } from '../utilities/utilities.js';
 
+const cloneDeep = require('lodash/cloneDeep');
+
 const enableDrag = (handlerArgs) => {
   const { setDragInfo, dragInfo } = handlerArgs;
   // enable drag on mouse enter, when its disabled on drag end
@@ -24,7 +26,7 @@ const handleDragStart = (e, handlerArgs) => {
       validMovesEmptyStyles,
       validMovesTakeStyles
     } = themes;
-  
+
     let newStyles = {...initialStyles};
     highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyStyles, validMovesTakeStyles, newStyles);
 
@@ -71,7 +73,8 @@ const handleDragStart = (e, handlerArgs) => {
   const handlePiecePositions = (handlerArgs) => {
     const {
         initialStyles, 
-        chess, 
+        chess,
+        onChessChange,
         onStylesChange, 
         setDragInfo, 
         dragInfo, 
@@ -93,6 +96,8 @@ const handleDragStart = (e, handlerArgs) => {
 
     if( isMoveValid(chess, initialPos.start, initialPos.destination) ){
       chess.move({ from: initialPos.start, to: initialPos.destination });
+      const chessClone = cloneDeep(chess);
+      onChessChange(chessClone);
     } else {
       const newStyles = {...initialStyles};
       onStylesChange(newStyles);

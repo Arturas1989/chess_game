@@ -14,6 +14,7 @@ const Board = () => {
     const [chess, setChess] = useState(new Chess());
     const [isReversed, setIsReversed] = useState(false);
     const [boardBoundaries, setBoardBoundaries] = useState(null);
+    
 
     // using useRef to create reference to the board component
     const boardRef = useRef(null);

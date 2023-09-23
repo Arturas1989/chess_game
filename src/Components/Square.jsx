@@ -50,6 +50,7 @@ const Square = (props) => {
         initialStyles: initialStyles,
         styles: styles, 
         chess: chess,
+        onChessChange: onChessChange,
         idToCoordList: idToCoordList,
         coordToIdList: coordToIdList,
         themes: themes.standard, 

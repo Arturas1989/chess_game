@@ -7,7 +7,7 @@ import Arrow from './Components/Arrow.jsx';
 
 
 const GameContainer = () => {
-  const [promotion, setPromotion] = useState({isPromoting: false, square: 'e8'});
+  const [promotion, setPromotion] = useState({isPromoting: true, square: 'd1'});
   return (
     <ThemeContext.Provider value={themes}>
       <div className="GameContainer">

@@ -88,7 +88,7 @@ const setPromotionStyles = (initialStyles, promotionIds, promotionStyles) => {
       const [col, coordRow] = id;
       const i = cols[col] + coordRow * 8;
       const row = Math.floor(i / 8);
-      initialStyles[id] = i % 2 === row % 2 ? promotionStyles.black : promotionStyles.white;
+      initialStyles[id] = i % 2 === row % 2 ? promotionStyles.white : promotionStyles.black;
     }
   
 }

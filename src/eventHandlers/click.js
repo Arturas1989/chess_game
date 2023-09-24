@@ -7,8 +7,7 @@ const handleSquareClick = (e, handlerArgs) => {
         initialStyles, 
         chess, 
         idToCoordList, 
-        themes,
-        squareStyles, 
+        themes, 
         onStylesChange, 
         dragInfo,
         pieceClicked,
@@ -20,6 +19,7 @@ const handleSquareClick = (e, handlerArgs) => {
         validMovesEmptyStyles,
         validMovesTakeStyles,
         clickStartEndStyles,
+        squareStyles,
       } = themes;
 
     if(!dragInfo.isDragging){
@@ -27,6 +27,7 @@ const handleSquareClick = (e, handlerArgs) => {
       if(e.target.tagName === 'IMG'){
         
         const [row, col] = idToCoordList[e.target.id].split(',');
+        // console.log(clickStartEndStyles)
         changeStyles(e.target.id, row, col, clickStartEndStyles, newStyles);
 
         if(!pieceClicked.wasPieceClicked){

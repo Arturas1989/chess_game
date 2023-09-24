@@ -43,9 +43,28 @@ const ChessPiece = (props) => {
         onMouseEnter={() => handleMouseEnter(handlerArgs)}
         id={pos}
         src={piece} 
-        alt='chess_piece'
+        alt='chess piece'
       />
     )
   }
 
-  export { ChessPiece, DragEnablingPiece };
+  function PromotionPiece({ pos, piece, handleDragStart }){
+    const style = {
+      width: '80%',
+      height: '80%',
+      alignSelf: 'center',
+      margin: '0 auto'
+    }
+    return piece && (
+      <img
+        // onMouseEnter={() => handleMouseEnter(handlerArgs)}
+        style={style}
+        onDragStart={(e) => handleDragStart(e)}
+        id={pos}
+        src={piece} 
+        alt='promotion piece'
+      />
+    )
+  }
+
+  export { ChessPiece, DragEnablingPiece, PromotionPiece };

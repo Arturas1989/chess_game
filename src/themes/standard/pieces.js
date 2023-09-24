@@ -11,6 +11,18 @@ import WhiteQueen from './pieces/WhiteQueen.svg';
 import WhiteRook from './pieces/WhiteRook.svg';
 import WhiteKing from './pieces/WhiteKing.svg';
 
+
+const squareStyles = {
+    white : {
+        backgroundColor :  'rgb(235, 235, 204)'
+    },
+    black : {
+        backgroundColor :  'rgb(89, 31, 31)'
+    },
+}
+
+const fromSquareStyle = (backgroundColor) => backgroundColor.match(/\(.+\)/g)[0].replace(/\)/g,'');
+
 const standard  = {
 
     pieces2 : {
@@ -50,10 +62,10 @@ const standard  = {
 
     squareStyles : {
         white : {
-            backgroundColor :  'rgb(235, 235, 204)'
+            backgroundColor :  squareStyles.white.backgroundColor
         },
         black : {
-            backgroundColor :  'rgb(89, 31, 31)'
+            backgroundColor :  squareStyles.black.backgroundColor
         },
     },
 
@@ -101,6 +113,17 @@ const standard  = {
         },
         black : {
             background :  'radial-gradient(rgb(89, 31, 31) 79%, rgba(242,196,92, 0.8) 80%)'
+        },
+    },
+
+    promotionStyles : {
+        white : {
+            position: 'relative',
+            background: `radial-gradient(rgba(190,190,190,30) 30%, rgba(100,100,100,10) 69.9%, rgba${fromSquareStyle(squareStyles.white.backgroundColor)}, 0.3) 71%)`
+        },
+        black : {
+            position: 'relative',
+            background :  `radial-gradient(rgba(190,190,190,30) 30%, rgba(100,100,100,10) 69.9%, rgba${fromSquareStyle(squareStyles.black.backgroundColor)}, 0.3) 71%)`
         },
     }
 }

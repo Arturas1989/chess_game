@@ -1,8 +1,7 @@
 import { useState, useContext} from 'react';
-import { ChessPiece, DragEnablingPiece } from './ChessPiece.jsx';
+import { ChessPiece, DragEnablingPiece, PromotionPiece } from './ChessPiece.jsx';
 import { ThemeContext } from '../themes/themes.js';
-import { preComputed } from '../utilities/utilities.js';
-import { handleDragStart, handleDragEnd, handleDrag, enableDrag } from '../eventHandlers/drag.js';
+import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
 import handleMouseEnter from '../eventHandlers/mouseMove.js';
 import handleSquareClick from '../eventHandlers/click.js';
 
@@ -18,21 +17,27 @@ const Square = (props) => {
         onStylesChange, 
         boardBoundaries, 
         pieceClicked, 
-        onPieceClick 
+        onPieceClick,
+        promotion,
+        onPromotionChange,
+        preComputedMaps,
       } = props;
     
       const themes = useContext(ThemeContext);
-      const { pieces } = themes.standard;
-
-      const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord} = preComputed;
-      const [coordList, coordToIdList, idToCoordList] = isReversed ? 
-      [revCoords, revCoordToId, revIdToCoord] : [coords, coordToId, idToCoord];
+      const { pieces, promotionStyles } = themes.standard;
+      const [coordList, coordToIdList, idToCoordList] = preComputedMaps;
+      
     
       const row = Math.floor(index / 8);
       const col = index % 8;
       const pos = coordToIdList[row + ',' + col];
       const squareInfo = chess.get(pos);
-      const source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+      let source;
+      source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+      
+      
+      
+      
       const boundaries = boardBoundaries || {};
       const boardWidth = boundaries.width || 0;
       const squareWidth = boardWidth / 8;
@@ -45,6 +50,7 @@ const Square = (props) => {
       
       const [dragInfo, setDragInfo] = useState({ dragEnabled : false, isDragging : false});
       const [initialPos, setInitialPos] = useState({});
+      
 
       const handlerArgs = {
         initialStyles: initialStyles,
@@ -63,15 +69,16 @@ const Square = (props) => {
         pieceClicked: pieceClicked,
         squareWidth: squareWidth
       }
-      
+
       return (
         <div
           id={pos}
-          className='Square' 
+          className={'Square' + (promotion.isPromoting ? ' .promotion-square' : '')} 
           style={styles[pos]}
           onClick={(e) => handleSquareClick(e, handlerArgs)}
           onMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
         >
+
           {dragInfo.dragEnabled ? 
               <ChessPiece
                 id={pos}
@@ -82,7 +89,7 @@ const Square = (props) => {
                 piece={source}
                 handleMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
                 handleDragStart={(e) => handleDragStart(e, handlerArgs)}
-                handleDragEnd={() => handleDragEnd(handlerArgs)}
+                handleDragEnd={(e) => handleDragEnd(e, handlerArgs)}
                 handleDrag={(e) => handleDrag(e, handlerArgs)}
               />
            : 
@@ -97,4 +104,46 @@ const Square = (props) => {
       );
 }
 
-export default Square;
+const PromotionSquare = (props) => {
+  const {
+      index,
+      styles,
+      chess,
+      onChessChange,
+      preComputedMaps,
+      promotionIds
+    } = props;
+  
+    const themes = useContext(ThemeContext);
+    const { pieces } = themes.standard;
+    const [, coordToIdList, ] = preComputedMaps;
+    
+  
+    const row = Math.floor(index / 8);
+    const col = index % 8;
+    const pos = coordToIdList[row + ',' + col];
+    const squareInfo = chess.get(pos);
+    let source;
+    if(promotionIds[pos]){
+      const [color, type] = [...promotionIds[pos]];
+      source = pieces[color][type];
+    } else {
+      source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+    }
+
+    return (
+      <div
+        id={pos}
+        className={'Square promotion-square'} 
+        style={styles[pos]}
+      >
+        <PromotionPiece 
+          pos={pos}
+          piece={source}
+          handleDragStart={preventDragStart}
+        />
+      </div>
+    );
+}
+
+export {Square, PromotionSquare};

@@ -39,12 +39,37 @@
   height: var(--BoardWidth);
   border: 1px solid black;
   margin: var(--board-margin);
+  
+}
+
+.promotion-board{
+  position: relative;
+  overflow: hidden; 
+  transition: filter 0.3s;
+}
+
+.promotion-board::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(128, 128, 128, 0.8);
+  filter: grayscale(100%);
+  transition: filter 0.3s;
+  pointer-events: none;
 }
 
 .Square{
   display: flex;
   width: 12.5%;
   height: 12.5%;
+}
+
+img{
+  width: 100%;
+  height: 100%;
 }
 
 @media (max-width: 1290px){

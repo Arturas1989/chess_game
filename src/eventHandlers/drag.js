@@ -8,6 +8,10 @@ const enableDrag = (handlerArgs) => {
   setDragInfo({...dragInfo, dragEnabled : true});
 };
 
+const preventDragStart = (e) => {
+  e.preventDefault();
+}
+
 const handleDragStart = (e, handlerArgs) => {
     const { 
         initialStyles, 
@@ -45,20 +49,23 @@ const handleDragStart = (e, handlerArgs) => {
     })
   }
 
-  const handleDragEnd = (handlerArgs) => {
-
+  const handleDragEnd = (e, handlerArgs) => {
+    
+    
     const {
         initialStyles, 
         idToCoordList, 
         themes, 
         onStylesChange, 
-        initialPos
+        initialPos,
     } = handlerArgs;
 
     const { dragStartEndStyles } = themes;
 
     const result = handlePiecePositions(handlerArgs);
-    if(!result) return;
+    if(!result){
+      return;
+    }
 
     let newStyles = {...initialStyles};
     
@@ -68,6 +75,7 @@ const handleDragStart = (e, handlerArgs) => {
     changeStyles(initialPos.destination, destRow, destCol, dragStartEndStyles, newStyles);
     changeStyles(initialPos.start, startRow, startCol, dragStartEndStyles, newStyles);
     onStylesChange(newStyles);
+    
   }
 
   const handlePiecePositions = (handlerArgs) => {
@@ -108,7 +116,6 @@ const handleDragStart = (e, handlerArgs) => {
   }
 
   const handleDrag = (e, handlerArgs) => {
-
     const {
         styles, 
         chess, 
@@ -164,4 +171,4 @@ const handleDragStart = (e, handlerArgs) => {
     }
   }
 
-  export  { handleDragStart, handleDragEnd, handleDrag, enableDrag };
+  export  { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart };

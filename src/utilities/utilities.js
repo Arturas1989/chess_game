@@ -15,6 +15,12 @@ const preComputed = {
   }
 };
 
+const changePromotionStyles = (id, promotionId, colors, newStyles) => {
+  const color = promotionId[1] === '8' ? colors.white : colors.black;
+  console.log(id, color)
+  newStyles[id] = {...color};
+};
+
 const changeStyles = (id, row, col, colors, newStyles) => {
   const index = parseInt(row) * 8 + parseInt(col);
   const color = index % 2 === row % 2 ? colors.white : colors.black;
@@ -101,4 +107,5 @@ export  {
   isMoveValid, 
   getPromotionIds, 
   setInitialStyles,
-  setPromotionStyles };
+  setPromotionStyles,
+  changePromotionStyles };

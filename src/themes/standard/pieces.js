@@ -132,7 +132,7 @@ const standard  = {
     promotionHoverStyles : {
         white : {
             position: 'relative',
-            background: 'linear-gradient(to right, #fffbd5, #b20a2c)',
+            background: 'linear-gradient(to right, #fc5c7d, #6a82fb)',
             cursor: 'pointer',
         },
         black : {

@@ -4,7 +4,7 @@ import { ThemeContext } from '../themes/themes.js';
 import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
 import handleMouseEnter from '../eventHandlers/mouseMove.js';
 import handleSquareClick from '../eventHandlers/click.js';
-import { changeStyles } from '../utilities/utilities.js';
+import { changeStyles, changePromotionStyles } from '../utilities/utilities.js';
 
 
 const Square = (props) => {
@@ -107,6 +107,7 @@ const Square = (props) => {
 
 const PromotionSquare = (props) => {
   const {
+      promotion,
       initialStyles,
       styles,
       onStylesChange,
@@ -123,18 +124,15 @@ const PromotionSquare = (props) => {
 
     const applyHoverStyle = (e) => {
       let newStyles = {...initialStyles};
-      const [row, col] = idToCoord[e.target.id].split(',');
-      changeStyles (e.target.id, row, col, promotionHoverStyles, newStyles);
+      changePromotionStyles (e.target.id, promotion.square, promotionHoverStyles, newStyles);
       onStylesChange(newStyles);
-      
     }
 
     const removeHoverStyle = (e) => {
       let newStyles = {...initialStyles};
       const [row, col] = idToCoord[e.target.id].split(',');
-      changeStyles (e.target.id, row, col, promotionStyles, newStyles);
+      changeStyles(e.target.id, row, col, promotionStyles, newStyles);
       onStylesChange(newStyles);
-      
     }
 
     return (

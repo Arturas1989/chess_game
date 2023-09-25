@@ -1,9 +1,10 @@
 import { useState, useContext} from 'react';
-import { ChessPiece, DragEnablingPiece, PromotionPiece } from './ChessPiece.jsx';
+import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
 import { ThemeContext } from '../themes/themes.js';
 import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
 import handleMouseEnter from '../eventHandlers/mouseMove.js';
 import handleSquareClick from '../eventHandlers/click.js';
+import { changeStyles } from '../utilities/utilities.js';
 
 
 const Square = (props) => {
@@ -106,29 +107,34 @@ const Square = (props) => {
 
 const PromotionSquare = (props) => {
   const {
-      index,
+      initialStyles,
       styles,
+      onStylesChange,
       chess,
       onChessChange,
-      preComputedMaps,
-      promotionIds
+      source,
+      pos,
+      preComputedMaps
     } = props;
   
     const themes = useContext(ThemeContext);
-    const { pieces } = themes.standard;
-    const [, coordToIdList, ] = preComputedMaps;
-    
-  
-    const row = Math.floor(index / 8);
-    const col = index % 8;
-    const pos = coordToIdList[row + ',' + col];
-    const squareInfo = chess.get(pos);
-    let source;
-    if(promotionIds[pos]){
-      const [color, type] = [...promotionIds[pos]];
-      source = pieces[color][type];
-    } else {
-      source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+    const { promotionStyles, promotionHoverStyles } = themes.standard;
+    const [, , idToCoord] = preComputedMaps;
+
+    const applyHoverStyle = (e) => {
+      let newStyles = {...initialStyles};
+      const [row, col] = idToCoord[e.target.id].split(',');
+      changeStyles (e.target.id, row, col, promotionHoverStyles, newStyles);
+      onStylesChange(newStyles);
+      
+    }
+
+    const removeHoverStyle = (e) => {
+      let newStyles = {...initialStyles};
+      const [row, col] = idToCoord[e.target.id].split(',');
+      changeStyles (e.target.id, row, col, promotionStyles, newStyles);
+      onStylesChange(newStyles);
+      
     }
 
     return (
@@ -136,6 +142,8 @@ const PromotionSquare = (props) => {
         id={pos}
         className={'Square promotion-square'} 
         style={styles[pos]}
+        onMouseEnter={(e) => applyHoverStyle(e)}
+        onMouseLeave={(e) => removeHoverStyle(e)}
       >
         <PromotionPiece 
           pos={pos}
@@ -146,4 +154,20 @@ const PromotionSquare = (props) => {
     );
 }
 
-export {Square, PromotionSquare};
+const RegularSquare = ({ pos, styles, source}) => {
+  return (
+    <div
+      id={pos}
+      className={'Square'} 
+      style={styles[pos]}
+    >
+      <RegularPiece 
+        pos={pos}
+        piece={source}
+        handleDragStart={preventDragStart}
+      />
+    </div>
+  );
+}
+
+export {Square, PromotionSquare, RegularSquare};

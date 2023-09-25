@@ -67,6 +67,18 @@
   height: 12.5%;
 }
 
+/* .promotion-square{
+  transition-delay: 1s !important;
+  transition: width 3s !important;
+}
+
+.promotion-square:hover{
+  position: relative !important;
+  background: linear-gradient(to right, #fc5c7d, #6a82fb) !important;
+  cursor: pointer !important;
+  
+} */
+
 img{
   width: 100%;
   height: 100%;

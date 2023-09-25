@@ -1,18 +1,21 @@
 import { useState, useRef, useEffect, useContext } from 'react';
-import { Square, PromotionSquare } from './Square.jsx';
+import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
 import { ThemeContext } from '../themes/themes.js';
-import { Chess } from 'chess.js';
-import { preComputed, promotionPieces, getPromotionIds, setInitialStyles, setPromotionStyles } from '../utilities/utilities.js';
 
-const Board = ({ promotion, onPromotionChange }) => {
+const Board = (props) => {
   
-    const themes = useContext(ThemeContext);
-    const { squareStyles, promotionStyles } = themes.standard;
-    const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord} = preComputed;
+  const { 
+    promotion, 
+    onPromotionChange, 
+    styles, 
+    onStylesChange, 
+    initialStyles,
+    preComputedMaps,
+    chess,
+    onChessChange,
+    isReversed
+  } = props;
     
-    
-    const [chess, setChess] = useState(new Chess());
-    const [isReversed, setIsReversed] = useState(false);
     const [boardBoundaries, setBoardBoundaries] = useState(null);
     
 
@@ -26,21 +29,6 @@ const Board = ({ promotion, onPromotionChange }) => {
         setBoardBoundaries(boardRef.current.getBoundingClientRect());
       }
     }, [boardRef]);
-    
-    let preComputedMaps;
-
-    if(isReversed){
-      preComputedMaps = [revCoords, revCoordToId, revIdToCoord];
-    } else {
-      preComputedMaps = [coords, coordToId, idToCoord];
-    }
-
-    //square styles
-    let initialStyles = {};
-    setInitialStyles(coords, initialStyles, squareStyles);
-    
-
-    const [styles, setStyles] = useState({...initialStyles});
   
     const [pieceClicked, setPieceClicked] = useState({});
     return (
@@ -52,10 +40,10 @@ const Board = ({ promotion, onPromotionChange }) => {
                 index={i}
                 styles={styles}
                 chess={chess}
-                onChessChange={setChess}
+                onChessChange={onChessChange}
                 isReversed={isReversed}
                 initialStyles={initialStyles}
-                onStylesChange={setStyles}
+                onStylesChange={onStylesChange}
                 boardBoundaries={boardBoundaries}
                 pieceClicked={pieceClicked}
                 onPieceClick={setPieceClicked}
@@ -68,47 +56,66 @@ const Board = ({ promotion, onPromotionChange }) => {
     );
   }
 
-const PromotionBoard = ({ promotion, onPromotionChange }) => {
+const PromotionBoard = (props) => {
   
+  const { 
+    promotion, 
+    onPromotionChange, 
+    styles, 
+    onStylesChange, 
+    initialStyles, 
+    promotionIds, 
+    preComputedMaps, 
+    chess, 
+    onChessChange } = props;
+
     const themes = useContext(ThemeContext);
-    const { squareStyles, promotionStyles } = themes.standard;
-    const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord} = preComputed;
+    const { pieces } = themes.standard;
     
-    
-    const [chess, setChess] = useState(new Chess());
-    const [isReversed, setIsReversed] = useState(false);
-    
-    let preComputedMaps, promotionPiecesList;
-
-    if(isReversed){
-      preComputedMaps = [revCoords, revCoordToId, revIdToCoord];
-      promotionPiecesList = promotionPieces.reversed;
-    } else {
-      preComputedMaps = [coords, coordToId, idToCoord];
-      promotionPiecesList = promotionPieces.regular;
-    }
-
-    
-    const promotionIds = getPromotionIds(promotion.square, preComputedMaps, promotionPiecesList);
-
-    //square styles
-    let initialStyles = {};
-    setInitialStyles(coords, initialStyles, squareStyles);
-    setPromotionStyles(initialStyles, promotionIds, promotionStyles);
 
     return (
       <div className={'Board promotion-board'}>
         
-        {Array.from({length: 64}, (_,i) => 
-            <PromotionSquare
-                key={i} 
-                index={i}
-                styles={initialStyles}
-                chess={chess}
-                onChessChange={setChess}
-                preComputedMaps={preComputedMaps}
-                promotionIds={promotionIds}
-            />
+        {Array.from({length: 64}, (_,i) =>
+          { 
+            const [, coordToIdList, ] = preComputedMaps;
+    
+  
+            const row = Math.floor(i / 8);
+            const col = i % 8;
+            const pos = coordToIdList[row + ',' + col];
+            const squareInfo = chess.get(pos);
+            let source, ComponentSquare;
+            if(promotionIds[pos]){
+              const [color, type] = [...promotionIds[pos]];
+              source = pieces[color][type];
+              ComponentSquare = 
+                <PromotionSquare
+                  key={i}
+                  styles={styles}
+                  initialStyles={initialStyles}
+                  onStylesChange={onStylesChange}
+                  chess={chess}
+                  onChessChange={onChessChange}
+                  source={source}
+                  pos={pos}
+                  preComputedMaps={preComputedMaps}
+                />
+            } else {
+              source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+              ComponentSquare = 
+                <RegularSquare
+                  key={i}
+                  styles={initialStyles}
+                  chess={chess}
+                  onChessChange={onChessChange}
+                  source={source}
+                  pos={pos}
+                />
+            }
+            
+            return ComponentSquare;
+          }
         )}
       </div>
     );

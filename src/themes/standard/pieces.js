@@ -119,11 +119,26 @@ const standard  = {
     promotionStyles : {
         white : {
             position: 'relative',
-            background: `radial-gradient(rgba(190,190,190,30) 30%, rgba(100,100,100,10) 69.9%, rgba${fromSquareStyle(squareStyles.white.backgroundColor)}, 0.3) 71%)`
+            background: `radial-gradient(rgba(190,190,190,30) 30%, rgba(100,100,100,10) 69.9%, rgba${fromSquareStyle(squareStyles.white.backgroundColor)}, 0.3) 71%)`,
+            
         },
         black : {
             position: 'relative',
-            background :  `radial-gradient(rgba(190,190,190,30) 30%, rgba(100,100,100,10) 69.9%, rgba${fromSquareStyle(squareStyles.black.backgroundColor)}, 0.3) 71%)`
+            background :  `radial-gradient(rgba(190,190,190,30) 30%, rgba(100,100,100,10) 69.9%, rgba${fromSquareStyle(squareStyles.black.backgroundColor)}, 0.3) 71%)`,
+            
+        },
+    },
+
+    promotionHoverStyles : {
+        white : {
+            position: 'relative',
+            background: 'linear-gradient(to right, #fffbd5, #b20a2c)',
+            cursor: 'pointer',
+        },
+        black : {
+            position: 'relative',
+            background: 'linear-gradient(to right, #fffbd5, #b20a2c)',
+            cursor: 'pointer',
         },
     }
 }

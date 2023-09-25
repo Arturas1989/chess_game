@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 const ChessPiece = (props) => {
     const {
@@ -49,22 +50,36 @@ const ChessPiece = (props) => {
   }
 
   function PromotionPiece({ pos, piece, handleDragStart }){
-    const style = {
+
+    const [pieceStyle, setPieceStyle] = useState({
       width: '80%',
       height: '80%',
       alignSelf: 'center',
       margin: '0 auto'
-    }
+    })
+
     return piece && (
       <img
-        // onMouseEnter={() => handleMouseEnter(handlerArgs)}
-        style={style}
+        style={pieceStyle}
         onDragStart={(e) => handleDragStart(e)}
+        onMouseEnter={() => setPieceStyle({...pieceStyle, width: '100%', height: '100%'})}
+        onMouseLeave={() => setPieceStyle({...pieceStyle, width: '80%', height: '80%'})}
         id={pos}
         src={piece} 
-        alt='promotion piece'
+        alt='chess piece'
       />
     )
   }
 
-  export { ChessPiece, DragEnablingPiece, PromotionPiece };
+  function RegularPiece({ pos, piece, handleDragStart }){
+    return piece && (
+      <img
+        onDragStart={(e) => handleDragStart(e)}
+        id={pos}
+        src={piece} 
+        alt='chess piece'
+      />
+    )
+  }
+
+  export { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece };

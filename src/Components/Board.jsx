@@ -92,6 +92,7 @@ const PromotionBoard = (props) => {
               ComponentSquare = 
                 <PromotionSquare
                   key={i}
+                  promotion={promotion}
                   styles={styles}
                   initialStyles={initialStyles}
                   onStylesChange={onStylesChange}

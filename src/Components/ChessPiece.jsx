@@ -49,22 +49,37 @@ const ChessPiece = (props) => {
     )
   }
 
-  function PromotionPiece({ pos, piece, handleDragStart }){
+  function PromotionPiece(props){
+    const {
+      promotion,
+      onPromotionChange,
+      pieceStyle,
+      onPieceStyleChange,
+      type,
+      pos,
+      piece,
+      handleDragStart
+    } = props;
 
-    const [pieceStyle, setPieceStyle] = useState({
-      width: '80%',
-      height: '80%',
-      alignSelf: 'center',
-      margin: '0 auto'
-    })
+    
+
+    const handleClick = (e) => {
+      const pieceType = e.currentTarget.getAttribute('piece-type');
+      onPromotionChange({
+        ...promotion,
+        pieceType: pieceType,
+      });
+    }
 
     return piece && (
       <img
         style={pieceStyle}
         onDragStart={(e) => handleDragStart(e)}
-        onMouseEnter={() => setPieceStyle({...pieceStyle, width: '100%', height: '100%'})}
-        onMouseLeave={() => setPieceStyle({...pieceStyle, width: '80%', height: '80%'})}
+        onMouseEnter={() => onPieceStyleChange({...pieceStyle, width: '100%', height: '100%'})}
+        onMouseLeave={() => onPieceStyleChange({...pieceStyle, width: '80%', height: '80%'})}
+        onClick={(e) => handleClick(e)}
         id={pos}
+        piece-type={type}
         src={piece} 
         alt='chess piece'
       />

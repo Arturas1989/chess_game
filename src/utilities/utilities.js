@@ -17,7 +17,6 @@ const preComputed = {
 
 const changePromotionStyles = (id, promotionId, colors, newStyles) => {
   const color = promotionId[1] === '8' ? colors.white : colors.black;
-  console.log(id, color)
   newStyles[id] = {...color};
 };
 
@@ -60,7 +59,6 @@ const promotionPieces = {
 const getPromotionIds = (square, preComputedMaps, promotionPieces) => {
   const [, coordToIdList, idToCoordList] = preComputedMaps;
   let [row, col] = idToCoordList[square].split(',').map(el=>parseInt(el));
-
   let ids = {};
   if(row === 7){
     for(const piece of promotionPieces.black){

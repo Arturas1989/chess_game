@@ -1,4 +1,11 @@
-import { changeStyles, highlightValidMoves, isMoveValid } from '../utilities/utilities.js';
+import { 
+  changeStyles, 
+  highlightValidMoves, 
+  isMoveValid, 
+  getPromotionIds, 
+  setPromotionStyles, 
+  changePromotionStyles 
+} from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
@@ -49,7 +56,7 @@ const handleDragStart = (e, handlerArgs) => {
     })
   }
 
-  const handleDragEnd = (e, handlerArgs) => {
+  const handleDragEnd = (handlerArgs) => {
     
     
     const {
@@ -80,6 +87,9 @@ const handleDragStart = (e, handlerArgs) => {
 
   const handlePiecePositions = (handlerArgs) => {
     const {
+        promotion,
+        onPromotionChange,
+        styles,
         initialStyles, 
         chess,
         onChessChange,
@@ -89,6 +99,12 @@ const handleDragStart = (e, handlerArgs) => {
         initialPos,
         onPieceClick,
         pieceClicked,
+        preComputedMaps,
+        promotionPiecesList,
+        promotionStyles,
+        promotionHoverStyles,
+        pieceStyle,
+        onPieceStyleChange
     } = handlerArgs;
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
     
@@ -103,7 +119,24 @@ const handleDragStart = (e, handlerArgs) => {
     } 
 
     if( isMoveValid(chess, initialPos.start, initialPos.destination) ){
-      chess.move({ from: initialPos.start, to: initialPos.destination });
+      if(initialPos.destination[1] === '8' || initialPos.destination[1] === '1'){
+        onPromotionChange({
+          ...promotion,
+          isPromoting: true,
+          from: initialPos.start,
+          to: initialPos.destination
+        })
+        let newStyles={...initialStyles};
+        const promotionIds = getPromotionIds(initialPos.destination, preComputedMaps, promotionPiecesList);
+        setPromotionStyles(newStyles, promotionIds, promotionStyles);
+        changePromotionStyles(initialPos.destination, initialPos.destination, promotionHoverStyles, newStyles);
+        console.log(newStyles);
+        onStylesChange(newStyles);
+        return false;
+      } else {
+        chess.move({ from: initialPos.start, to: initialPos.destination });
+      }
+      
       const chessClone = cloneDeep(chess);
       onChessChange(chessClone);
     } else {

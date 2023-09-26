@@ -13,7 +13,10 @@ const Board = (props) => {
     preComputedMaps,
     chess,
     onChessChange,
-    isReversed
+    isReversed,
+    promotionPiecesList,
+    pieceStyle,
+    onPieceStyleChange
   } = props;
     
     const [boardBoundaries, setBoardBoundaries] = useState(null);
@@ -50,6 +53,9 @@ const Board = (props) => {
                 promotion={promotion}
                 onPromotionChange={onPromotionChange}
                 preComputedMaps={preComputedMaps}
+                promotionPiecesList={promotionPiecesList}
+                pieceStyle={pieceStyle}
+                onPieceStyleChange={onPieceStyleChange}
             />
         )}
       </div>
@@ -67,7 +73,11 @@ const PromotionBoard = (props) => {
     promotionIds, 
     preComputedMaps, 
     chess, 
-    onChessChange } = props;
+    onChessChange,
+    promotionPiecesList,
+    pieceStyle,
+    onPieceStyleChange
+   } = props;
 
     const themes = useContext(ThemeContext);
     const { pieces } = themes.standard;
@@ -92,7 +102,9 @@ const PromotionBoard = (props) => {
               ComponentSquare = 
                 <PromotionSquare
                   key={i}
+                  type={type}
                   promotion={promotion}
+                  onPromotionChange={onPromotionChange}
                   styles={styles}
                   initialStyles={initialStyles}
                   onStylesChange={onStylesChange}
@@ -101,6 +113,8 @@ const PromotionBoard = (props) => {
                   source={source}
                   pos={pos}
                   preComputedMaps={preComputedMaps}
+                  pieceStyle={pieceStyle}
+                  onPieceStyleChange={onPieceStyleChange}
                 />
             } else {
               source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';

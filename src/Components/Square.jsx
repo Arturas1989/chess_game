@@ -22,10 +22,13 @@ const Square = (props) => {
         promotion,
         onPromotionChange,
         preComputedMaps,
+        promotionPiecesList,
+        pieceStyle,
+        onPieceStyleChange
       } = props;
     
       const themes = useContext(ThemeContext);
-      const { pieces, promotionStyles } = themes.standard;
+      const { pieces, promotionStyles, promotionHoverStyles } = themes.standard;
       const [coordList, coordToIdList, idToCoordList] = preComputedMaps;
       
     
@@ -68,7 +71,15 @@ const Square = (props) => {
         initialPos: initialPos,
         onPieceClick: onPieceClick,
         pieceClicked: pieceClicked,
-        squareWidth: squareWidth
+        squareWidth: squareWidth,
+        promotion: promotion,
+        onPromotionChange: onPromotionChange,
+        preComputedMaps: preComputedMaps,
+        promotionPiecesList: promotionPiecesList,
+        promotionStyles: promotionStyles,
+        promotionHoverStyles: promotionHoverStyles,
+        pieceStyle: pieceStyle,
+        onPieceStyleChange: onPieceStyleChange
       }
 
       return (
@@ -90,7 +101,7 @@ const Square = (props) => {
                 piece={source}
                 handleMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
                 handleDragStart={(e) => handleDragStart(e, handlerArgs)}
-                handleDragEnd={(e) => handleDragEnd(e, handlerArgs)}
+                handleDragEnd={() => handleDragEnd(handlerArgs)}
                 handleDrag={(e) => handleDrag(e, handlerArgs)}
               />
            : 
@@ -108,6 +119,8 @@ const Square = (props) => {
 const PromotionSquare = (props) => {
   const {
       promotion,
+      onPromotionChange,
+      type,
       initialStyles,
       styles,
       onStylesChange,
@@ -115,16 +128,20 @@ const PromotionSquare = (props) => {
       onChessChange,
       source,
       pos,
-      preComputedMaps
+      preComputedMaps,
+      pieceStyle,
+      onPieceStyleChange
     } = props;
   
     const themes = useContext(ThemeContext);
     const { promotionStyles, promotionHoverStyles } = themes.standard;
     const [, , idToCoord] = preComputedMaps;
+    
 
     const applyHoverStyle = (e) => {
+      
       let newStyles = {...initialStyles};
-      changePromotionStyles (e.target.id, promotion.square, promotionHoverStyles, newStyles);
+      changePromotionStyles (e.target.id, promotion.to, promotionHoverStyles, newStyles);
       onStylesChange(newStyles);
     }
 
@@ -143,9 +160,14 @@ const PromotionSquare = (props) => {
         onMouseEnter={(e) => applyHoverStyle(e)}
         onMouseLeave={(e) => removeHoverStyle(e)}
       >
-        <PromotionPiece 
+        <PromotionPiece
+          pieceStyle={pieceStyle}
+          onPieceStyleChange={onPieceStyleChange}
+          type={type} 
           pos={pos}
           piece={source}
+          promotion={promotion}
+          onPromotionChange={onPromotionChange}
           handleDragStart={preventDragStart}
         />
       </div>

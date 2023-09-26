@@ -10,18 +10,21 @@ import { Chess } from 'chess.js';
 
 
 const GameContainer = () => {
-  const [promotion, setPromotion] = useState({isPromoting: true, square: 'd8'});
+  const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
   const [chess, setChess] = useState(new Chess());
-  const [isReversed, setIsReversed] = useState(true);
-
+  const [isReversed, setIsReversed] = useState(false);
+  const [pieceStyle, setPieceStyle] = useState({
+    width: '80%',
+    height: '80%',
+    alignSelf: 'center',
+    margin: '0 auto'
+  })
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   const { squareStyles, promotionStyles } = themes.standard;
 
   let initialStyles = {};
   setInitialStyles(coords, initialStyles, squareStyles);
-    
-    
-    
+  
     
   let preComputedMaps, promotionPiecesList;
 
@@ -33,15 +36,16 @@ const GameContainer = () => {
     promotionPiecesList = promotionPieces.regular;
   }
 
-  
-  const promotionIds = getPromotionIds(promotion.square, preComputedMaps, promotionPiecesList);
-
+  console.log(promotion)
   //square promotion styles
-  if(promotion.isPromoting) setPromotionStyles(initialStyles, promotionIds, promotionStyles);
-  // onStylesChange(initialStyles);
-  
-
+  let promotionIds;
+  if(promotion.isPromoting){
+    promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
+    // setPromotionStyles(initialStyles, promotionIds, promotionStyles);
+  } 
   const [styles, setStyles] = useState({...initialStyles});
+
+  
   return (
     <ThemeContext.Provider value={themes}>
       <div className="GameContainer">
@@ -56,6 +60,9 @@ const GameContainer = () => {
             preComputedMaps={preComputedMaps}
             chess={chess}
             onChessChange={setChess}
+            promotionPiecesList={promotionPiecesList}
+            pieceStyle={pieceStyle}
+            onPieceStyleChange={setPieceStyle}
           />
           :
           <Board
@@ -68,6 +75,9 @@ const GameContainer = () => {
             chess={chess}
             onChessChange={setChess}
             isReversed={isReversed}
+            promotionPiecesList={promotionPiecesList}
+            pieceStyle={pieceStyle}
+            onPieceStyleChange={setPieceStyle}
           />
         }
         

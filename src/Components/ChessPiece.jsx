@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { GameContext } from '../themes/themes.js';
+import { useContext } from 'react';
 
 const ChessPiece = (props) => {
     const {
@@ -49,23 +50,13 @@ const ChessPiece = (props) => {
     )
   }
 
-  function PromotionPiece(props){
-    const {
-      promotion,
-      onPromotionChange,
-      pieceStyle,
-      onPieceStyleChange,
-      type,
-      pos,
-      piece,
-      handleDragStart
-    } = props;
+  function PromotionPiece({ type, pos, piece, handleDragStart }){
 
-    
+    const {promotion, setPromotion} = useContext(GameContext);
 
     const handleClick = (e) => {
       const pieceType = e.currentTarget.getAttribute('piece-type');
-      onPromotionChange({
+      setPromotion({
         ...promotion,
         pieceType: pieceType,
       });
@@ -73,10 +64,7 @@ const ChessPiece = (props) => {
 
     return piece && (
       <img
-        style={pieceStyle}
         onDragStart={(e) => handleDragStart(e)}
-        onMouseEnter={() => onPieceStyleChange({...pieceStyle, width: '100%', height: '100%'})}
-        onMouseLeave={() => onPieceStyleChange({...pieceStyle, width: '80%', height: '80%'})}
         onClick={(e) => handleClick(e)}
         id={pos}
         piece-type={type}

@@ -1,26 +1,12 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
-import { ThemeContext } from '../themes/themes.js';
+import { GameContext } from '../themes/themes.js';
+import { getPromotionIds, promotionPieces } from '../utilities/utilities.js';
 
-const Board = (props) => {
-  
-  const { 
-    promotion, 
-    onPromotionChange, 
-    styles, 
-    onStylesChange, 
-    initialStyles,
-    preComputedMaps,
-    chess,
-    onChessChange,
-    isReversed,
-    promotionPiecesList,
-    pieceStyle,
-    onPieceStyleChange
-  } = props;
+const Board = () => {
+    const { promotion } = useContext(GameContext)
     
     const [boardBoundaries, setBoardBoundaries] = useState(null);
-    
 
     // using useRef to create reference to the board component
     const boardRef = useRef(null);
@@ -41,46 +27,28 @@ const Board = (props) => {
             <Square
                 key={i} 
                 index={i}
-                styles={styles}
-                chess={chess}
-                onChessChange={onChessChange}
-                isReversed={isReversed}
-                initialStyles={initialStyles}
-                onStylesChange={onStylesChange}
                 boardBoundaries={boardBoundaries}
                 pieceClicked={pieceClicked}
                 onPieceClick={setPieceClicked}
-                promotion={promotion}
-                onPromotionChange={onPromotionChange}
-                preComputedMaps={preComputedMaps}
-                promotionPiecesList={promotionPiecesList}
-                pieceStyle={pieceStyle}
-                onPieceStyleChange={onPieceStyleChange}
             />
         )}
       </div>
     );
   }
 
-const PromotionBoard = (props) => {
-  
-  const { 
-    promotion, 
-    onPromotionChange, 
-    styles, 
-    onStylesChange, 
-    initialStyles, 
-    promotionIds, 
-    preComputedMaps, 
-    chess, 
-    onChessChange,
-    promotionPiecesList,
-    pieceStyle,
-    onPieceStyleChange
-   } = props;
+const PromotionBoard = () => {
 
-    const themes = useContext(ThemeContext);
-    const { pieces } = themes.standard;
+  const {
+    themes,
+    theme,
+    promotion,
+    chess,
+    preComputedMaps,
+    promotionPiecesList
+  } = useContext(GameContext)
+
+    const { pieces } = themes[theme];
+    const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
     
 
     return (
@@ -103,27 +71,14 @@ const PromotionBoard = (props) => {
                 <PromotionSquare
                   key={i}
                   type={type}
-                  promotion={promotion}
-                  onPromotionChange={onPromotionChange}
-                  styles={styles}
-                  initialStyles={initialStyles}
-                  onStylesChange={onStylesChange}
-                  chess={chess}
-                  onChessChange={onChessChange}
                   source={source}
                   pos={pos}
-                  preComputedMaps={preComputedMaps}
-                  pieceStyle={pieceStyle}
-                  onPieceStyleChange={onPieceStyleChange}
                 />
             } else {
               source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
               ComponentSquare = 
                 <RegularSquare
                   key={i}
-                  styles={initialStyles}
-                  chess={chess}
-                  onChessChange={onChessChange}
                   source={source}
                   pos={pos}
                 />

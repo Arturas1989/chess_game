@@ -23,26 +23,22 @@ const handleDragStart = (e, handlerArgs) => {
     const { 
         initialStyles, 
         chess, 
-        idToCoordList, 
-        themes, 
+        idToCoordList,
         onStylesChange, 
         setDragInfo, 
         dragInfo, 
         setInitialPos, 
-        initialPos
+        initialPos,
+        validMovesEmptyClass, 
+        validMovesTakeClass,
+        dragStartEndClass
     } = handlerArgs;
 
-    const { 
-      dragStartEndStyles,
-      validMovesEmptyStyles,
-      validMovesTakeStyles
-    } = themes;
-
     let newStyles = {...initialStyles};
-    highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyStyles, validMovesTakeStyles, newStyles);
+    highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
 
     const [row, col] = idToCoordList[e.target.id].split(',');
-    changeStyles(e.target.id, row, col, dragStartEndStyles, newStyles);
+    changeStyles(e.target.id, row, col, dragStartEndClass, newStyles);
 
     onStylesChange(newStyles);
     setDragInfo({...dragInfo, isDragging : true});
@@ -62,12 +58,10 @@ const handleDragStart = (e, handlerArgs) => {
     const {
         initialStyles, 
         idToCoordList, 
-        themes, 
         onStylesChange, 
         initialPos,
+        dragStartEndClass
     } = handlerArgs;
-
-    const { dragStartEndStyles } = themes;
 
     const result = handlePiecePositions(handlerArgs);
     if(!result){
@@ -79,8 +73,8 @@ const handleDragStart = (e, handlerArgs) => {
     const [destRow, destCol] = idToCoordList[initialPos.destination].split(',');
     const [startRow, startCol] = idToCoordList[initialPos.start].split(',');
 
-    changeStyles(initialPos.destination, destRow, destCol, dragStartEndStyles, newStyles);
-    changeStyles(initialPos.start, startRow, startCol, dragStartEndStyles, newStyles);
+    changeStyles(initialPos.destination, destRow, destCol, dragStartEndClass, newStyles);
+    changeStyles(initialPos.start, startRow, startCol, dragStartEndClass, newStyles);
     onStylesChange(newStyles);
     
   }
@@ -89,7 +83,6 @@ const handleDragStart = (e, handlerArgs) => {
     const {
         promotion,
         onPromotionChange,
-        styles,
         initialStyles, 
         chess,
         onChessChange,
@@ -99,12 +92,9 @@ const handleDragStart = (e, handlerArgs) => {
         initialPos,
         onPieceClick,
         pieceClicked,
-        preComputedMaps,
+        preComputedMaps, 
         promotionPiecesList,
-        promotionStyles,
-        promotionHoverStyles,
-        pieceStyle,
-        onPieceStyleChange
+        promotionClass
     } = handlerArgs;
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
     
@@ -126,11 +116,9 @@ const handleDragStart = (e, handlerArgs) => {
           from: initialPos.start,
           to: initialPos.destination
         })
-        let newStyles={...initialStyles};
         const promotionIds = getPromotionIds(initialPos.destination, preComputedMaps, promotionPiecesList);
-        setPromotionStyles(newStyles, promotionIds, promotionStyles);
-        changePromotionStyles(initialPos.destination, initialPos.destination, promotionHoverStyles, newStyles);
-        console.log(newStyles);
+        let newStyles = {...initialStyles};
+        setPromotionStyles(newStyles, promotionIds, promotionClass);
         onStylesChange(newStyles);
         return false;
       } else {
@@ -154,19 +142,15 @@ const handleDragStart = (e, handlerArgs) => {
         chess, 
         idToCoordList,
         coordToIdList, 
-        themes, 
         onStylesChange, 
         dragInfo, 
         setInitialPos, 
         initialPos,
-        squareWidth
+        squareWidth,
+        validMovesTakeClass,
+        validMovesEmptyClass,
+        draggingClass
     } = handlerArgs;
-
-    const {
-      validMovesEmptyStyles,
-      validMovesTakeStyles,
-      draggingStyles
-    } = themes;
 
     if(dragInfo.isDragging){
       
@@ -176,11 +160,10 @@ const handleDragStart = (e, handlerArgs) => {
       if(initialPos.destination !== initialPos.start){
         const [prevRow, prevCol] = idToCoordList[initialPos.destination].split(',');
         if(isMoveValid(chess, initialPos.start, initialPos.destination)){
-          const validMoveStyles = chess.get(initialPos.destination) ? validMovesTakeStyles : validMovesEmptyStyles;
+          const validMoveStyles = chess.get(initialPos.destination) ? validMovesTakeClass : validMovesEmptyClass;
           changeStyles(initialPos.destination, prevRow, prevCol, validMoveStyles, newStyles);
         }
       }
-      
 
       //highlight new cell
       const [row, col] = idToCoordList[initialPos.pos].split(',');
@@ -192,7 +175,7 @@ const handleDragStart = (e, handlerArgs) => {
 
       const newDestination = coordToIdList[nextCoord];
       if(initialPos.start !== newDestination && isMoveValid(chess, initialPos.start, newDestination)){
-        changeStyles(newDestination, nextRow, nextCol, draggingStyles, newStyles);
+        changeStyles(newDestination, nextRow, nextCol, draggingClass, newStyles);
       }
 
       onStylesChange(newStyles);

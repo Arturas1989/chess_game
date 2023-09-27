@@ -5,24 +5,20 @@ const handleMouseEnter = (e, handlerArgs) => {
         styles, 
         chess, 
         idToCoordList, 
-        themes, 
         onStylesChange,
         pieceClicked,
-        onPieceClick
+        onPieceClick,
+        draggingClass,
+        validMovesTakeClass,
+        validMovesEmptyClass
     } = handlerArgs;
-
-    const {
-      validMovesEmptyStyles,
-      validMovesTakeStyles,
-      draggingStyles
-    } = themes;
 
     if(pieceClicked.wasPieceClicked){
 
       const newStyles = {...styles};
       if(isMoveValid(chess, pieceClicked.prevPos, e.target.id)){
         const [row, col] = idToCoordList[e.target.id].split(',');
-        changeStyles(e.target.id, row, col, draggingStyles, newStyles);
+        changeStyles(e.target.id, row, col, draggingClass, newStyles);
         onPieceClick({
           ...pieceClicked,
           prevHovered: e.target.id
@@ -30,7 +26,7 @@ const handleMouseEnter = (e, handlerArgs) => {
       }
 
       if(pieceClicked.prevHovered && pieceClicked.prevHovered !== e.target.id){
-        const validMoveStyles = chess.get(pieceClicked.prevHovered) ? validMovesTakeStyles : validMovesEmptyStyles;
+        const validMoveStyles = chess.get(pieceClicked.prevHovered) ? validMovesTakeClass : validMovesEmptyClass;
         const [prevRow, prevCol] = idToCoordList[pieceClicked.prevHovered].split(',');
         changeStyles(pieceClicked.prevHovered, prevRow, prevCol, validMoveStyles, newStyles);
       }

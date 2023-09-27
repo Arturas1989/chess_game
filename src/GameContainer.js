@@ -1,29 +1,23 @@
 import './App.css';
 import { useState } from 'react';
-import { themes, ThemeContext } from './themes/themes.js';
+import { themes, GameContext } from './themes/themes.js';
 import { Board, PromotionBoard } from './Components/Board';
 import MoveList from './Components/MoveList.jsx';
-import Arrow from './Components/Arrow.jsx';
-import { preComputed, setInitialStyles, getPromotionIds, setPromotionStyles, promotionPieces } from './utilities/utilities.js';
+import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
 
 
 
 const GameContainer = () => {
+
+  const [theme, setTheme] = useState('standard');
   const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
   const [chess, setChess] = useState(new Chess());
   const [isReversed, setIsReversed] = useState(false);
-  const [pieceStyle, setPieceStyle] = useState({
-    width: '80%',
-    height: '80%',
-    alignSelf: 'center',
-    margin: '0 auto'
-  })
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
-  const { squareStyles, promotionStyles } = themes.standard;
 
   let initialStyles = {};
-  setInitialStyles(coords, initialStyles, squareStyles);
+  setInitialStyles(coords, initialStyles, theme + 'Square');
   
     
   let preComputedMaps, promotionPiecesList;
@@ -36,55 +30,44 @@ const GameContainer = () => {
     promotionPiecesList = promotionPieces.regular;
   }
 
-  console.log(promotion)
   //square promotion styles
-  let promotionIds;
-  if(promotion.isPromoting){
-    promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
-    // setPromotionStyles(initialStyles, promotionIds, promotionStyles);
-  } 
+  // let promotionIds;
+  // if(promotion.isPromoting){
+  //   promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
+  //   // setPromotionStyles(initialStyles, promotionIds, promotionStyles);
+  // } 
   const [styles, setStyles] = useState({...initialStyles});
 
+  const GameContextValues = {
+    themes,
+    theme,
+    setTheme,
+    promotion, 
+    setPromotion,
+    chess,
+    setChess,
+    isReversed, 
+    setIsReversed,
+    preComputedMaps,
+    promotionPiecesList,
+    styles,
+    setStyles,
+    initialStyles
+  }
   
   return (
-    <ThemeContext.Provider value={themes}>
+    <GameContext.Provider value={GameContextValues}>
       <div className="GameContainer">
         {promotion.isPromoting ?
-          <PromotionBoard 
-            promotion={promotion}
-            onPromotionChange={setPromotion}
-            initialStyles={initialStyles}
-            styles={styles}
-            onStylesChange={setStyles}
-            promotionIds={promotionIds}
-            preComputedMaps={preComputedMaps}
-            chess={chess}
-            onChessChange={setChess}
-            promotionPiecesList={promotionPiecesList}
-            pieceStyle={pieceStyle}
-            onPieceStyleChange={setPieceStyle}
-          />
+          <PromotionBoard/>
           :
-          <Board
-            preComputedMaps={preComputedMaps}
-            promotion={promotion}
-            onPromotionChange={setPromotion}
-            initialStyles={initialStyles}
-            styles={styles}
-            onStylesChange={setStyles}
-            chess={chess}
-            onChessChange={setChess}
-            isReversed={isReversed}
-            promotionPiecesList={promotionPiecesList}
-            pieceStyle={pieceStyle}
-            onPieceStyleChange={setPieceStyle}
-          />
+          <Board/>
         }
         
         {/* <Arrow /> */}
         <MoveList />
       </div>
-    </ThemeContext.Provider>
+    </GameContext.Provider>
   );
 }
 

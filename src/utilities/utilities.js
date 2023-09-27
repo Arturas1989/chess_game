@@ -15,23 +15,23 @@ const preComputed = {
   }
 };
 
-const changePromotionStyles = (id, promotionId, colors, newStyles) => {
-  const color = promotionId[1] === '8' ? colors.white : colors.black;
-  newStyles[id] = {...color};
+const changePromotionStyles = (id, promotionId, className, newStyles) => {
+  const newClassName = promotionId[1] === '8' ? className + 'SideWhite' : className + 'SideBlack';
+  newStyles[id] = newClassName;
 };
 
-const changeStyles = (id, row, col, colors, newStyles) => {
+const changeStyles = (id, row, col, className, newStyles) => {
   const index = parseInt(row) * 8 + parseInt(col);
-  const color = index % 2 === row % 2 ? colors.white : colors.black;
-  newStyles[id] = {...color};
+  const newClassName = index % 2 === row % 2 ? className + 'White' : className + 'Black';
+  newStyles[id] = newClassName;
 };
 
-const highlightValidMoves = (chess, id, idToCoord, emptyColors, pieceColors, newStyles) => {
+const highlightValidMoves = (chess, id, idToCoord, emptySquareClass, pieceClass, newStyles) => {
   const validMoves = chess.moves({ square: id, verbose: true });
   for(const move of validMoves){
     const [row, col] = idToCoord[move.to].split(',').map(el=>parseInt(el));
-    chess.get(move.to) ? changeStyles(move.to, row, col, pieceColors, newStyles) : 
-    changeStyles(move.to, row, col, emptyColors, newStyles);
+    chess.get(move.to) ? changeStyles(move.to, row, col, pieceClass, newStyles) : 
+    changeStyles(move.to, row, col, emptySquareClass, newStyles);
   }
 };
 
@@ -60,6 +60,7 @@ const getPromotionIds = (square, preComputedMaps, promotionPieces) => {
   const [, coordToIdList, idToCoordList] = preComputedMaps;
   let [row, col] = idToCoordList[square].split(',').map(el=>parseInt(el));
   let ids = {};
+  console.log(promotionPieces);
   if(row === 7){
     for(const piece of promotionPieces.black){
       ids[coordToIdList[(row--) + ',' + col]] = piece;
@@ -72,18 +73,18 @@ const getPromotionIds = (square, preComputedMaps, promotionPieces) => {
   return ids;
 };
 
-const setInitialStyles = (coords, initialStyles, squareStyles) => {
+const setInitialStyles = (coords, initialStyles, className) => {
   let i = 0;
     
     for(const id of coords){
       const row = Math.floor(i / 8);
       
-      initialStyles[id] = i % 2 === row % 2 ? squareStyles.black : squareStyles.white;
+      initialStyles[id] = i % 2 === row % 2 ? className + 'Black' : className + 'White';
       i++;
     }
 }
 
-const setPromotionStyles = (initialStyles, promotionIds, promotionStyles) => {
+const setPromotionStyles = (initialStyles, promotionIds, promotionClass) => {
 
   
     const cols = {'a' : 0, 'b' : 1, 'c' : 2, 'd' : 3, 'e' : 4, 'f' : 5, 'g' : 6, 'h' : 7};
@@ -92,7 +93,7 @@ const setPromotionStyles = (initialStyles, promotionIds, promotionStyles) => {
       const [col, coordRow] = id;
       const i = cols[col] + coordRow * 8;
       const row = Math.floor(i / 8);
-      initialStyles[id] = i % 2 === row % 2 ? promotionStyles.white : promotionStyles.black;
+      initialStyles[id] = i % 2 === row % 2 ? promotionClass + 'White' : promotionClass + 'Black';
     }
   
 }

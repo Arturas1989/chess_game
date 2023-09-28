@@ -14,8 +14,9 @@ const GameContainer = () => {
   const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
   const [chess, setChess] = useState(new Chess());
   const [isReversed, setIsReversed] = useState(false);
+  const [pieceClicked, setPieceClicked] = useState({});
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
-
+  
   let initialStyles = {};
   setInitialStyles(coords, initialStyles, theme + 'Square');
   
@@ -30,12 +31,6 @@ const GameContainer = () => {
     promotionPiecesList = promotionPieces.regular;
   }
 
-  //square promotion styles
-  // let promotionIds;
-  // if(promotion.isPromoting){
-  //   promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
-  //   // setPromotionStyles(initialStyles, promotionIds, promotionStyles);
-  // } 
   const [styles, setStyles] = useState({...initialStyles});
 
   const GameContextValues = {
@@ -52,7 +47,9 @@ const GameContainer = () => {
     promotionPiecesList,
     styles,
     setStyles,
-    initialStyles
+    initialStyles,
+    pieceClicked,
+    setPieceClicked
   }
   
   return (

@@ -1,4 +1,4 @@
-import { changeStyles, highlightValidMoves, isMoveValid } from '../utilities/utilities.js';
+import { changeStyles, setPromotionStyles, highlightValidMoves, isMoveValid } from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
@@ -17,23 +17,24 @@ const handleSquareClick = (e, handlerArgs) => {
         validMovesTakeClass,
         clickStartEndClass,
         promotion,
-        onPromotionChange
+        onPromotionChange,
+        preComputedMaps,
+        promotionClass,
+        promotionPiecesList
     } = handlerArgs;
 
     if(!dragInfo.isDragging){
       let newStyles = {...initialStyles};
       if(e.target.tagName === 'IMG'){
-        
-        const [row, col] = idToCoordList[e.target.id].split(',');
-        changeStyles(e.target.id, row, col, clickStartEndClass, newStyles);
+
+        changeStyles(e.target.id, idToCoordList, clickStartEndClass, newStyles);
 
         if(!pieceClicked.wasPieceClicked){
           highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
         }
         
         if(pieceClicked.wasPieceClicked && pieceClicked.prevPos === e.target.id){
-          const [prevRow, prevCol] = idToCoordList[pieceClicked.prevPos].split(',');
-          changeStyles(pieceClicked.prevPos, prevRow, prevCol, squareClass, newStyles);
+          changeStyles(pieceClicked.prevPos, idToCoordList, squareClass, newStyles);
         }
 
         onPieceClick({
@@ -54,17 +55,22 @@ const handleSquareClick = (e, handlerArgs) => {
         });
 
         if( isMoveValid(chess, pieceClicked.prevPos, e.target.id) ){
-          if(e.target.id[1] === '8' || e.target.id[1] === '1'){
+          const chessClone = cloneDeep(chess);
+          const color = chessClone.get(pieceClicked.prevPos).color;
+          if( (e.target.id[1] === '8' && color === 'w') || (e.target.id[1] === '1' && color === 'b') ){
             onPromotionChange({
               ...promotion,
               isPromoting: true,
               from: pieceClicked.prevPos,
               to: e.target.id
             });
+            changeStyles(pieceClicked.prevPos, idToCoordList, clickStartEndClass, newStyles);
+            setPromotionStyles(newStyles, e.target.id, preComputedMaps, promotionPiecesList, promotionClass);
+            onStylesChange(newStyles);
             return false;
           }
-          chess.move({ from: pieceClicked.prevPos, to: e.target.id });
-          const chessClone = cloneDeep(chess);
+          chessClone.move({ from: pieceClicked.prevPos, to: e.target.id });
+          
           onChessChange(chessClone);
         } else {
           newStyles = {...initialStyles};
@@ -72,10 +78,8 @@ const handleSquareClick = (e, handlerArgs) => {
           return false;
         }
         
-        const [prevRow, prevCol] = idToCoordList[pieceClicked.prevPos].split(',');
-        const [newRow, newCol] = idToCoordList[e.target.id].split(',');
-        changeStyles(pieceClicked.prevPos, prevRow, prevCol, clickStartEndClass, newStyles);
-        changeStyles(e.target.id, newRow, newCol, clickStartEndClass, newStyles);
+        changeStyles(pieceClicked.prevPos, idToCoordList, clickStartEndClass, newStyles);
+        changeStyles(e.target.id, idToCoordList, clickStartEndClass, newStyles);
         
       }
       onStylesChange(newStyles);

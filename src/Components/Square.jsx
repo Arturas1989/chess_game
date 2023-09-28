@@ -4,8 +4,9 @@ import { GameContext } from '../themes/themes.js';
 import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
 import handleMouseEnter from '../eventHandlers/mouseMove.js';
 import handleSquareClick from '../eventHandlers/click.js';
+import { changeStyles } from '../utilities/utilities.js';
 
-const Square = ({ index, boardBoundaries, pieceClicked, onPieceClick }) => {
+const Square = ({ index, boardBoundaries }) => {
   const {
     themes,
     theme,
@@ -17,7 +18,9 @@ const Square = ({ index, boardBoundaries, pieceClicked, onPieceClick }) => {
     promotionPiecesList,
     styles,
     setStyles,
-    initialStyles
+    initialStyles,
+    pieceClicked,
+    setPieceClicked
   } = useContext(GameContext);
 
   const { pieces } = themes[theme];
@@ -58,7 +61,7 @@ const Square = ({ index, boardBoundaries, pieceClicked, onPieceClick }) => {
     dragInfo: dragInfo, 
     setInitialPos: setInitialPos, 
     initialPos: initialPos,
-    onPieceClick: onPieceClick,
+    onPieceClick: setPieceClicked,
     pieceClicked: pieceClicked,
     squareWidth: squareWidth,
     promotion: promotion,
@@ -127,12 +130,35 @@ const PromotionSquare = ({ type, source, pos }) => {
 
 const RegularSquare = ({ pos, source }) => {
 
-  const { styles } = useContext(GameContext);
+  const { 
+    styles, 
+    initialStyles, 
+    setStyles, 
+    promotion, 
+    setPromotion, 
+    preComputedMaps,
+    theme,
+    pieceClicked,
+    setPieceClicked 
+  } = useContext(GameContext);
+
+  const cancelPromotion = () => {
+    setPromotion({...promotion, isPromoting: false});
+    let newStyles = {...initialStyles};
+    changeStyles(promotion.from, preComputedMaps[2], theme + 'DragStartEnd', newStyles);
+    setStyles(newStyles);
+    setPieceClicked({
+      ...pieceClicked,
+      wasPieceClicked : true,
+      prevPos : promotion.from
+    })
+  }
 
   return (
     <div
       id={pos}
       className={`Square ${styles[pos]}`}
+      onClick={() => cancelPromotion()}
     >
       <RegularPiece 
         pos={pos}

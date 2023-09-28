@@ -20,7 +20,8 @@ const changePromotionStyles = (id, promotionId, className, newStyles) => {
   newStyles[id] = newClassName;
 };
 
-const changeStyles = (id, row, col, className, newStyles) => {
+const changeStyles = (id, idToCoord, className, newStyles) => {
+  const [row, col] = idToCoord[id].split(',');
   const index = parseInt(row) * 8 + parseInt(col);
   const newClassName = index % 2 === row % 2 ? className + 'White' : className + 'Black';
   newStyles[id] = newClassName;
@@ -29,9 +30,8 @@ const changeStyles = (id, row, col, className, newStyles) => {
 const highlightValidMoves = (chess, id, idToCoord, emptySquareClass, pieceClass, newStyles) => {
   const validMoves = chess.moves({ square: id, verbose: true });
   for(const move of validMoves){
-    const [row, col] = idToCoord[move.to].split(',').map(el=>parseInt(el));
-    chess.get(move.to) ? changeStyles(move.to, row, col, pieceClass, newStyles) : 
-    changeStyles(move.to, row, col, emptySquareClass, newStyles);
+    chess.get(move.to) ? changeStyles(move.to, idToCoord, pieceClass, newStyles) : 
+    changeStyles(move.to, idToCoord, emptySquareClass, newStyles);
   }
 };
 
@@ -60,7 +60,6 @@ const getPromotionIds = (square, preComputedMaps, promotionPieces) => {
   const [, coordToIdList, idToCoordList] = preComputedMaps;
   let [row, col] = idToCoordList[square].split(',').map(el=>parseInt(el));
   let ids = {};
-  console.log(promotionPieces);
   if(row === 7){
     for(const piece of promotionPieces.black){
       ids[coordToIdList[(row--) + ',' + col]] = piece;
@@ -84,8 +83,9 @@ const setInitialStyles = (coords, initialStyles, className) => {
     }
 }
 
-const setPromotionStyles = (initialStyles, promotionIds, promotionClass) => {
+const setPromotionStyles = (initialStyles, square, preComputedMaps, promotionPiecesList, promotionClass) => {
 
+    const promotionIds = getPromotionIds(square, preComputedMaps, promotionPiecesList);
   
     const cols = {'a' : 0, 'b' : 1, 'c' : 2, 'd' : 3, 'e' : 4, 'f' : 5, 'g' : 6, 'h' : 7};
   

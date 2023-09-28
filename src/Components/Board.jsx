@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useContext } from 'react';
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
 import { GameContext } from '../themes/themes.js';
-import { getPromotionIds, promotionPieces } from '../utilities/utilities.js';
+import { getPromotionIds } from '../utilities/utilities.js';
 
 const Board = () => {
     const { promotion } = useContext(GameContext)
@@ -18,8 +18,6 @@ const Board = () => {
         setBoardBoundaries(boardRef.current.getBoundingClientRect());
       }
     }, [boardRef]);
-  
-    const [pieceClicked, setPieceClicked] = useState({});
     return (
       <div ref={boardRef} className={'Board' + (promotion.isPromoting ? ' promotion-board' : '')}>
         
@@ -28,8 +26,6 @@ const Board = () => {
                 key={i} 
                 index={i}
                 boardBoundaries={boardBoundaries}
-                pieceClicked={pieceClicked}
-                onPieceClick={setPieceClicked}
             />
         )}
       </div>
@@ -75,7 +71,7 @@ const PromotionBoard = () => {
                   pos={pos}
                 />
             } else {
-              source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+              source = squareInfo && promotion.from !== pos ? pieces[squareInfo.color][squareInfo.type] : '';
               ComponentSquare = 
                 <RegularSquare
                   key={i}

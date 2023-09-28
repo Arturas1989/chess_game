@@ -1,6 +1,9 @@
 import { motion } from 'framer-motion';
 import { GameContext } from '../themes/themes.js';
 import { useContext } from 'react';
+import { changeStyles } from '../utilities/utilities.js';
+
+const cloneDeep = require('lodash/cloneDeep');
 
 const ChessPiece = (props) => {
     const {
@@ -52,13 +55,31 @@ const ChessPiece = (props) => {
 
   function PromotionPiece({ type, pos, piece, handleDragStart }){
 
-    const {promotion, setPromotion} = useContext(GameContext);
+    const {
+      promotion, 
+      setPromotion, 
+      chess, 
+      setChess, 
+      initialStyles, 
+      setStyles, 
+      preComputedMaps,
+      theme
+    } = useContext(GameContext);
 
     const handleClick = (e) => {
       const pieceType = e.currentTarget.getAttribute('piece-type');
+      const chessClone = cloneDeep(chess);
+      chessClone.move({from: promotion.from, to: promotion.to, promotion: pieceType});
+      setChess(chessClone);
+
+      let newStyles = {...initialStyles};
+      changeStyles(promotion.from, preComputedMaps[2], theme + 'DragStartEnd', newStyles);
+      changeStyles(promotion.to, preComputedMaps[2], theme + 'DragStartEnd', newStyles)
+      setStyles({...newStyles});
+      
       setPromotion({
         ...promotion,
-        pieceType: pieceType,
+        isPromoting: false
       });
     }
 

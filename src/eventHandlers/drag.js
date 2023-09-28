@@ -3,8 +3,7 @@ import {
   highlightValidMoves, 
   isMoveValid, 
   getPromotionIds, 
-  setPromotionStyles, 
-  changePromotionStyles 
+  setPromotionStyles 
 } from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
@@ -37,8 +36,7 @@ const handleDragStart = (e, handlerArgs) => {
     let newStyles = {...initialStyles};
     highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
 
-    const [row, col] = idToCoordList[e.target.id].split(',');
-    changeStyles(e.target.id, row, col, dragStartEndClass, newStyles);
+    changeStyles(e.target.id, idToCoordList, dragStartEndClass, newStyles);
 
     onStylesChange(newStyles);
     setDragInfo({...dragInfo, isDragging : true});
@@ -69,12 +67,9 @@ const handleDragStart = (e, handlerArgs) => {
     }
 
     let newStyles = {...initialStyles};
-    
-    const [destRow, destCol] = idToCoordList[initialPos.destination].split(',');
-    const [startRow, startCol] = idToCoordList[initialPos.start].split(',');
 
-    changeStyles(initialPos.destination, destRow, destCol, dragStartEndClass, newStyles);
-    changeStyles(initialPos.start, startRow, startCol, dragStartEndClass, newStyles);
+    changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
+    changeStyles(initialPos.start, idToCoordList, dragStartEndClass, newStyles);
     onStylesChange(newStyles);
     
   }
@@ -94,7 +89,8 @@ const handleDragStart = (e, handlerArgs) => {
         pieceClicked,
         preComputedMaps, 
         promotionPiecesList,
-        promotionClass
+        promotionClass,
+        dragStartEndClass
     } = handlerArgs;
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
     
@@ -109,23 +105,25 @@ const handleDragStart = (e, handlerArgs) => {
     } 
 
     if( isMoveValid(chess, initialPos.start, initialPos.destination) ){
-      if(initialPos.destination[1] === '8' || initialPos.destination[1] === '1'){
+      const chessClone = cloneDeep(chess);
+      const color = chessClone.get(initialPos.start).color;
+      if( (initialPos.destination[1] === '8' && color === 'w') || (initialPos.destination[1] === '1' && color === 'b') ){
         onPromotionChange({
           ...promotion,
           isPromoting: true,
           from: initialPos.start,
           to: initialPos.destination
         })
-        const promotionIds = getPromotionIds(initialPos.destination, preComputedMaps, promotionPiecesList);
         let newStyles = {...initialStyles};
-        setPromotionStyles(newStyles, promotionIds, promotionClass);
+        changeStyles(initialPos.start, preComputedMaps[2], dragStartEndClass, newStyles);
+        setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
         onStylesChange(newStyles);
         return false;
       } else {
-        chess.move({ from: initialPos.start, to: initialPos.destination });
+        chessClone.move({ from: initialPos.start, to: initialPos.destination });
       }
       
-      const chessClone = cloneDeep(chess);
+      
       onChessChange(chessClone);
     } else {
       const newStyles = {...initialStyles};
@@ -158,10 +156,9 @@ const handleDragStart = (e, handlerArgs) => {
 
       //change previous cell color back to original
       if(initialPos.destination !== initialPos.start){
-        const [prevRow, prevCol] = idToCoordList[initialPos.destination].split(',');
         if(isMoveValid(chess, initialPos.start, initialPos.destination)){
           const validMoveStyles = chess.get(initialPos.destination) ? validMovesTakeClass : validMovesEmptyClass;
-          changeStyles(initialPos.destination, prevRow, prevCol, validMoveStyles, newStyles);
+          changeStyles(initialPos.destination, idToCoordList, validMoveStyles, newStyles);
         }
       }
 
@@ -175,7 +172,7 @@ const handleDragStart = (e, handlerArgs) => {
 
       const newDestination = coordToIdList[nextCoord];
       if(initialPos.start !== newDestination && isMoveValid(chess, initialPos.start, newDestination)){
-        changeStyles(newDestination, nextRow, nextCol, draggingClass, newStyles);
+        changeStyles(newDestination, idToCoordList, draggingClass, newStyles);
       }
 
       onStylesChange(newStyles);

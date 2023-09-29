@@ -25,23 +25,28 @@ const handleSquareClick = (e, handlerArgs) => {
 
     if(!dragInfo.isDragging){
       let newStyles = {...initialStyles};
+      
       if(e.target.tagName === 'IMG'){
 
-        changeStyles(e.target.id, idToCoordList, clickStartEndClass, newStyles);
+        if(chess.moves({square: e.target.id}).length){
 
-        if(!pieceClicked.wasPieceClicked){
-          highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
+          changeStyles(e.target.id, idToCoordList, clickStartEndClass, newStyles);
+
+          if(!pieceClicked.wasPieceClicked){
+            highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
+          }
+          
+          if(pieceClicked.wasPieceClicked && pieceClicked.prevPos === e.target.id){
+            changeStyles(pieceClicked.prevPos, idToCoordList, squareClass, newStyles);
+          }
+
+          onPieceClick({
+            ...pieceClicked,
+            wasPieceClicked : !pieceClicked.wasPieceClicked,
+            prevPos : e.target.id
+          });
         }
         
-        if(pieceClicked.wasPieceClicked && pieceClicked.prevPos === e.target.id){
-          changeStyles(pieceClicked.prevPos, idToCoordList, squareClass, newStyles);
-        }
-
-        onPieceClick({
-          ...pieceClicked,
-          wasPieceClicked : !pieceClicked.wasPieceClicked,
-          prevPos : e.target.id
-        });
       }
 
       if(pieceClicked.wasPieceClicked && e.target.id !== pieceClicked.prevPos){
@@ -50,8 +55,7 @@ const handleSquareClick = (e, handlerArgs) => {
         onPieceClick({
           ...pieceClicked,
           wasPieceClicked : false,
-          pos : e.target.id,
-          prevHovered: ''
+          pos : e.target.id
         });
 
         if( isMoveValid(chess, pieceClicked.prevPos, e.target.id) ){

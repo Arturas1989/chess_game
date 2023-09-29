@@ -36,19 +36,19 @@
 }
 
 .standardValidMovesEmptyWhite{
-    background: radial-gradient( rgba(242,196,92, 0.8) 19%, rgb(var(--white-square-rgb)) 20%);
+    background: radial-gradient( hsla(120, 31%, 51%, 0.5) 19%, rgb(var(--white-square-rgb)) 20%);
 }
 
 .standardValidMovesEmptyBlack{
-    background: radial-gradient( rgba(242,196,92, 0.8) 19%, rgb(var(--black-square-rgb)) 20%);
+    background: radial-gradient( hsla(120, 31%, 51%, 0.5) 19%, rgb(var(--black-square-rgb)) 20%);
 }
 
 .standardValidMovesTakeWhite{
-    background: radial-gradient(rgb(var(--white-square-rgb)) 79%, rgba(242,196,92, 0.8) 80%);
+    background: radial-gradient(rgb(var(--white-square-rgb)) 79%, hsla(120, 31%, 51%, 0.5) 80%);
 }
 
 .standardValidMovesTakeBlack{
-    background: radial-gradient(rgb(var(--black-square-rgb)) 79%, rgba(242,196,92, 0.8) 80%);
+    background: radial-gradient(rgb(var(--black-square-rgb)) 79%, hsla(120, 31%, 51%, 0.5) 80%);
 }
 
 .standardPromotionWhiteSideWhite, .standardPromotionBlackSideBlack{

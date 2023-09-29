@@ -1,4 +1,4 @@
-import { changeStyles, isMoveValid } from '../utilities/utilities.js';
+import { changeStyles, isMoveValid, highlightValidMoves } from '../utilities/utilities.js';
 
 const handleMouseEnter = (e, handlerArgs) => {
     const {
@@ -14,21 +14,19 @@ const handleMouseEnter = (e, handlerArgs) => {
     } = handlerArgs;
 
     if(pieceClicked.wasPieceClicked){
-
-      const newStyles = {...styles};
+      let newStyles = {...styles};
+      highlightValidMoves(chess, pieceClicked.prevPos, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles)
+      
       if(isMoveValid(chess, pieceClicked.prevPos, e.target.id)){
+        
         changeStyles(e.target.id, idToCoordList, draggingClass, newStyles);
         onPieceClick({
           ...pieceClicked,
           prevHovered: e.target.id
         })
       }
-
-      if(pieceClicked.prevHovered && pieceClicked.prevHovered !== e.target.id){
-        const validMoveStyles = chess.get(pieceClicked.prevHovered) ? validMovesTakeClass : validMovesEmptyClass;
-        changeStyles(pieceClicked.prevHovered, idToCoordList, validMoveStyles, newStyles);
-      }
       onStylesChange(newStyles);
+      
     }
   }
 

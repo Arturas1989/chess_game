@@ -45,7 +45,7 @@ const ChessPiece = (props) => {
   function DragEnablingPiece({ piece, handleMouseEnter, handlerArgs, pos }){
     return piece && (
       <img
-        onMouseEnter={() => handleMouseEnter(handlerArgs)}
+        onMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
         id={pos}
         src={piece} 
         alt='chess piece'

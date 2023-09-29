@@ -2,16 +2,15 @@ import {
   changeStyles, 
   highlightValidMoves, 
   isMoveValid, 
-  getPromotionIds, 
   setPromotionStyles 
 } from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
-const enableDrag = (handlerArgs) => {
-  const { setDragInfo, dragInfo } = handlerArgs;
+const enableDrag = (e, handlerArgs) => {
+  const { setDragInfo, dragInfo, chess } = handlerArgs;
   // enable drag on mouse enter, when its disabled on drag end
-  setDragInfo({...dragInfo, dragEnabled : true});
+  if(chess.moves({square: e.target.id}).length) setDragInfo({...dragInfo, dragEnabled : true});
 };
 
 const preventDragStart = (e) => {
@@ -35,8 +34,11 @@ const handleDragStart = (e, handlerArgs) => {
 
     let newStyles = {...initialStyles};
     highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
-
+    
+    
     changeStyles(e.target.id, idToCoordList, dragStartEndClass, newStyles);
+    
+    
 
     onStylesChange(newStyles);
     setDragInfo({...dragInfo, isDragging : true});
@@ -54,22 +56,32 @@ const handleDragStart = (e, handlerArgs) => {
     
     
     const {
+      styles,
+        chess,
         initialStyles, 
         idToCoordList, 
         onStylesChange, 
         initialPos,
-        dragStartEndClass
+        dragStartEndClass,
+        validMovesEmptyClass,
+        validMovesTakeClass,
+        promotion,
+        preComputedMaps,
+        promotionPiecesList,
+        promotionClass
     } = handlerArgs;
 
-    const result = handlePiecePositions(handlerArgs);
-    if(!result){
-      return;
-    }
+    const isPromoting = handlePiecePositions(handlerArgs);
 
     let newStyles = {...initialStyles};
-
-    changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
+    if(initialPos.start === initialPos.destination){
+      highlightValidMoves(chess, initialPos.start, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
+    }
     changeStyles(initialPos.start, idToCoordList, dragStartEndClass, newStyles);
+    changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
+    if(isPromoting){
+      setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
+    }
     onStylesChange(newStyles);
     
   }
@@ -95,13 +107,16 @@ const handleDragStart = (e, handlerArgs) => {
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
     
     //if it's the same position, disable drag and return early
+    
+    let newStyles = {...initialStyles};
     if(initialPos.destination === initialPos.start){
       onPieceClick({
         ...pieceClicked,
         wasPieceClicked : true,
         prevPos : initialPos.destination
       });
-      return false;
+      onStylesChange(newStyles);
+      return;
     } 
 
     if( isMoveValid(chess, initialPos.start, initialPos.destination) ){
@@ -114,11 +129,10 @@ const handleDragStart = (e, handlerArgs) => {
           from: initialPos.start,
           to: initialPos.destination
         })
-        let newStyles = {...initialStyles};
         changeStyles(initialPos.start, preComputedMaps[2], dragStartEndClass, newStyles);
         setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
         onStylesChange(newStyles);
-        return false;
+        return true;
       } else {
         chessClone.move({ from: initialPos.start, to: initialPos.destination });
       }
@@ -128,10 +142,8 @@ const handleDragStart = (e, handlerArgs) => {
     } else {
       const newStyles = {...initialStyles};
       onStylesChange(newStyles);
-      return false;
+      return;
     }
-
-    return true;
   }
 
   const handleDrag = (e, handlerArgs) => {

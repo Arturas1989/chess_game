@@ -3,6 +3,14 @@
     --black-square-rgb: 89, 31, 31;
 }
 
+.standardCoordWhite{
+    color: rgb(var(--black-square-rgb));
+}
+
+.standardCoordBlack{
+    color: rgb(var(--white-square-rgb));
+}
+
 .standardSquareWhite{
     background-color: rgb(var(--white-square-rgb));
 } 

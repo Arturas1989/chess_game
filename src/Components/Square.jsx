@@ -1,12 +1,13 @@
 import { useState, useContext} from 'react';
 import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
+import SquareCoord from './SquareCoord.jsx';
 import { GameContext } from '../themes/themes.js';
 import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
 import handleMouseEnter from '../eventHandlers/mouseMove.js';
 import handleSquareClick from '../eventHandlers/click.js';
-import { changeStyles } from '../utilities/utilities.js';
+import { changeStyles, getSquareWidth } from '../utilities/utilities.js';
 
-const Square = ({ index, boardBoundaries }) => {
+const Square = ({ index }) => {
   const {
     themes,
     theme,
@@ -20,7 +21,8 @@ const Square = ({ index, boardBoundaries }) => {
     setStyles,
     initialStyles,
     pieceClicked,
-    setPieceClicked
+    setPieceClicked,
+    boardBoundaries
   } = useContext(GameContext);
 
   const { pieces } = themes[theme];
@@ -34,9 +36,7 @@ const Square = ({ index, boardBoundaries }) => {
   let source;
   source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
 
-  const boundaries = boardBoundaries || {};
-  const boardWidth = boundaries.width || 0;
-  const squareWidth = boardWidth / 8;
+  const squareWidth = getSquareWidth(boardBoundaries);
 
   //drag constrains
   const left = (col + 0.3) * squareWidth * -1;
@@ -85,7 +85,8 @@ const Square = ({ index, boardBoundaries }) => {
       onMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
     >
 
-      {dragInfo.dragEnabled ? 
+      {dragInfo.dragEnabled ?
+        <>
           <ChessPiece
             id={pos}
             left={left}
@@ -98,20 +99,28 @@ const Square = ({ index, boardBoundaries }) => {
             handleDragEnd={() => handleDragEnd(handlerArgs)}
             handleDrag={(e) => handleDrag(e, handlerArgs)}
           />
-        : 
-        <DragEnablingPiece
-          piece={source}
-          handlerArgs={handlerArgs}
-          handleMouseEnter={enableDrag}
-          pos={pos}
-        />
+          <SquareCoord id={pos} squareWidth={squareWidth}/>
+        </> 
+          
+        :
+        <>
+          <DragEnablingPiece
+            piece={source}
+            handlerArgs={handlerArgs}
+            handleMouseEnter={enableDrag}
+            pos={pos}
+          />
+          <SquareCoord id={pos} squareWidth={squareWidth}/>
+        </> 
+        
       }
     </div>
   );
 }
 
 const PromotionSquare = ({ type, source, pos }) => {
-  const { styles } = useContext(GameContext);
+  const { styles, boardBoundaries } = useContext(GameContext);
+  const squareWidth = getSquareWidth(boardBoundaries);
 
     return (
       <div
@@ -124,11 +133,12 @@ const PromotionSquare = ({ type, source, pos }) => {
           piece={source}
           handleDragStart={preventDragStart}
         />
+        <SquareCoord id={pos} squareWidth={squareWidth}/>
       </div>
     );
 }
 
-const RegularSquare = ({ pos, source }) => {
+const RegularSquare = ({ pos, source}) => {
 
   const { 
     styles, 
@@ -139,7 +149,8 @@ const RegularSquare = ({ pos, source }) => {
     preComputedMaps,
     theme,
     pieceClicked,
-    setPieceClicked 
+    setPieceClicked,
+    boardBoundaries 
   } = useContext(GameContext);
 
   const cancelPromotion = () => {
@@ -153,7 +164,7 @@ const RegularSquare = ({ pos, source }) => {
       prevPos : promotion.from
     })
   }
-
+  const squareWidth = getSquareWidth(boardBoundaries);
   return (
     <div
       id={pos}
@@ -165,6 +176,7 @@ const RegularSquare = ({ pos, source }) => {
         piece={source}
         handleDragStart={preventDragStart}
       />
+      <SquareCoord id={pos} squareWidth={squareWidth}/>
     </div>
   );
 }

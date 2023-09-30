@@ -1,23 +1,33 @@
-import { useState, useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect, useContext } from 'react';
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
 import { GameContext } from '../themes/themes.js';
 import { getPromotionIds } from '../utilities/utilities.js';
 
 const Board = () => {
-    const { promotion } = useContext(GameContext)
-    
-    const [boardBoundaries, setBoardBoundaries] = useState(null);
+    const { promotion, boardBoundaries, setBoardBoundaries } = useContext(GameContext)
 
     // using useRef to create reference to the board component
     const boardRef = useRef(null);
-  
-    // it's not guaranteed that the Board component is rendered, it might be null
-    //useEffect is used that, when boardRef changes (Board component is rendered) boardBoundaries will be set
-    useEffect(() => {
+    
+
+    const updateBoardBoundaries = () => {
       if (boardRef.current) {
         setBoardBoundaries(boardRef.current.getBoundingClientRect());
       }
-    }, [boardRef]);
+    }
+
+    useEffect(() => {
+      updateBoardBoundaries();
+    }, []);
+
+    useEffect(() => {
+      window.addEventListener('resize', updateBoardBoundaries);
+      return () => {
+          window.removeEventListener('resize', updateBoardBoundaries);
+      };
+    }, []);
+
+
     return (
       <div ref={boardRef} className={'Board' + (promotion.isPromoting ? ' promotion-board' : '')}>
         
@@ -25,7 +35,6 @@ const Board = () => {
             <Square
                 key={i} 
                 index={i}
-                boardBoundaries={boardBoundaries}
             />
         )}
       </div>

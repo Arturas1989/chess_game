@@ -15,16 +15,30 @@ const preComputed = {
   }
 };
 
+const getSquareWidth = (boardBoundaries) => {
+  const boundaries = boardBoundaries || {};
+  const boardWidth = boundaries.width || 0;
+  return boardWidth / 8;
+}
+
+const getCoordClass = (id, idToCoord, theme, coordType) => {
+  const squareType = getSquareType(id, idToCoord);
+  return `coord${coordType} ${theme}Coord${squareType}`;
+}
+
+const getSquareType = (id, idToCoord) => {
+  const [row, col] = idToCoord[id].split(',');
+  const index = parseInt(row) * 8 + parseInt(col);
+  return index % 2 === row % 2 ? 'White' : 'Black';
+};
+
 const changePromotionStyles = (id, promotionId, className, newStyles) => {
   const newClassName = promotionId[1] === '8' ? className + 'SideWhite' : className + 'SideBlack';
   newStyles[id] = newClassName;
 };
 
 const changeStyles = (id, idToCoord, className, newStyles) => {
-  const [row, col] = idToCoord[id].split(',');
-  const index = parseInt(row) * 8 + parseInt(col);
-  const newClassName = index % 2 === row % 2 ? className + 'White' : className + 'Black';
-  newStyles[id] = newClassName;
+  newStyles[id] = className + getSquareType(id, idToCoord);
 };
 
 const highlightValidMoves = (chess, id, idToCoord, emptySquareClass, pieceClass, newStyles) => {
@@ -100,7 +114,10 @@ const setPromotionStyles = (initialStyles, square, preComputedMaps, promotionPie
 
 export  { 
   promotionPieces, 
-  preComputed, 
+  preComputed,
+  getSquareWidth,
+  getSquareType,
+  getCoordClass, 
   changeStyles, 
   highlightValidMoves, 
   isMoveValid, 

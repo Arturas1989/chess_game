@@ -13,7 +13,7 @@ const GameContainer = () => {
   const [theme, setTheme] = useState('standard');
   const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
   const [chess, setChess] = useState(new Chess());
-  const [isReversed, setIsReversed] = useState(true);
+  const [isReversed, setIsReversed] = useState(false);
   const [pieceClicked, setPieceClicked] = useState({});
   const [boardBoundaries, setBoardBoundaries] = useState(null);
   

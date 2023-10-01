@@ -187,12 +187,17 @@ const handleDragStart = (e, handlerArgs) => {
         changeStyles(newDestination, idToCoordList, draggingClass, newStyles);
       }
 
-      onStylesChange(newStyles);
+      if(initialPos.prevDragId !== newDestination){
+        onStylesChange(newStyles);
       
-      setInitialPos({
-        ...initialPos,
-        destination : newDestination
-      })
+        setInitialPos({
+          ...initialPos,
+          prevDragId : newDestination,
+          destination : newDestination
+        })
+      }
+
+      
     }
   }
 

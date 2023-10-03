@@ -60,8 +60,9 @@ const handleSquareClick = (e, handlerArgs) => {
 
         if( isMoveValid(chess, pieceClicked.prevPos, e.target.id) ){
           const chessClone = cloneDeep(chess);
-          const color = chessClone.get(pieceClicked.prevPos).color;
-          if( (e.target.id[1] === '8' && color === 'w') || (e.target.id[1] === '1' && color === 'b') ){
+          const {color, type} = chessClone.get(pieceClicked.prevPos);
+          if( (e.target.id[1] === '8' && color === 'w' && type === 'p') 
+          || (e.target.id[1] === '1' && color === 'b' && type === 'p') ){
             onPromotionChange({
               ...promotion,
               isPromoting: true,

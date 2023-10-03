@@ -1,10 +1,10 @@
-import { useRef, useEffect, useContext } from 'react';
+import { useRef, useEffect} from 'react';
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
-import { GameContext } from '../themes/themes.js';
+import { useGameContext } from '../themes/themes.js';
 import { getPromotionIds } from '../utilities/utilities.js';
 
 const Board = () => {
-    const { promotion, boardBoundaries, setBoardBoundaries } = useContext(GameContext)
+    const { promotion, setBoardBoundaries } = useGameContext()
 
     // using useRef to create reference to the board component
     const boardRef = useRef(null);
@@ -50,7 +50,7 @@ const PromotionBoard = () => {
     chess,
     preComputedMaps,
     promotionPiecesList
-  } = useContext(GameContext)
+  } = useGameContext
 
     const { pieces } = themes[theme];
     const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);

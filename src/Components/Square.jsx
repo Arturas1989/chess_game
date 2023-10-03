@@ -1,7 +1,7 @@
-import { useState, useContext} from 'react';
+import { useState } from 'react';
 import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
 import SquareCoord from './SquareCoord.jsx';
-import { GameContext } from '../themes/themes.js';
+import { useGameContext } from '../themes/themes.js';
 import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
 import handleMouseEnter from '../eventHandlers/mouseMove.js';
 import handleSquareClick from '../eventHandlers/click.js';
@@ -23,7 +23,7 @@ const Square = ({ index }) => {
     pieceClicked,
     setPieceClicked,
     boardBoundaries
-  } = useContext(GameContext);
+  } = useGameContext();
 
   const { pieces } = themes[theme];
   const [, coordToIdList, idToCoordList] = preComputedMaps;
@@ -119,7 +119,7 @@ const Square = ({ index }) => {
 }
 
 const PromotionSquare = ({ type, source, pos }) => {
-  const { styles, boardBoundaries } = useContext(GameContext);
+  const { styles, boardBoundaries } = useGameContext();
   const squareWidth = getSquareWidth(boardBoundaries);
 
     return (
@@ -151,7 +151,7 @@ const RegularSquare = ({ pos, source}) => {
     pieceClicked,
     setPieceClicked,
     boardBoundaries 
-  } = useContext(GameContext);
+  } = useGameContext();
 
   const cancelPromotion = () => {
     setPromotion({...promotion, isPromoting: false});

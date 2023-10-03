@@ -1,6 +1,5 @@
 import { motion } from 'framer-motion';
-import { GameContext } from '../themes/themes.js';
-import { useContext } from 'react';
+import { useGameContext } from '../themes/themes.js';
 import { changeStyles } from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
@@ -64,7 +63,7 @@ const ChessPiece = (props) => {
       setStyles, 
       preComputedMaps,
       theme
-    } = useContext(GameContext);
+    } = useGameContext();
 
     const handleClick = (e) => {
       const pieceType = e.currentTarget.getAttribute('piece-type');

@@ -1,10 +1,9 @@
-import { useContext } from 'react';
-import { GameContext } from '../themes/themes.js';
+import { useGameContext } from '../themes/themes.js';
 import { getCoordClass, getPromotionIds } from '../utilities/utilities.js';
 
 
 const SquareCoord = ({ id, squareWidth }) => {
-    const { isReversed, preComputedMaps, theme, promotion, promotionPiecesList } = useContext(GameContext);
+    const { isReversed, preComputedMaps, theme, promotion, promotionPiecesList } = useGameContext();
     const idToCoord = preComputedMaps[2];
 
     const [displayCol, displayRow] = isReversed ? ['h', '8'] : ['a', '1'];

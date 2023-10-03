@@ -50,7 +50,7 @@ const PromotionBoard = () => {
     chess,
     preComputedMaps,
     promotionPiecesList
-  } = useGameContext
+  } = useGameContext();
 
     const { pieces } = themes[theme];
     const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);

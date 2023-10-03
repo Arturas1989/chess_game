@@ -56,7 +56,6 @@ const handleDragStart = (e, handlerArgs) => {
     
     
     const {
-      styles,
         chess,
         initialStyles, 
         idToCoordList, 
@@ -65,7 +64,6 @@ const handleDragStart = (e, handlerArgs) => {
         dragStartEndClass,
         validMovesEmptyClass,
         validMovesTakeClass,
-        promotion,
         preComputedMaps,
         promotionPiecesList,
         promotionClass
@@ -121,22 +119,23 @@ const handleDragStart = (e, handlerArgs) => {
 
     if( isMoveValid(chess, initialPos.start, initialPos.destination) ){
       const chessClone = cloneDeep(chess);
-      const color = chessClone.get(initialPos.start).color;
-      if( (initialPos.destination[1] === '8' && color === 'w') || (initialPos.destination[1] === '1' && color === 'b') ){
-        onPromotionChange({
-          ...promotion,
-          isPromoting: true,
-          from: initialPos.start,
-          to: initialPos.destination
-        })
-        changeStyles(initialPos.start, preComputedMaps[2], dragStartEndClass, newStyles);
-        setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
-        onStylesChange(newStyles);
-        return true;
-      } else {
-        chessClone.move({ from: initialPos.start, to: initialPos.destination });
-      }
+      const {color, type} = chessClone.get(initialPos.start);
       
+        if( (initialPos.destination[1] === '8' && color === 'w' && type === 'p') 
+        || (initialPos.destination[1] === '1' && color === 'b' && type === 'p') ){
+          onPromotionChange({
+            ...promotion,
+            isPromoting: true,
+            from: initialPos.start,
+            to: initialPos.destination
+          })
+          changeStyles(initialPos.start, preComputedMaps[2], dragStartEndClass, newStyles);
+          setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
+          onStylesChange(newStyles);
+          return true;
+        } else {
+          chessClone.move({ from: initialPos.start, to: initialPos.destination });
+        }
       
       onChessChange(chessClone);
     } else {

@@ -9,7 +9,7 @@
   --GameContainerHeight: 590px;
   --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) - var(--board-margin) * 2) );
   --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
-  --CoordFontSize: max(calc(var(--BoardWidth) * 0.035), 10px);
+  --CoordFontSize: min(max(calc(var(--BoardWidth) * 0.035), 8px), 15px);
   --MoveListWidth: calc(
     var(--GameContainerRemainingWidth) - var(--BoardWidth)
     - 2 * (var(--board-margin) + var(--MoveList-margin))
@@ -85,7 +85,6 @@
 img{
   width: 100%;
   height: 100%;
-  
 }
 
 .coordRow, .coordCol{

@@ -22,7 +22,7 @@ const SquareCoord = ({ id, squareWidth }) => {
     if(displayRow === idRow){
         className = getCoordClass(id, idToCoord, theme, 'Col');
         const right = squareWidth * 0.84;
-        const down = squareWidth * 0.58;
+        const down = squareWidth * 0.61;
         const colStyle = {
             transform: `translate(${right}px,${down}px)`,
             opacity: promotionIds[id] ? '0.3' : '1'

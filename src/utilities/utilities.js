@@ -15,6 +15,19 @@ const preComputed = {
   }
 };
 
+const notationSymbols = {
+  'wK' : '♔',
+  'wQ' : '♕',
+  'wR' : '♖',
+  'wB' : '♗',
+  'wN' : '♘',
+  'bK' : '♚',
+  'bQ' : '♛',
+  'bR' : '♜',
+  'bB' : '♝',
+  'bN' : '♞'
+}
+
 const getSquareWidth = (boardBoundaries) => {
   const boundaries = boardBoundaries || {};
   const boardWidth = boundaries.width || 0;
@@ -112,7 +125,8 @@ const setPromotionStyles = (initialStyles, square, preComputedMaps, promotionPie
   
 }
 
-export  { 
+export  {
+  notationSymbols, 
   promotionPieces, 
   preComputed,
   getSquareWidth,

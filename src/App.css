@@ -36,6 +36,21 @@
   min-height: var(--MoveListHeight);
 }
 
+.WhiteMoveContainer{
+  display: flex;
+  flex-direction: row;
+}
+
+.WhiteMove{
+  width: 20px;
+  display: flex;
+  flex-direction: row;
+}
+
+.WhiteMove g {
+  width: 100%;
+}
+
 .Board{
   display: flex;
   flex-wrap: wrap;

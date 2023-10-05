@@ -126,11 +126,11 @@ const WhiteMove = ({ chess }) => {
   return (
     <div className="WhiteMoveContainer">
 
-      <div className="WhiteMove">
+      {/* <div className="WhiteMove">
         <Piece width={45} piece='n'/>
       </div>
 
-      <span>f3</span>
+      <span>f3</span> */}
 
     </div>
       

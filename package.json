@@ -1,7 +1,7 @@
 {
   "name": "chess_game",
   "version": "0.1.0",
-  "homepage": "https://arturas1989.github.io/chess_games",
+  "homepage": "https://arturas1989.github.io/chess_game",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",

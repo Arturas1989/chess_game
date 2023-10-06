@@ -69,15 +69,15 @@ const handleDragStart = (e, handlerArgs) => {
         promotionClass
     } = handlerArgs;
 
-    const isPromoting = handlePiecePositions(handlerArgs);
+    const result = handlePiecePositions(handlerArgs);
 
     let newStyles = {...initialStyles};
-    if(initialPos.start === initialPos.destination){
+    if(initialPos.start === initialPos.destination || !result.isMoveValid){
       highlightValidMoves(chess, initialPos.start, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
     }
     changeStyles(initialPos.start, idToCoordList, dragStartEndClass, newStyles);
-    changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
-    if(isPromoting){
+    if(result.isMoveValid) changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
+    if(result.isPromoting){
       setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
     }
     onStylesChange(newStyles);
@@ -105,7 +105,7 @@ const handleDragStart = (e, handlerArgs) => {
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
     
     //if it's the same position, disable drag and return early
-    
+    let result = {isPromoting: false, isMoveValid: true};
     let newStyles = {...initialStyles};
     if(initialPos.destination === initialPos.start){
       onPieceClick({
@@ -114,7 +114,7 @@ const handleDragStart = (e, handlerArgs) => {
         prevPos : initialPos.destination
       });
       onStylesChange(newStyles);
-      return;
+      return result;
     } 
 
     if( isMoveValid(chess, initialPos.start, initialPos.destination) ){
@@ -132,7 +132,7 @@ const handleDragStart = (e, handlerArgs) => {
           changeStyles(initialPos.start, preComputedMaps[2], dragStartEndClass, newStyles);
           setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
           onStylesChange(newStyles);
-          return true;
+          return result.isPromoting = true;
         } else {
           chessClone.move({ from: initialPos.start, to: initialPos.destination });
         }
@@ -141,8 +141,16 @@ const handleDragStart = (e, handlerArgs) => {
     } else {
       const newStyles = {...initialStyles};
       onStylesChange(newStyles);
-      return;
+      result.isMoveValid = false;
+      onPieceClick({
+        ...pieceClicked,
+        wasPieceClicked : true,
+        prevPos : initialPos.start
+      });
+      
+      return result;
     }
+    return result;
   }
 
   const handleDrag = (e, handlerArgs) => {

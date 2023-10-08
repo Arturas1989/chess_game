@@ -28,6 +28,7 @@ const MoveList = () => {
     })
 
     if(chess.history().length % 2 === 1){
+      moveRow.push(<BlackMove key={chess.history().length} notation=''/>)
       moveRows.push(
         <div key={moveNumber} className="MoveRow">
           <span className="MoveNumber">{moveNumber}</span>

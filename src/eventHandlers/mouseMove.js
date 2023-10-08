@@ -26,7 +26,6 @@ const handleMouseEnter = (e, handlerArgs) => {
         })
       }
       onStylesChange(newStyles);
-      
     }
   }
 

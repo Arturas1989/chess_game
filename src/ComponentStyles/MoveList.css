@@ -1,0 +1,53 @@
+@import './variables.css';
+
+.MoveList{
+    border: 1px solid black;
+    margin: var(--MoveList-margin);
+    width: var(--MoveListWidth);
+    min-height: var(--MoveListHeight);
+    background-color: white;
+    max-height: var(--BoardWidth);
+    overflow-x: auto;
+}
+
+.MoveRow{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+}
+
+.MoveNumber{
+    display: flex;
+    justify-content: center;
+    width: 10%;
+    padding: var(--moveRowPadding);
+    background-color: rgba(128, 128, 128, 0.3);
+}
+
+.MovesCol{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+  
+.WhiteMoveContainer, .BlackMoveContainer{
+    display: flex;
+    flex-direction: row;
+    width: 50%;
+    border: 1px solid black;
+}
+
+.WhiteMove, .BlackMove{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    padding: var(--moveRowPadding);
+}
+
+.NotationPiece{
+    width: 19px;
+}
+
+.WhiteMoveContainer:hover, .BlackMoveContainer:hover  {
+    background-color: rgba(0, 0, 255, 0.5);
+  }

@@ -1,8 +1,8 @@
 import './App.css';
 import { useState } from 'react';
 import { themes, GameContext } from './themes/themes.js';
-import { Board, PromotionBoard } from './Components/Board';
-import MoveList from './Components/MoveList.jsx';
+import { Board, PromotionBoard } from './Components/ReactComponents/Board';
+import MoveList from './Components/ReactComponents/MoveList.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
 
@@ -10,7 +10,7 @@ import { Chess } from 'chess.js';
 
 const GameContainer = () => {
 
-  const [theme, setTheme] = useState('standard');
+  const [theme, setTheme] = useState({squares: 'standard', pieces: 'standard', background: 'light'});
   const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
   const [chess, setChess] = useState(new Chess());
   const [isReversed, setIsReversed] = useState(false);
@@ -22,7 +22,7 @@ const GameContainer = () => {
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
   let initialStyles = {};
-  setInitialStyles(coords, initialStyles, theme + 'Square');
+  setInitialStyles(coords, initialStyles, theme.squares + 'Square');
   
     
   let preComputedMaps, promotionPiecesList;

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
-import { useGameContext } from '../themes/themes.js';
-import { changeStyles } from '../utilities/utilities.js';
+import { useGameContext } from '../../themes/themes.js';
+import { changeStyles } from '../../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
@@ -72,8 +72,8 @@ const ChessPiece = (props) => {
       setChess(chessClone);
 
       let newStyles = {...initialStyles};
-      changeStyles(promotion.from, preComputedMaps[2], theme + 'DragStartEnd', newStyles);
-      changeStyles(promotion.to, preComputedMaps[2], theme + 'DragStartEnd', newStyles)
+      changeStyles(promotion.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
+      changeStyles(promotion.to, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles)
       setStyles({...newStyles});
       
       setPromotion({

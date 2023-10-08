@@ -77,6 +77,7 @@ const handleDragStart = (e, handlerArgs) => {
     }
     changeStyles(initialPos.start, idToCoordList, dragStartEndClass, newStyles);
     if(result.isMoveValid) changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
+    console.log(result)
     if(result.isPromoting){
       setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
     }
@@ -132,7 +133,8 @@ const handleDragStart = (e, handlerArgs) => {
           changeStyles(initialPos.start, preComputedMaps[2], dragStartEndClass, newStyles);
           setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
           onStylesChange(newStyles);
-          return result.isPromoting = true;
+          result.isPromoting = true;
+          return result;
         } else {
           chessClone.move({ from: initialPos.start, to: initialPos.destination });
         }

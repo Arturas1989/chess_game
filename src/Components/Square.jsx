@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
 import SquareCoord from './SquareCoord.jsx';
 import { useGameContext } from '../themes/themes.js';
@@ -24,6 +24,8 @@ const Square = ({ index }) => {
     setPieceClicked,
     boardBoundaries
   } = useGameContext();
+
+  console.log(1);
 
   const { pieces } = themes[theme];
   const [, coordToIdList, idToCoordList] = preComputedMaps;
@@ -181,4 +183,12 @@ const RegularSquare = ({ pos, source}) => {
   );
 }
 
-export {Square, PromotionSquare, RegularSquare};
+const MemoizedSquare = React.memo(Square);
+const MemoizedPromotionSquare = React.memo(PromotionSquare);
+const MemoizedRegularSquare = React.memo(RegularSquare);
+
+export {
+  MemoizedSquare as Square, 
+  MemoizedPromotionSquare as PromotionSquare, 
+  MemoizedRegularSquare as RegularSquare
+};

@@ -1,0 +1,18 @@
+:root{
+    --board-margin: 30px;
+    --MoveList-margin: 30px;
+    --GameContainerMarginTop: 20px;
+    --GameContainerMarginLeft: 200px;
+    --GameContainerRemainingWidth: calc(100vw - var(--GameContainerMarginLeft)*2);
+    --GameContainerHeight: 590px;
+    --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) - var(--board-margin) * 2) );
+    --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
+    --CoordFontSizeMinimum: max(calc(var(--BoardWidth) * 0.035), 8px);
+    --CoordFontSize: min(var(--CoordFontSizeMinimum), 15px);
+    --MoveListWidth: calc(
+      var(--GameContainerRemainingWidth) - var(--BoardWidth)
+      - 2 * (var(--board-margin) + var(--MoveList-margin))
+      );
+    --MoveListHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
+    --moveRowPadding: 8px;
+}

@@ -1,7 +1,7 @@
 import { useRef, useEffect} from 'react';
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
-import { useGameContext } from '../themes/themes.js';
-import { getPromotionIds } from '../utilities/utilities.js';
+import { useGameContext } from '../../themes/themes.js';
+import { getPromotionIds } from '../../utilities/utilities.js';
 
 const Board = () => {
     const { promotion, setBoardBoundaries } = useGameContext()
@@ -52,7 +52,7 @@ const PromotionBoard = () => {
     promotionPiecesList
   } = useGameContext();
 
-    const { pieces } = themes[theme];
+    const { pieces } = themes[theme.pieces];
     const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
     
 

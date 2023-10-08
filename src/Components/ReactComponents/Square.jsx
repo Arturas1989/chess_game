@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
 import SquareCoord from './SquareCoord.jsx';
-import { useGameContext } from '../themes/themes.js';
-import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../eventHandlers/drag.js';
-import handleMouseEnter from '../eventHandlers/mouseMove.js';
-import handleSquareClick from '../eventHandlers/click.js';
-import { changeStyles, getSquareWidth } from '../utilities/utilities.js';
+import { useGameContext } from '../../themes/themes.js';
+import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../../eventHandlers/drag.js';
+import handleMouseEnter from '../../eventHandlers/mouseMove.js';
+import handleSquareClick from '../../eventHandlers/click.js';
+import { changeStyles, getSquareWidth } from '../../utilities/utilities.js';
 
 const Square = ({ index }) => {
   const {
@@ -27,7 +27,7 @@ const Square = ({ index }) => {
 
   console.log(1);
 
-  const { pieces } = themes[theme];
+  const { pieces } = themes[theme.pieces];
   const [, coordToIdList, idToCoordList] = preComputedMaps;
   
 
@@ -57,7 +57,7 @@ const Square = ({ index }) => {
     onChessChange: setChess,
     idToCoordList: idToCoordList,
     coordToIdList: coordToIdList,
-    themes: themes.standard, 
+    themes: themes[theme.squares], 
     onStylesChange: setStyles, 
     setDragInfo: setDragInfo, 
     dragInfo: dragInfo, 
@@ -70,13 +70,13 @@ const Square = ({ index }) => {
     onPromotionChange: setPromotion,
     preComputedMaps: preComputedMaps,
     promotionPiecesList: promotionPiecesList,
-    squareClass: theme + 'Square',
-    draggingClass: theme + 'Dragging',
-    validMovesEmptyClass: theme + 'ValidMovesEmpty',
-    validMovesTakeClass: theme + 'ValidMovesTake',
-    dragStartEndClass: theme + 'DragStartEnd',
-    clickStartEndClass: theme + 'ClickStartEnd',
-    promotionClass: theme + 'PromotionWhiteSide',
+    squareClass: theme.squares + 'Square',
+    draggingClass: theme.squares + 'Dragging',
+    validMovesEmptyClass: theme.squares + 'ValidMovesEmpty',
+    validMovesTakeClass: theme.squares + 'ValidMovesTake',
+    dragStartEndClass: theme.squares + 'DragStartEnd',
+    clickStartEndClass: theme.squares + 'ClickStartEnd',
+    promotionClass: theme.squares + 'PromotionWhiteSide',
   }
 
   return (

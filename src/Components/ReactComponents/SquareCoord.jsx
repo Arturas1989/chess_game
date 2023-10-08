@@ -1,5 +1,5 @@
-import { useGameContext } from '../themes/themes.js';
-import { getCoordClass, getPromotionIds } from '../utilities/utilities.js';
+import { useGameContext } from '../../themes/themes.js';
+import { getCoordClass, getPromotionIds } from '../../utilities/utilities.js';
 
 
 const SquareCoord = ({ id, squareWidth }) => {
@@ -13,13 +13,13 @@ const SquareCoord = ({ id, squareWidth }) => {
     let squareCoords = [], className;
      
     if(displayCol === idCol){
-        className = getCoordClass(id, idToCoord, theme, 'Row');
+        className = getCoordClass(id, idToCoord, theme.squares, 'Row');
         const rowStyle = {opacity: promotionIds[id] ? '0.3' : '1'};
         squareCoords.push(<span className={className} style={rowStyle} key={0}>{idRow}</span>);
     }
     
     if(displayRow === idRow){
-        className = getCoordClass(id, idToCoord, theme, 'Col');
+        className = getCoordClass(id, idToCoord, theme.squares, 'Col');
         const right = squareWidth * 0.84;
         const down = squareWidth * 0.61;
         const colStyle = {

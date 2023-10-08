@@ -1,22 +1,8 @@
 @import './themes/themes.css';
+@import './ComponentStyles/Board.css';
+@import './ComponentStyles/MoveList.css';
 
-:root{
-  --board-margin: 30px;
-  --MoveList-margin: 30px;
-  --GameContainerMarginTop: 20px;
-  --GameContainerMarginLeft: 200px;
-  --GameContainerRemainingWidth: calc(100vw - var(--GameContainerMarginLeft)*2);
-  --GameContainerHeight: 590px;
-  --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) - var(--board-margin) * 2) );
-  --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
-  --CoordFontSizeMinimum: max(calc(var(--BoardWidth) * 0.035), 8px);
-  --CoordFontSize: min(var(--CoordFontSizeMinimum), 15px);
-  --MoveListWidth: calc(
-    var(--GameContainerRemainingWidth) - var(--BoardWidth)
-    - 2 * (var(--board-margin) + var(--MoveList-margin))
-    );
-  --MoveListHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
-}
+
 
 .GameContainer{
   display: flex;
@@ -29,85 +15,9 @@
   min-height: var(--GameContainerHeight);
 }
 
-.MoveList{
-  border: 1px solid black;
-  margin: var(--MoveList-margin);
-  width: var(--MoveListWidth);
-  min-height: var(--MoveListHeight);
-}
-
-.WhiteMoveContainer{
-  display: flex;
-  flex-direction: row;
-}
-
-.WhiteMove{
-  width: 20px;
-  display: flex;
-  flex-direction: row;
-}
-
-.WhiteMove g {
-  width: 100%;
-}
-
-.Board{
-  display: flex;
-  flex-wrap: wrap;
-  width: var(--BoardWidth);
-  height: var(--BoardWidth);
-  border: 1px solid black;
-  margin: var(--board-margin);
-  
-}
-
-.promotion-board{
-  position: relative;
-  overflow: hidden; 
-  transition: filter 0.3s;
-  /* z-index: -1; */
-}
-
-.promotion-board::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(128, 128, 128, 0.8);
-  filter: grayscale(100%);
-  transition: filter 0.3s;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.standardPromotionWhiteSideWhite,
-.standardPromotionBlackSideBlack,
-.standardPromotionWhiteSideBlack,
-.standardPromotionBlackSideBlack{
-  z-index: 1;
-}
-
-.Square{
-  display: flex;
-  width: 12.5%;
-  height: 12.5%;
-  /* z-index: -1; */
-}
 
 
 
-img{
-  width: 100%;
-  height: 100%;
-}
-
-.coordRow, .coordCol{
-  position: absolute;
-  font-size: var(--CoordFontSize);
-  /* z-index: -1; */
-}
 
 @media (max-width: 1290px){
   :root{

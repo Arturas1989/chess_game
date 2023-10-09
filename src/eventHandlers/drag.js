@@ -94,9 +94,6 @@ const handleDragStart = (e, handlerArgs) => {
       prevPos : initialPos.start
     });
     
-
-    console.log(initialPos.start, initialPos.destination)
-    
     
   }
 

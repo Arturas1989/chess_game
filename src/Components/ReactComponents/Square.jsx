@@ -102,7 +102,7 @@ const Square = ({ index }) => {
             piece={source}
             handleMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
             handleDragStart={(e) => handleDragStart(e, handlerArgs)}
-            handleDragEnd={() => handleDragEnd(handlerArgs)}
+            handleDragEnd={(e) => handleDragEnd(e, handlerArgs)}
             handleDrag={(e) => handleDrag(e, handlerArgs)}
           />
           <SquareCoord id={pos} squareWidth={squareWidth}/>

@@ -54,7 +54,7 @@ const handleDragStart = (e, handlerArgs) => {
     })
   }
 
-  const handleDragEnd = (handlerArgs) => {
+  const handleDragEnd = (e, handlerArgs) => {
     
     
     const {
@@ -78,6 +78,7 @@ const handleDragStart = (e, handlerArgs) => {
     let newStyles = {...initialStyles};
     if(initialPos.start === initialPos.destination || !result.isMoveValid){
       highlightValidMoves(chess, initialPos.start, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
+      
     }
     changeStyles(initialPos.start, idToCoordList, dragStartEndClass, newStyles);
     if(result.isMoveValid) changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
@@ -86,6 +87,16 @@ const handleDragStart = (e, handlerArgs) => {
       setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
     }
     onStylesChange(newStyles);
+
+    onPieceClick({
+      ...pieceClicked,
+      wasPieceClicked: initialPos.start === initialPos.destination,
+      prevPos : initialPos.start
+    });
+    
+
+    console.log(initialPos.start, initialPos.destination)
+    
     
   }
 

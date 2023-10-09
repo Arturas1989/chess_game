@@ -1,4 +1,8 @@
-# Libraries and frameworks
+# Project published at:
+
+[chess_game](https://arturas1989.github.io/chess_game/)
+
+## Libraries and frameworks
 
 - React.js
 - Chess.js

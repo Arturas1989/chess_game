@@ -17,7 +17,7 @@ const handleMouseEnter = (e, handlerArgs) => {
 
     if(pieceClicked.wasPieceClicked){
       let newStyles = {...styles};
-
+      
       highlightValidMoves(chess, pieceClicked.prevPos, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles)
       
       if(isMoveValid(chess, pieceClicked.prevPos, e.target.id)){

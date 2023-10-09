@@ -16,8 +16,6 @@ const GameContainer = () => {
   const [isReversed, setIsReversed] = useState(false);
   const [pieceClicked, setPieceClicked] = useState({});
   const [boardBoundaries, setBoardBoundaries] = useState(null);
-
-  console.log(chess.history())
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   

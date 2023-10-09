@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
 import SquareCoord from './SquareCoord.jsx';
 import { useGameContext } from '../../themes/themes.js';
-import { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart } from '../../eventHandlers/drag.js';
+import { 
+  handleDragStart, 
+  handleDragEnd, 
+  handleDrag, 
+  enableDrag, 
+  preventDragStart 
+} from '../../eventHandlers/drag.js';
 import handleMouseEnter from '../../eventHandlers/mouseMove.js';
 import handleSquareClick from '../../eventHandlers/click.js';
 import { changeStyles, getSquareWidth } from '../../utilities/utilities.js';
@@ -24,8 +30,6 @@ const Square = ({ index }) => {
     setPieceClicked,
     boardBoundaries
   } = useGameContext();
-
-  console.log(1);
 
   const { pieces } = themes[theme.pieces];
   const [, coordToIdList, idToCoordList] = preComputedMaps;

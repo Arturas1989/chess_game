@@ -2,8 +2,6 @@
 @import './ComponentStyles/Board.css';
 @import './ComponentStyles/MoveList.css';
 
-
-
 .GameContainer{
   display: flex;
   border: 1px solid black;
@@ -14,10 +12,6 @@
   width: var(--GameContainerRemainingWidth);
   min-height: var(--GameContainerHeight);
 }
-
-
-
-
 
 @media (max-width: 1290px){
   :root{

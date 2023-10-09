@@ -71,8 +71,6 @@ const handleDragStart = (e, handlerArgs) => {
         promotionClass,
         pieceClicked,
         onPieceClick,
-        dragInfo,
-        setDragInfo
     } = handlerArgs;
 
     const result = handlePiecePositions(handlerArgs);
@@ -88,12 +86,6 @@ const handleDragStart = (e, handlerArgs) => {
       setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
     }
     onStylesChange(newStyles);
-
-    onPieceClick({
-      ...pieceClicked,
-      wasPieceClicked : false,
-      prevPos : initialPos.destination
-    });
     
   }
 

@@ -10,11 +10,14 @@ const handleMouseEnter = (e, handlerArgs) => {
         onPieceClick,
         draggingClass,
         validMovesTakeClass,
-        validMovesEmptyClass
+        validMovesEmptyClass,
+        setDragInfo, 
+        dragInfo
     } = handlerArgs;
 
     if(pieceClicked.wasPieceClicked){
       let newStyles = {...styles};
+
       highlightValidMoves(chess, pieceClicked.prevPos, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles)
       
       if(isMoveValid(chess, pieceClicked.prevPos, e.target.id)){
@@ -27,6 +30,9 @@ const handleMouseEnter = (e, handlerArgs) => {
       }
       onStylesChange(newStyles);
     }
+
+    // disable drag on mouse enter if there is no valid moves
+    if(!chess.moves({square: e.target.id}).length) setDragInfo({...dragInfo, dragEnabled : false});
   }
 
   export default handleMouseEnter;

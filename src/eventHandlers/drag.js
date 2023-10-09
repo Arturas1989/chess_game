@@ -9,8 +9,10 @@ const cloneDeep = require('lodash/cloneDeep');
 
 const enableDrag = (e, handlerArgs) => {
   const { setDragInfo, dragInfo, chess } = handlerArgs;
-  // enable drag on mouse enter, when its disabled on drag end
+
+  // enable drag if there is any valid move
   if(chess.moves({square: e.target.id}).length) setDragInfo({...dragInfo, dragEnabled : true});
+   
 };
 
 const preventDragStart = (e) => {
@@ -66,7 +68,11 @@ const handleDragStart = (e, handlerArgs) => {
         validMovesTakeClass,
         preComputedMaps,
         promotionPiecesList,
-        promotionClass
+        promotionClass,
+        pieceClicked,
+        onPieceClick,
+        dragInfo,
+        setDragInfo
     } = handlerArgs;
 
     const result = handlePiecePositions(handlerArgs);
@@ -77,11 +83,17 @@ const handleDragStart = (e, handlerArgs) => {
     }
     changeStyles(initialPos.start, idToCoordList, dragStartEndClass, newStyles);
     if(result.isMoveValid) changeStyles(initialPos.destination, idToCoordList, dragStartEndClass, newStyles);
-    console.log(result)
+    
     if(result.isPromoting){
       setPromotionStyles(newStyles, initialPos.destination, preComputedMaps, promotionPiecesList, promotionClass);
     }
     onStylesChange(newStyles);
+
+    onPieceClick({
+      ...pieceClicked,
+      wasPieceClicked : false,
+      prevPos : initialPos.destination
+    });
     
   }
 
@@ -210,4 +222,10 @@ const handleDragStart = (e, handlerArgs) => {
     }
   }
 
-  export  { handleDragStart, handleDragEnd, handleDrag, enableDrag, preventDragStart };
+  export  { 
+    handleDragStart, 
+    handleDragEnd, 
+    handleDrag, 
+    enableDrag, 
+    preventDragStart 
+  };

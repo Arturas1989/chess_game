@@ -68,7 +68,7 @@ const King = ({ background }) => {
     )
   }
   
-  const Piece = ({ type }) => {
+  const Piece = ({ type, left, top }) => {
     const viewBoxWidth = '50';
     const viewBoxHeight = '50';
     const { theme } = useGameContext();
@@ -85,7 +85,7 @@ const King = ({ background }) => {
       <svg
         width='100%'
         height='100%'
-        viewBox={`-10 -1 ${viewBoxWidth} ${viewBoxHeight}`}
+        viewBox={`${left} ${top} ${viewBoxWidth} ${viewBoxHeight}`}
         xmlns="http://www.w3.org/2000/svg"
       >
         {componentMap[type]}

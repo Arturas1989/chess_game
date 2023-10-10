@@ -93,8 +93,6 @@ const handleDragStart = (e, handlerArgs) => {
       wasPieceClicked: initialPos.start === initialPos.destination || !result.isMoveValid,
       prevPos : initialPos.start
     });
-    
-    
   }
 
   const handlePiecePositions = (handlerArgs) => {

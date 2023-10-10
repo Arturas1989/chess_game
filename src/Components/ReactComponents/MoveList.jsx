@@ -46,14 +46,25 @@ const MoveList = () => {
 }
 
 const Notation = ({ notation }) => {
-  const {type, notations, space, isPromoting, left, top} = getTypeNotations(notation);
+  const {
+    type, 
+    notations, 
+    textSpace, 
+    pieceSpace, 
+    isPromoting, 
+    left, 
+    top,
+    viewBoxWidth,
+    viewBoxHeight
+  } = getTypeNotations(notation);
 
   let NotationPiece = [
     type && 
-    <div className="NotationPiece">
-      <Piece type={type} left={left} top={top}/>
+    <div key={0} style={{paddingLeft: pieceSpace}} className="NotationPiece">
+      <Piece type={type} left={left} top={top} viewBoxWidth={viewBoxWidth} viewBoxHeight={viewBoxHeight} />
     </div>,
-    <span style={{paddingLeft: space}}>{notations}</span>
+    <span key={1} style={{paddingLeft: textSpace}}>{notations}</span>,
+    notation[notation.length - 1] === '+' ? <span key={2}>+</span> : ''
   ] 
 
   if(isPromoting) [NotationPiece[1], NotationPiece[0]] = [NotationPiece[0], NotationPiece[1]];

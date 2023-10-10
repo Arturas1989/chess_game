@@ -68,9 +68,7 @@ const King = ({ background }) => {
     )
   }
   
-  const Piece = ({ type, left, top }) => {
-    const viewBoxWidth = '50';
-    const viewBoxHeight = '50';
+  const Piece = ({ type, left, top, viewBoxWidth, viewBoxHeight }) => {
     const { theme } = useGameContext();
   
     const componentMap = {

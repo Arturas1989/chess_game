@@ -90,7 +90,7 @@ const handleDragStart = (e, handlerArgs) => {
 
     onPieceClick({
       ...pieceClicked,
-      wasPieceClicked: initialPos.start === initialPos.destination,
+      wasPieceClicked: initialPos.start === initialPos.destination || !result.isMoveValid,
       prevPos : initialPos.start
     });
     

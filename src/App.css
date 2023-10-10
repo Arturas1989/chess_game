@@ -13,13 +13,13 @@
   min-height: var(--GameContainerHeight);
 }
 
-@media (max-width: 1290px){
+@media (max-width: 85em){
   :root{
     --GameContainerMarginLeft: 20px;
   }
 }
 
-@media (max-width: 960px){
+@media (max-width: 63em){
   :root{
     --MoveListWidth: calc(var(--GameContainerRemainingWidth) - 2 *  var(--MoveList-margin));
   }
@@ -31,7 +31,7 @@
   }
 }
 
-@media (max-width: 300px){
+@media (max-width: 20em){
   .Board{
     min-width: 200px;
     min-height: 200px;

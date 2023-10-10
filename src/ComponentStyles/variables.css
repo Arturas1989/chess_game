@@ -2,9 +2,9 @@
     --board-margin: 30px;
     --MoveList-margin: 30px;
     --GameContainerMarginTop: 20px;
-    --GameContainerMarginLeft: 200px;
+    --GameContainerMarginLeft: 13vw;
     --GameContainerRemainingWidth: calc(100vw - var(--GameContainerMarginLeft)*2);
-    --GameContainerHeight: 590px;
+    --GameContainerHeight: 85vh;
     --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) - var(--board-margin) * 2) );
     --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
     --CoordFontSizeMinimum: max(calc(var(--BoardWidth) * 0.035), 8px);

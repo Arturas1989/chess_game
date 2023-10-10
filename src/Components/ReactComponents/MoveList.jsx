@@ -13,9 +13,9 @@ const MoveList = () => {
       moveNumber = Math.floor(i / 2) + 1;
 
       if(i % 2 === 0){
-        moveRow = [<WhiteMove key={i} notation={move}/>];
+        moveRow = [<Move key={i} notation={move}/>];
       } else {
-        moveRow.push(<BlackMove key={i} notation={move}/>)
+        moveRow.push(<Move key={i} notation={move}/>)
         moveRows.push(
           <div key={moveNumber} className="MoveRow">
             <span className="MoveNumber">{moveNumber}</span>
@@ -28,7 +28,7 @@ const MoveList = () => {
     })
 
     if(chess.history().length % 2 === 1){
-      moveRow.push(<BlackMove key={chess.history().length} notation=''/>)
+      moveRow.push(<Move key={chess.history().length} notation=''/>)
       moveRows.push(
         <div key={moveNumber} className="MoveRow">
           <span className="MoveNumber">{moveNumber}</span>
@@ -45,35 +45,37 @@ const MoveList = () => {
     );
 }
 
-const WhiteMove = ({ notation }) => {
-  const {type, notations, space} = getTypeNotations(notation);
+const Notation = ({ notation }) => {
+  const {type, notations, space, isPromoting, left, top} = getTypeNotations(notation);
+
+  let NotationPiece = [
+    type && 
+    <div className="NotationPiece">
+      <Piece type={type} left={left} top={top}/>
+    </div>,
+    <span style={{paddingLeft: space}}>{notations}</span>
+  ] 
+
+  if(isPromoting) [NotationPiece[1], NotationPiece[0]] = [NotationPiece[0], NotationPiece[1]];
+  return (
+    <>
+        {NotationPiece}
+    </>
+    
+  )
+}
+
+const Move = ({ notation }) => {
   
 
   return (
     <div className="WhiteMoveContainer">
       <div className="WhiteMove">
-        {type && <div className="NotationPiece">
-          <Piece width={45} type={type}/>
-        </div>}
-        <span style={{paddingLeft: space}}>{notations}</span>
+        <Notation notation={notation}/>
       </div>
     </div>
   )
 }
 
-const BlackMove = ({ notation }) => {
-  const {type, notations, space} = getTypeNotations(notation);
-
-  return (
-    <div className="BlackMoveContainer">
-      <div className="BlackMove">
-        {type && <div className="NotationPiece">
-          <Piece width={45} type={type}/>
-        </div>}
-        <span style={{paddingLeft: space}}>{notations}</span>
-      </div>
-    </div>
-  )
-}
 
 export default MoveList;

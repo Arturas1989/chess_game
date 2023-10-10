@@ -15,6 +15,7 @@ const preComputed = {
   }
 };
 
+
 const notationSymbols = {
   'K' : '♔',
   'Q' : '♕',
@@ -24,8 +25,15 @@ const notationSymbols = {
 }
 
 const getTypeNotations = (notation) => {
-  let type, notations, space;
-  if(notationSymbols[notation[0]]){
+  let type, notations, space, isPromoting, left = '-10', top = '-1';
+  const lastIndex = notation.length - 1;
+  if(notationSymbols[notation[lastIndex]]){
+    type = notation[lastIndex];
+    notations = notation.substring(0, lastIndex);
+    space = '7px';
+    isPromoting = true;
+    left = '5';
+  } else if (notationSymbols[notation[0]]) {
     type = notation[0];
     notations = notation.substring(1);
   } else {
@@ -33,7 +41,7 @@ const getTypeNotations = (notation) => {
     notations = notation;
     space = '7px';
   }
-  return { type: type, notations: notations, space: space};
+  return { type: type, notations: notations, space: space, isPromoting: isPromoting, left: left, top: top};
 }
 
 const getSquareWidth = (boardBoundaries) => {

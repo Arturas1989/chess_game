@@ -42,17 +42,17 @@ const getTypeNotations = (notation) => {
   if(notationSymbols[notation[lastIndex]]){
     type = notation[lastIndex];
     notations = notation.substring(0, lastIndex);
-    textSpace = '7px';
+    textSpace = '6px';
     isPromoting = true;
     left = '-3';
   } else if (notationSymbols[notation[0]]) {
     type = notation[0];
     notations = notation.substring(1);
-    pieceSpace = '2px';
+    pieceSpace = '-2px';
   } else {
     type = '';
     notations = notation;
-    textSpace = '7px';
+    textSpace = '6px';
   }
   return { 
     type: type, 

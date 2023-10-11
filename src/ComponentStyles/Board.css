@@ -3,7 +3,7 @@
     flex-wrap: wrap;
     width: var(--BoardWidth);
     height: var(--BoardWidth);
-    border: 1px solid black;
+    /* border: 1px solid black; */
     margin: var(--board-margin);
     
   }

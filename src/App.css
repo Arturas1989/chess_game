@@ -4,6 +4,7 @@
 
 .GameContainer{
   display: flex;
+  align-items: center;
   border: 1px solid black;
   margin-top: var(--GameContainerMarginTop);
   margin-bottom: var(--GameContainerMarginTop);
@@ -19,7 +20,7 @@
   }
 }
 
-@media (max-width: 63em){
+@media (max-width: 70em){
   :root{
     --MoveListWidth: calc(var(--GameContainerRemainingWidth) - 2 *  var(--MoveList-margin));
   }
@@ -44,6 +45,7 @@
 
   .GameContainer{
     min-width: 300px;
+    align-items: normal;
   }
 }
 

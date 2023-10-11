@@ -38,6 +38,7 @@ const getTypeNotations = (notation) => {
   if(notationSymbols[notation[lastIndex - 1]]){
     notation = notation.substring(0, lastIndex);
     lastIndex--;
+    isPromoting = true;
   } 
   if(notationSymbols[notation[lastIndex]]){
     type = notation[lastIndex];

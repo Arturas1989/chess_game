@@ -64,7 +64,7 @@ const Notation = ({ notation }) => {
       <Piece type={type} left={left} top={top} viewBoxWidth={viewBoxWidth} viewBoxHeight={viewBoxHeight} />
     </div>,
     <span key={1} style={{paddingLeft: textSpace}}>{notations}</span>,
-    notation[notation.length - 1] === '+' ? <span key={2}>+</span> : ''
+    isPromoting ? <span key={2}>{notation[notation.length - 1]}</span> : ''
   ] 
 
   if(isPromoting) [NotationPiece[1], NotationPiece[0]] = [NotationPiece[0], NotationPiece[1]];

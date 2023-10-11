@@ -25,23 +25,46 @@ const notationSymbols = {
 }
 
 const getTypeNotations = (notation) => {
-  let type, notations, space, isPromoting, left = '-10', top = '-1';
-  const lastIndex = notation.length - 1;
+  let type, 
+  notations, 
+  textSpace, 
+  pieceSpace, 
+  isPromoting, 
+  left = '-8', 
+  top = '-1', 
+  viewBoxWidth = '50',
+  viewBoxHeight = '50',
+  lastIndex = notation.length - 1;
+  if(notationSymbols[notation[lastIndex - 1]]){
+    notation = notation.substring(0, lastIndex);
+    lastIndex--;
+  } 
   if(notationSymbols[notation[lastIndex]]){
     type = notation[lastIndex];
     notations = notation.substring(0, lastIndex);
-    space = '7px';
+    textSpace = '6px';
     isPromoting = true;
-    left = '5';
+    left = '-3';
   } else if (notationSymbols[notation[0]]) {
     type = notation[0];
     notations = notation.substring(1);
+    pieceSpace = '-2px';
   } else {
     type = '';
     notations = notation;
-    space = '7px';
+    textSpace = '6px';
   }
-  return { type: type, notations: notations, space: space, isPromoting: isPromoting, left: left, top: top};
+  return { 
+    type: type, 
+    notations: notations, 
+    textSpace: textSpace,
+    pieceSpace: pieceSpace, 
+    isPromoting: isPromoting, 
+    left: left, 
+    top: top,
+    viewBoxWidth: viewBoxWidth,
+    viewBoxHeight: viewBoxHeight
+  };
 }
 
 const getSquareWidth = (boardBoundaries) => {

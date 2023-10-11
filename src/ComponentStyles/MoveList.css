@@ -3,7 +3,7 @@
 .MoveList{
     border: 1px solid black;
     margin: var(--MoveList-margin);
-    width: var(--MoveListWidth);
+    width: min(var(--MoveListWidth), var(--BoardWidth));
     min-height: var(--MoveListHeight);
     
     max-height: var(--BoardWidth);

@@ -4,7 +4,8 @@ import { createContext, useContext } from 'react';
 const GameContext = createContext();
 
 const themes = {
-    standard : standard
+    standard : standard,
+    moveListFontSize: '16px'
 };
 
 function useGameContext(){

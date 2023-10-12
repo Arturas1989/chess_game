@@ -1,6 +1,7 @@
 import { useGameContext } from '../../themes/themes.js';
 import notationPiecesFonts from '../../themes/notationPiecesFonts.js';
 
+
 const King = ({ background }) => {
     return (
       <g width="100%" height="100%" fill="none" fillRule="evenodd" stroke={notationPiecesFonts[background]} strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5">
@@ -68,7 +69,7 @@ const King = ({ background }) => {
     )
   }
   
-  const Piece = ({ type, left, top, viewBoxWidth, viewBoxHeight }) => {
+  const Piece = ({ pieceType, left, top, viewBoxWidth, viewBoxHeight }) => {
     const { theme } = useGameContext();
   
     const componentMap = {
@@ -86,7 +87,7 @@ const King = ({ background }) => {
         viewBox={`${left} ${top} ${viewBoxWidth} ${viewBoxHeight}`}
         xmlns="http://www.w3.org/2000/svg"
       >
-        {componentMap[type]}
+        {componentMap[pieceType]}
       </svg>
     );
   }

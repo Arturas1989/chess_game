@@ -24,47 +24,42 @@ const notationSymbols = {
   'N' : '♘'
 }
 
+
+
 const getTypeNotations = (notation) => {
-  let type, 
+  let pieceType,
+  svgType, 
   notations, 
-  textSpace, 
-  pieceSpace, 
-  isPromoting, 
-  left = '-8', 
-  top = '-1', 
-  viewBoxWidth = '50',
-  viewBoxHeight = '50',
+  isPromoting,
+  spanRight,
   lastIndex = notation.length - 1;
   if(notationSymbols[notation[lastIndex - 1]]){
     notation = notation.substring(0, lastIndex);
     lastIndex--;
+    svgType = 'middle';
     isPromoting = true;
+    spanRight = true;
   } 
   if(notationSymbols[notation[lastIndex]]){
-    type = notation[lastIndex];
+    pieceType = notation[lastIndex];
+    svgType = 'right';
     notations = notation.substring(0, lastIndex);
-    textSpace = '6px';
     isPromoting = true;
-    left = '-3';
   } else if (notationSymbols[notation[0]]) {
-    type = notation[0];
+    pieceType = notation[0];
+    svgType = 'left';
     notations = notation.substring(1);
-    pieceSpace = '-2px';
   } else {
-    type = '';
+    pieceType = '';
+    svgType = 'none';
     notations = notation;
-    textSpace = '6px';
   }
   return { 
-    type: type, 
+    pieceType: pieceType,
+    svgType: svgType, 
     notations: notations, 
-    textSpace: textSpace,
-    pieceSpace: pieceSpace, 
-    isPromoting: isPromoting, 
-    left: left, 
-    top: top,
-    viewBoxWidth: viewBoxWidth,
-    viewBoxHeight: viewBoxHeight
+    isPromoting: isPromoting,
+    spanRight: spanRight
   };
 }
 

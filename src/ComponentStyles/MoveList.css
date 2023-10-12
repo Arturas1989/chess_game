@@ -44,10 +44,6 @@
     padding: var(--moveRowPadding);
 }
 
-.NotationPiece{
-    width: 19px;
-}
-
 .WhiteMoveContainer:hover, .BlackMoveContainer:hover  {
     background-color: rgba(0, 0, 255, 0.5);
   }

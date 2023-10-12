@@ -36,6 +36,7 @@ const GameContainer = () => {
   const [styles, setStyles] = useState({...initialStyles});
 
   const GameContextValues = {
+
     themes,
     theme,
     setTheme,

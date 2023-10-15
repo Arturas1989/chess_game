@@ -45,8 +45,6 @@ const PromotionBoard = () => {
         {Array.from({length: 64}, (_,i) =>
           { 
             const [, coordToIdList, ] = preComputedMaps;
-    
-  
             const row = Math.floor(i / 8);
             const col = i % 8;
             const pos = coordToIdList[row + ',' + col];

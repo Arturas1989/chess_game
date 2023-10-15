@@ -2,15 +2,17 @@ import {
   changeStyles, 
   highlightValidMoves, 
   isMoveValid, 
-  setPromotionStyles 
+  setPromotionStyles,
+  setMoves
 } from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
 const enableDrag = (e, handlerArgs) => {
-  const { setDragInfo, dragInfo, chess } = handlerArgs;
+  const { setDragInfo, dragInfo, chessHistory, currMove } = handlerArgs;
 
   // enable drag if there is any valid move
+  const chess = chessHistory[currMove];
   if(chess.moves({square: e.target.id}).length) setDragInfo({...dragInfo, dragEnabled : true});
    
 };
@@ -22,7 +24,8 @@ const preventDragStart = (e) => {
 const handleDragStart = (e, handlerArgs) => {
     const { 
         initialStyles, 
-        chess, 
+        chessHistory,
+        currMove, 
         idToCoordList,
         onStylesChange, 
         setDragInfo, 
@@ -35,6 +38,7 @@ const handleDragStart = (e, handlerArgs) => {
     } = handlerArgs;
 
     let newStyles = {...initialStyles};
+    const chess = chessHistory[currMove];
     highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
     
     
@@ -58,7 +62,8 @@ const handleDragStart = (e, handlerArgs) => {
     
     
     const {
-        chess,
+        chessHistory,
+        currMove,
         initialStyles, 
         idToCoordList, 
         onStylesChange, 
@@ -74,6 +79,7 @@ const handleDragStart = (e, handlerArgs) => {
     } = handlerArgs;
 
     const result = handlePiecePositions(handlerArgs);
+    const chess = chessHistory[currMove];
 
     let newStyles = {...initialStyles};
     if(initialPos.start === initialPos.destination || !result.isMoveValid){
@@ -100,8 +106,10 @@ const handleDragStart = (e, handlerArgs) => {
         promotion,
         onPromotionChange,
         initialStyles, 
-        chess,
-        onChessChange,
+        chessHistory,
+        setChessHistory,
+        currMove,
+        setCurrMove,
         onStylesChange, 
         setDragInfo, 
         dragInfo, 
@@ -114,6 +122,7 @@ const handleDragStart = (e, handlerArgs) => {
         dragStartEndClass
     } = handlerArgs;
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
+    const chess = chessHistory[currMove];
     
     //if it's the same position, disable drag and return early
     let result = {isPromoting: false, isMoveValid: true};
@@ -149,7 +158,8 @@ const handleDragStart = (e, handlerArgs) => {
           chessClone.move({ from: initialPos.start, to: initialPos.destination });
         }
       
-      onChessChange(chessClone);
+      setChessHistory([...chessHistory.slice(0, currMove + 1), chessClone])
+      setCurrMove(currMove + 1);
     } else {
       const newStyles = {...initialStyles};
       onStylesChange(newStyles);
@@ -168,7 +178,8 @@ const handleDragStart = (e, handlerArgs) => {
   const handleDrag = (e, handlerArgs) => {
     const {
         styles, 
-        chess, 
+        chessHistory,
+        currMove,
         idToCoordList,
         coordToIdList, 
         onStylesChange, 
@@ -181,8 +192,10 @@ const handleDragStart = (e, handlerArgs) => {
         draggingClass
     } = handlerArgs;
 
+    
+
     if(dragInfo.isDragging){
-      
+      const chess = chessHistory[currMove];
       let newStyles = {...styles};
 
       //change previous cell color back to original

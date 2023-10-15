@@ -4,14 +4,16 @@ const cloneDeep = require('lodash/cloneDeep');
 
 const handleSquareClick = (e, handlerArgs) => {
     const { 
-        initialStyles, 
-        chess, 
+        initialStyles,
+        chessHistory,
+        setChessHistory,
+        currMove,
+        setCurrMove,
         idToCoordList, 
         onStylesChange, 
         dragInfo,
         pieceClicked,
         onPieceClick,
-        onChessChange,
         squareClass,
         validMovesEmptyClass,
         validMovesTakeClass,
@@ -22,6 +24,8 @@ const handleSquareClick = (e, handlerArgs) => {
         promotionClass,
         promotionPiecesList
     } = handlerArgs;
+
+    const chess = chessHistory[currMove];
 
     if(!dragInfo.isDragging){
       let newStyles = {...initialStyles};
@@ -76,7 +80,9 @@ const handleSquareClick = (e, handlerArgs) => {
           }
           chessClone.move({ from: pieceClicked.prevPos, to: e.target.id });
           
-          onChessChange(chessClone);
+          const nextMove = currMove + 1;
+          setChessHistory([...chessHistory.slice(0, nextMove), chessClone]);
+          setCurrMove(nextMove);
         } else {
           newStyles = {...initialStyles};
           onStylesChange(newStyles);

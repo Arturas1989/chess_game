@@ -1,4 +1,4 @@
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import Piece from './NotationPieces.jsx';
 import { getTypeNotations, changeStyles } from '../../utilities/utilities.js';
 import fontSizeSVG from '../../utilities/fontSizeSVG.js';

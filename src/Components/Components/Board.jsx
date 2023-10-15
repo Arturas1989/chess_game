@@ -1,5 +1,5 @@
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import { getPromotionIds } from '../../utilities/utilities.js';
 import useBoardRef from '../../hooks/useBoardRef.jsx';
 

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import { changeStyles } from '../../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');

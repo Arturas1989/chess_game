@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ChessPiece, DragEnablingPiece, PromotionPiece, RegularPiece } from './ChessPiece.jsx';
 import SquareCoord from './SquareCoord.jsx';
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import { 
   handleDragStart, 
   handleDragEnd, 

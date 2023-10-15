@@ -1,4 +1,4 @@
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import { getCoordClass, getPromotionIds } from '../../utilities/utilities.js';
 
 

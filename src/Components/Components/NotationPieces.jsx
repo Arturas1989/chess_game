@@ -1,4 +1,4 @@
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import notationPiecesFonts from '../../themes/notationPiecesFonts.js';
 
 

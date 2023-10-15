@@ -1,15 +1,14 @@
 import './App.css';
-import { useState } from 'react';
-import { themes, GameContext } from './themes/themes.js';
+import { useState, createContext, useContext } from 'react';
+import themes from './themes/themes.js';
 import { Board, PromotionBoard } from './Components/Components/Board';
 import MoveList from './Components/Components/MoveList.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
 
+const GameContext = createContext();
 
-
-const GameContainer = () => {
-
+const GameApp = () => {
   const [theme, setTheme] = useState({squares: 'standard', pieces: 'standard', background: 'light'});
   const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
   const [chessHistory, setChessHistory] = useState([new Chess()]);
@@ -59,11 +58,18 @@ const GameContainer = () => {
     boardBoundaries, 
     setBoardBoundaries
   }
-  
+
   return (
     <GameContext.Provider value={GameContextValues}>
+      <GameContainer isPromoting={promotion.isPromoting} />
+    </GameContext.Provider>
+  )
+}
+
+const GameContainer = ({ isPromoting }) => {
+  return (
       <div className="GameContainer">
-        {promotion.isPromoting ?
+        {isPromoting ?
           <PromotionBoard/>
           :
           <Board/>
@@ -71,8 +77,12 @@ const GameContainer = () => {
         
         <MoveList />
       </div>
-    </GameContext.Provider>
   );
 }
 
-export default GameContainer;
+function useGameContext(){
+    const context = useContext(GameContext);
+    return context;
+}
+
+export {GameApp, useGameContext};

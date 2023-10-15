@@ -1,31 +1,13 @@
-import { useRef, useEffect} from 'react';
 import { Square, PromotionSquare, RegularSquare } from './Square.jsx';
-import { useGameContext } from '../../themes/themes.js';
+import { useGameContext } from '../../GameApp.js';
 import { getPromotionIds } from '../../utilities/utilities.js';
+import useBoardRef from '../../hooks/useBoardRef.jsx';
 
 const Board = () => {
-    const { promotion, setBoardBoundaries } = useGameContext()
+    const { promotion } = useGameContext()
 
     // using useRef to create reference to the board component
-    const boardRef = useRef(null);
-    
-
-    const updateBoardBoundaries = () => {
-      if (boardRef.current) {
-        setBoardBoundaries(boardRef.current.getBoundingClientRect());
-      }
-    }
-
-    useEffect(() => {
-      updateBoardBoundaries();
-    });
-
-    useEffect(() => {
-      window.addEventListener('resize', updateBoardBoundaries);
-      return () => {
-          window.removeEventListener('resize', updateBoardBoundaries);
-      };
-    });
+    const boardRef = useBoardRef();
 
 
     return (
@@ -63,8 +45,6 @@ const PromotionBoard = () => {
         {Array.from({length: 64}, (_,i) =>
           { 
             const [, coordToIdList, ] = preComputedMaps;
-    
-  
             const row = Math.floor(i / 8);
             const col = i % 8;
             const pos = coordToIdList[row + ',' + col];

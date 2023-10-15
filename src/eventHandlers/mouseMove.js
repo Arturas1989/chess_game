@@ -3,7 +3,8 @@ import { changeStyles, isMoveValid, highlightValidMoves } from '../utilities/uti
 const handleMouseEnter = (e, handlerArgs) => {
     const {
         styles, 
-        chess, 
+        chessHistory,
+        currMove,
         idToCoordList, 
         onStylesChange,
         pieceClicked,
@@ -15,6 +16,7 @@ const handleMouseEnter = (e, handlerArgs) => {
         dragInfo
     } = handlerArgs;
 
+    const chess = chessHistory[currMove]
     if(pieceClicked.wasPieceClicked){
       let newStyles = {...styles};
       

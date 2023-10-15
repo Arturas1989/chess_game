@@ -75,6 +75,7 @@ const getCoordClass = (id, idToCoord, theme, coordType) => {
 }
 
 const getSquareType = (id, idToCoord) => {
+  
   const [row, col] = idToCoord[id].split(',');
   const index = parseInt(row) * 8 + parseInt(col);
   return index % 2 === row % 2 ? 'White' : 'Black';
@@ -173,4 +174,5 @@ export  {
   getPromotionIds, 
   setInitialStyles,
   setPromotionStyles,
-  changePromotionStyles };
+  changePromotionStyles
+ };

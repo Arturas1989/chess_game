@@ -57,8 +57,10 @@ const ChessPiece = (props) => {
     const {
       promotion, 
       setPromotion, 
-      chess, 
-      setChess, 
+      chessHistory,
+      setChessHistory, 
+      currMove,
+      setCurrMove,
       initialStyles, 
       setStyles, 
       preComputedMaps,
@@ -67,9 +69,11 @@ const ChessPiece = (props) => {
 
     const handleClick = (e) => {
       const pieceType = e.currentTarget.getAttribute('piece-type');
+      const chess = chessHistory[currMove];
       const chessClone = cloneDeep(chess);
       chessClone.move({from: promotion.from, to: promotion.to, promotion: pieceType});
-      setChess(chessClone);
+      setChessHistory([...chessHistory, chessClone]);
+      setCurrMove(currMove + 1);
 
       let newStyles = {...initialStyles};
       changeStyles(promotion.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);

@@ -19,8 +19,10 @@ const Square = ({ index }) => {
     theme,
     promotion, 
     setPromotion,
-    chess,
-    setChess,
+    currMove,
+    setCurrMove,
+    chessHistory,
+    setChessHistory,
     preComputedMaps,
     promotionPiecesList,
     styles,
@@ -33,8 +35,8 @@ const Square = ({ index }) => {
 
   const { pieces } = themes[theme.pieces];
   const [, coordToIdList, idToCoordList] = preComputedMaps;
-  
-
+  const chess = chessHistory[currMove];
+  // console.log(chessHistory, currMove, chess);
   const row = Math.floor(index / 8);
   const col = index % 8;
   const pos = coordToIdList[row + ',' + col];
@@ -57,8 +59,10 @@ const Square = ({ index }) => {
   const handlerArgs = {
     initialStyles: initialStyles,
     styles: styles, 
-    chess: chess,
-    onChessChange: setChess,
+    currMove: currMove,
+    setCurrMove: setCurrMove,
+    chessHistory: chessHistory,
+    setChessHistory: setChessHistory,
     idToCoordList: idToCoordList,
     coordToIdList: coordToIdList,
     themes: themes[theme.squares], 

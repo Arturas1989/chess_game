@@ -18,14 +18,14 @@ const Board = () => {
 
     useEffect(() => {
       updateBoardBoundaries();
-    }, []);
+    });
 
     useEffect(() => {
       window.addEventListener('resize', updateBoardBoundaries);
       return () => {
           window.removeEventListener('resize', updateBoardBoundaries);
       };
-    }, []);
+    });
 
 
     return (
@@ -47,14 +47,15 @@ const PromotionBoard = () => {
     themes,
     theme,
     promotion,
-    chess,
+    chessHistory,
+    currMove,
     preComputedMaps,
     promotionPiecesList
   } = useGameContext();
 
     const { pieces } = themes[theme.pieces];
     const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
-    
+    const chess = chessHistory[currMove];
 
     return (
       <div className={'Board promotion-board'}>

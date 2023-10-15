@@ -35,6 +35,11 @@
     flex-direction: row;
     width: 50%;
     border: 1px solid black;
+    cursor: pointer;
+}
+
+.WhiteMoveContainer *, .BlackMoveContainer * {
+    pointer-events: none;
 }
 
 .WhiteMove, .BlackMove{
@@ -46,4 +51,8 @@
 
 .WhiteMoveContainer:hover, .BlackMoveContainer:hover  {
     background-color: rgba(0, 0, 255, 0.5);
-  }
+}
+
+.currMove {
+    background-color: rgba(0, 0, 255, 0.2);
+}

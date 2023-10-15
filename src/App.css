@@ -1,6 +1,6 @@
 @import './themes/themes.css';
-@import './ComponentStyles/Board.css';
-@import './ComponentStyles/MoveList.css';
+@import './Components/ComponentStyles/Board.css';
+@import './Components/ComponentStyles/MoveList.css';
 
 .GameContainer{
   display: flex;

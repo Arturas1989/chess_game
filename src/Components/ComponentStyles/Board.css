@@ -1,3 +1,7 @@
+.Board, .promotion-board{
+  user-select: none;
+}
+
 .Board{
   display: flex;
   flex-wrap: wrap;

@@ -30,7 +30,7 @@
     width: 90%;
 }
   
-.WhiteMoveContainer, .BlackMoveContainer{
+.MoveContainer{
     display: flex;
     flex-direction: row;
     width: 50%;
@@ -38,18 +38,18 @@
     cursor: pointer;
 }
 
-.WhiteMoveContainer *, .BlackMoveContainer * {
+.MoveContainer * {
     pointer-events: none;
 }
 
-.WhiteMove, .BlackMove{
+.Move{
     width: 100%;
     display: flex;
     flex-direction: row;
     padding: var(--moveRowPadding);
 }
 
-.WhiteMoveContainer:hover, .BlackMoveContainer:hover  {
+.MoveContainer:hover{
     background-color: rgba(0, 0, 255, 0.5);
 }
 

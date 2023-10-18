@@ -24,7 +24,12 @@ const notationSymbols = {
   'N' : '♘'
 }
 
-
+const setVariant = (newChessVariants, currLine, currMove, chessClone, setChessVariants, setCurrVariant) => {
+  const moves = newChessVariants[currLine]['moves'];
+  newChessVariants[currLine]['moves'] = [...moves.slice(0, currMove + 1), chessClone];
+  setChessVariants(newChessVariants);
+  setCurrVariant({'currLine' : 'line1', 'currMove' : currMove + 1});
+}
 
 const getTypeNotations = (notation) => {
   let pieceType,
@@ -174,5 +179,6 @@ export  {
   getPromotionIds, 
   setInitialStyles,
   setPromotionStyles,
-  changePromotionStyles
+  changePromotionStyles,
+  setVariant
  };

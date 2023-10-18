@@ -1,14 +1,20 @@
-import { changeStyles, setPromotionStyles, highlightValidMoves, isMoveValid } from '../utilities/utilities.js';
+import { 
+  changeStyles, 
+  setPromotionStyles, 
+  highlightValidMoves, 
+  isMoveValid, 
+  setVariant 
+} from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
 const handleSquareClick = (e, handlerArgs) => {
     const { 
         initialStyles,
-        chessHistory,
-        setChessHistory,
-        currMove,
-        setCurrMove,
+        chessVariants,
+        setChessVariants,
+        currVariant,
+        setCurrVariant,
         idToCoordList, 
         onStylesChange, 
         dragInfo,
@@ -25,7 +31,8 @@ const handleSquareClick = (e, handlerArgs) => {
         promotionPiecesList
     } = handlerArgs;
 
-    const chess = chessHistory[currMove];
+    const {currLine, currMove} = currVariant
+    const chess = chessVariants[currLine]['moves'][currMove];
 
     if(!dragInfo.isDragging){
       let newStyles = {...initialStyles};
@@ -80,9 +87,8 @@ const handleSquareClick = (e, handlerArgs) => {
           }
           chessClone.move({ from: pieceClicked.prevPos, to: e.target.id });
           
-          const nextMove = currMove + 1;
-          setChessHistory([...chessHistory.slice(0, nextMove), chessClone]);
-          setCurrMove(nextMove);
+          let newChessVariants = cloneDeep(chessVariants);
+          setVariant(newChessVariants, currLine, currMove, chessClone, setChessVariants, setCurrVariant);
         } else {
           newStyles = {...initialStyles};
           onStylesChange(newStyles);

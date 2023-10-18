@@ -19,10 +19,10 @@ const Square = ({ index }) => {
     theme,
     promotion, 
     setPromotion,
-    currMove,
-    setCurrMove,
-    chessHistory,
-    setChessHistory,
+    currVariant,
+    setCurrVariant,
+    chessVariants,
+    setChessVariants,
     preComputedMaps,
     promotionPiecesList,
     styles,
@@ -35,14 +35,13 @@ const Square = ({ index }) => {
 
   const { pieces } = themes[theme.pieces];
   const [, coordToIdList, idToCoordList] = preComputedMaps;
-  const chess = chessHistory[currMove];
-  // console.log(chessHistory, currMove, chess);
+  const {currLine, currMove} = currVariant;
+  const chess = chessVariants[currLine]['moves'][currMove];
   const row = Math.floor(index / 8);
   const col = index % 8;
   const pos = coordToIdList[row + ',' + col];
   const squareInfo = chess.get(pos);
-  let source;
-  source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
+  const source = squareInfo ? pieces[squareInfo.color][squareInfo.type] : '';
 
   const squareWidth = getSquareWidth(boardBoundaries);
 
@@ -59,10 +58,10 @@ const Square = ({ index }) => {
   const handlerArgs = {
     initialStyles: initialStyles,
     styles: styles, 
-    currMove: currMove,
-    setCurrMove: setCurrMove,
-    chessHistory: chessHistory,
-    setChessHistory: setChessHistory,
+    currVariant: currVariant,
+    setCurrVariant: setCurrVariant,
+    chessVariants: chessVariants,
+    setChessVariants: setChessVariants,
     idToCoordList: idToCoordList,
     coordToIdList: coordToIdList,
     themes: themes[theme.squares], 

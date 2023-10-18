@@ -30,7 +30,7 @@
     width: 90%;
 }
   
-.WhiteMoveContainer, .BlackMoveContainer{
+.RegularMoveContainer{
     display: flex;
     flex-direction: row;
     width: 50%;
@@ -38,18 +38,38 @@
     cursor: pointer;
 }
 
-.WhiteMoveContainer *, .BlackMoveContainer * {
+.RegularMoveContainer * {
     pointer-events: none;
 }
 
-.WhiteMove, .BlackMove{
+.RegularMove{
     width: 100%;
     display: flex;
     flex-direction: row;
     padding: var(--moveRowPadding);
 }
 
-.WhiteMoveContainer:hover, .BlackMoveContainer:hover  {
+.Variants{
+    display: flex;
+    flex-direction: column;
+}
+
+.VariantLine{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.VariantMove{
+    display: flex;
+    flex-direction: row;
+}
+
+.VariantMoveNumber{
+    margin: 0px 5px;
+}
+
+.MoveContainer:hover{
     background-color: rgba(0, 0, 255, 0.5);
 }
 

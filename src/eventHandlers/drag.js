@@ -3,16 +3,17 @@ import {
   highlightValidMoves, 
   isMoveValid, 
   setPromotionStyles,
-  setMoves
+  setVariant
 } from '../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
 const enableDrag = (e, handlerArgs) => {
-  const { setDragInfo, dragInfo, chessHistory, currMove } = handlerArgs;
+  const { setDragInfo, dragInfo, chessVariants, currVariant } = handlerArgs;
 
   // enable drag if there is any valid move
-  const chess = chessHistory[currMove];
+  const {currLine, currMove} = currVariant;
+  const chess = chessVariants[currLine]['moves'][currMove];
   if(chess.moves({square: e.target.id}).length) setDragInfo({...dragInfo, dragEnabled : true});
    
 };
@@ -24,8 +25,8 @@ const preventDragStart = (e) => {
 const handleDragStart = (e, handlerArgs) => {
     const { 
         initialStyles, 
-        chessHistory,
-        currMove, 
+        chessVariants,
+        currVariant, 
         idToCoordList,
         onStylesChange, 
         setDragInfo, 
@@ -38,7 +39,8 @@ const handleDragStart = (e, handlerArgs) => {
     } = handlerArgs;
 
     let newStyles = {...initialStyles};
-    const chess = chessHistory[currMove];
+    const {currLine, currMove} = currVariant
+    const chess = chessVariants[currLine]['moves'][currMove];
     highlightValidMoves(chess, e.target.id, idToCoordList, validMovesEmptyClass, validMovesTakeClass, newStyles);
     
     
@@ -62,8 +64,8 @@ const handleDragStart = (e, handlerArgs) => {
     
     
     const {
-        chessHistory,
-        currMove,
+        chessVariants,
+        currVariant,
         initialStyles, 
         idToCoordList, 
         onStylesChange, 
@@ -79,7 +81,8 @@ const handleDragStart = (e, handlerArgs) => {
     } = handlerArgs;
 
     const result = handlePiecePositions(handlerArgs);
-    const chess = chessHistory[currMove];
+    const {currLine, currMove} = currVariant
+    const chess = chessVariants[currLine]['moves'][currMove];
 
     let newStyles = {...initialStyles};
     if(initialPos.start === initialPos.destination || !result.isMoveValid){
@@ -106,10 +109,10 @@ const handleDragStart = (e, handlerArgs) => {
         promotion,
         onPromotionChange,
         initialStyles, 
-        chessHistory,
-        setChessHistory,
-        currMove,
-        setCurrMove,
+        chessVariants,
+        setChessVariants,
+        currVariant,
+        setCurrVariant,
         onStylesChange, 
         setDragInfo, 
         dragInfo, 
@@ -122,7 +125,8 @@ const handleDragStart = (e, handlerArgs) => {
         dragStartEndClass
     } = handlerArgs;
     setDragInfo({...dragInfo, dragEnabled : false, isDragging : false});
-    const chess = chessHistory[currMove];
+    const {currLine, currMove} = currVariant
+    const chess = chessVariants[currLine]['moves'][currMove];
     
     //if it's the same position, disable drag and return early
     let result = {isPromoting: false, isMoveValid: true};
@@ -158,8 +162,9 @@ const handleDragStart = (e, handlerArgs) => {
           chessClone.move({ from: initialPos.start, to: initialPos.destination });
         }
       
-      setChessHistory([...chessHistory.slice(0, currMove + 1), chessClone])
-      setCurrMove(currMove + 1);
+      let newChessVariants = cloneDeep(chessVariants);
+      setVariant(newChessVariants, currLine, currMove, chessClone, setChessVariants, setCurrVariant);
+
     } else {
       const newStyles = {...initialStyles};
       onStylesChange(newStyles);
@@ -178,8 +183,8 @@ const handleDragStart = (e, handlerArgs) => {
   const handleDrag = (e, handlerArgs) => {
     const {
         styles, 
-        chessHistory,
-        currMove,
+        chessVariants,
+        currVariant,
         idToCoordList,
         coordToIdList, 
         onStylesChange, 
@@ -195,7 +200,8 @@ const handleDragStart = (e, handlerArgs) => {
     
 
     if(dragInfo.isDragging){
-      const chess = chessHistory[currMove];
+      const {currLine, currMove} = currVariant
+      const chess = chessVariants[currLine]['moves'][currMove];
       let newStyles = {...styles};
 
       //change previous cell color back to original

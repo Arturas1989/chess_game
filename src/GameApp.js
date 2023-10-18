@@ -11,8 +11,15 @@ const GameContext = createContext();
 const GameApp = () => {
   const [theme, setTheme] = useState({squares: 'standard', pieces: 'standard', background: 'light'});
   const [promotion, setPromotion] = useState({isPromoting: false, from: '', to: '', pieceType: ''});
-  const [chessHistory, setChessHistory] = useState([new Chess()]);
-  const [currMove, setCurrMove] = useState(0);
+  const [chessVariants, setChessVariants] = useState({
+    'line1' : {
+      'moves' : [new Chess()],
+      'fromMove' : 0,
+      'fromLine' : 'line1'
+    },
+    'lastLine' : 1
+  });
+  const [currVariant, setCurrVariant] = useState({'currLine' : 'line1', 'currMove' : 0});
   const [isReversed, setIsReversed] = useState(false);
   const [pieceClicked, setPieceClicked] = useState({});
   const [boardBoundaries, setBoardBoundaries] = useState(null);
@@ -42,10 +49,10 @@ const GameApp = () => {
     setTheme,
     promotion, 
     setPromotion,
-    currMove,
-    setCurrMove,
-    chessHistory,
-    setChessHistory,
+    currVariant,
+    setCurrVariant,
+    chessVariants,
+    setChessVariants,
     isReversed, 
     setIsReversed,
     preComputedMaps,

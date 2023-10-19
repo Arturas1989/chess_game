@@ -25,7 +25,7 @@ const Variants = () => {
       (notation, i) => (
         <React.Fragment key={i}>
           {i % 2 === 0 ? <MoveNumber className="VariantMoveNumber" i={i} /> : ''}
-          <VariantMove notation={notation}  id={i} />
+          <VariantMove notation={notation}  id={`${line},${i}`} />
         </React.Fragment>
       )
     );
@@ -45,8 +45,36 @@ const Variants = () => {
 }
 
 const VariantMove = ({ notation, id }) => {
+  const {
+    currVariant, 
+    setCurrVariant, 
+    initialStyles, 
+    setStyles, 
+    chessVariants, 
+    preComputedMaps,
+    theme 
+  } = useGameContext();
+
+  const {currLine, currMove} = currVariant;
+
+  const handleClick = (e) => {
+    
+    let newStyles = {...initialStyles};
+    let [currLine, newCurrMove] = e.target.id.split(',');
+    newCurrMove = parseInt(newCurrMove) + 1;
+
+    const chess = chessVariants[currLine]['moves'][newCurrMove];
+    
+    let moveInfo = chess.history({ verbose: true })[newCurrMove - 1];
+    changeStyles(moveInfo.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
+    changeStyles(moveInfo.to, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
+
+    setCurrVariant({'currLine' : currLine, 'currMove' : newCurrMove});
+    setStyles(newStyles);
+  }
+
   return (
-    <div className="VariantMove">
+    <div className="VariantMove" id={id} onClick={(e) => handleClick(e)}>
         <Notation notation={notation}/>
     </div>
   )
@@ -145,7 +173,7 @@ const Move = ({ notation, id }) => {
 
   const {currLine, currMove} = currVariant;
 
-  const handlelick = (e) => {
+  const handleClick = (e) => {
     
     let newStyles = {...initialStyles};
     const newCurrMove = parseInt(e.target.id) + 1;
@@ -163,7 +191,7 @@ const Move = ({ notation, id }) => {
   return (
     <div 
       className={`RegularMoveContainer ${currMove - 1 === id ? 'currMove' : ''}`}
-      onClick={(e) => handlelick(e)}
+      onClick={(e) => handleClick(e)}
       id={id}
     >
       <div className="RegularMove">

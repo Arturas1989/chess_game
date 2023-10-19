@@ -38,7 +38,7 @@
     cursor: pointer;
 }
 
-.RegularMoveContainer * {
+.RegularMoveContainer *, .VariantMove * {
     pointer-events: none;
 }
 
@@ -63,6 +63,7 @@
 .VariantMove{
     display: flex;
     flex-direction: row;
+    cursor: pointer;
 }
 
 .VariantMoveNumber{

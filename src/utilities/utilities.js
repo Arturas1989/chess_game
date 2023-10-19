@@ -25,10 +25,32 @@ const notationSymbols = {
 }
 
 const setVariant = (newChessVariants, currLine, currMove, chessClone, setChessVariants, setCurrVariant) => {
-  const moves = newChessVariants[currLine]['moves'];
-  newChessVariants[currLine]['moves'] = [...moves.slice(0, currMove + 1), chessClone];
+  const prevMoves = [...newChessVariants[currLine]['moves']];
+  const nextMoveIndex = currMove + 1;
+  const prevHistory = prevMoves[prevMoves.length - 1].history();
+  const nextHistory = chessClone.history();
+  const lastMove = prevHistory[currMove] || '';
+  const nextMove = nextHistory[currMove];
+
+  let newMoves = [...prevMoves.slice(0, nextMoveIndex), chessClone];
+
+  if(lastMove){
+    if(nextMove !== lastMove){
+      const prevLine = currLine;
+      newChessVariants['lastLine']++;
+      currLine = 'line' + newChessVariants['lastLine'];
+      newChessVariants[currLine] = {
+        'fromLine' : prevLine,
+        'fromMove' : currMove
+      };
+    } else {
+      newMoves = prevMoves;
+    }
+  }
+  
+  newChessVariants[currLine]['moves'] = newMoves;
   setChessVariants(newChessVariants);
-  setCurrVariant({'currLine' : 'line1', 'currMove' : currMove + 1});
+  setCurrVariant({'currLine' : currLine, 'currMove' : nextMoveIndex});
 }
 
 const getTypeNotations = (notation) => {

@@ -8,8 +8,8 @@ import fontSizeSVG from '../../utilities/fontSizeSVG.js';
 const MoveList = () => {
   return (
     <div className="MoveList">
-      {/* <MainLine /> */}
-      <Variants />
+      <MainLine />
+      {/* <Variants /> */}
     </div>
   );
 }
@@ -45,8 +45,7 @@ const Variants = () => {
 }
 
 const VariantMove = ({ notation, id }) => {
-  const {
-    currVariant, 
+  const { 
     setCurrVariant, 
     initialStyles, 
     setStyles, 
@@ -55,8 +54,6 @@ const VariantMove = ({ notation, id }) => {
     theme 
   } = useGameContext();
 
-  const {currLine, currMove} = currVariant;
-
   const handleClick = (e) => {
     
     let newStyles = {...initialStyles};
@@ -64,6 +61,7 @@ const VariantMove = ({ notation, id }) => {
     newCurrMove = parseInt(newCurrMove) + 1;
 
     const chess = chessVariants[currLine]['moves'][newCurrMove];
+    if(!chess) return;
     
     let moveInfo = chess.history({ verbose: true })[newCurrMove - 1];
     changeStyles(moveInfo.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
@@ -81,19 +79,19 @@ const VariantMove = ({ notation, id }) => {
 }
 
 const MainLine = () => {
-  const { chessVariants, currVariant } = useGameContext();
+  const { chessVariants } = useGameContext();
     let moveRows = [], moveRow = [];
-    const { currLine } = currVariant;
-    const moves = chessVariants[currLine]['moves'];
+    const mainLine = 'line1';
+    const moves = chessVariants[mainLine]['moves'];
     const chess = moves[moves.length - 1];
     const historyLength = chess.history().length
     
     chess.history().forEach((move, i) => {
 
       if(i % 2 === 0){
-        moveRow = [<Move key={i} id={i} notation={move} />];
+        moveRow = [<Move key={i} id={`${mainLine},${i}`} notation={move} cursor='pointer' />];
       } else {
-        moveRow.push(<Move key={i} id={i} notation={move} />)
+        moveRow.push(<Move key={i} id={`${mainLine},${i}`} notation={move} cursor='pointer' />)
         moveRows.push(
           <div key={i} className="MoveRow">
             <MoveNumber i={i} className="MoveNumber" />
@@ -106,8 +104,15 @@ const MainLine = () => {
     })
 
     if(chess.history().length % 2 === 1){
-      const i = historyLength-1;
-      moveRow.push(<Move key={historyLength} id={historyLength} notation='' />)
+      const i = historyLength - 1;
+      moveRow.push(
+        <Move 
+          key={historyLength} 
+          id={`${mainLine},${historyLength}`} 
+          notation=''
+          cursor=''
+        />
+      )
       moveRows.push(
         <div key={i} className="MoveRow">
           <MoveNumber i={i} className="MoveNumber" />
@@ -160,7 +165,7 @@ const Notation = ({ notation }) => {
   return NotationPiece
 }
 
-const Move = ({ notation, id }) => {
+const Move = ({ notation, id, cursor }) => {
   const {
     currVariant, 
     setCurrVariant, 
@@ -172,25 +177,34 @@ const Move = ({ notation, id }) => {
   } = useGameContext();
 
   const {currLine, currMove} = currVariant;
+  
 
   const handleClick = (e) => {
     
     let newStyles = {...initialStyles};
-    const newCurrMove = parseInt(e.target.id) + 1;
+    const [line, i] = e.target.id.split(',');
 
-    const chess = chessVariants[currLine]['moves'][newCurrMove];
+    const newCurrMove = parseInt(i) + 1;
+    const chess = chessVariants[line]['moves'][newCurrMove];
+
+    
+    if(!chess) return;
     
     let moveInfo = chess.history({ verbose: true })[newCurrMove - 1];
     changeStyles(moveInfo.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
     changeStyles(moveInfo.to, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
 
-    setCurrVariant({...currVariant, 'currMove' : newCurrMove});
+    setCurrVariant({'currLine' : line, 'currMove' : newCurrMove});
     setStyles(newStyles);
   }
+  
+  const moveIndex = parseInt(id.split(',')[1]);
+  let className = `RegularMoveContainer ${cursor}`;
+  if (currMove - 1 === moveIndex) className += ' currMove';
 
   return (
     <div 
-      className={`RegularMoveContainer ${currMove - 1 === id ? 'currMove' : ''}`}
+      className={className}
       onClick={(e) => handleClick(e)}
       id={id}
     >

@@ -3,22 +3,22 @@ import { useGameContext } from '../../GameApp.js';
 import Piece from './NotationPieces.jsx';
 import { getTypeNotations, changeStyles } from '../../utilities/utilities.js';
 import fontSizeSVG from '../../utilities/fontSizeSVG.js';
+import { getLinePriority } from '../../utilities/utilities.js';
 
 
 const MoveList = () => {
   return (
     <div className="MoveList">
       <MainLine />
-      {/* <Variants /> */}
     </div>
   );
 }
 
-const Variants = () => {
+const Variants = ({ lines }) => {
   const { chessVariants } = useGameContext();
+
   let variants = [];
-  for(let i = 1; i <= chessVariants['lastLine']; i++){
-    const line = 'line' + i;
+  for(const line of lines){
     const length = chessVariants[line]['moves'].length;
     const chess = chessVariants[line]['moves'][length - 1];
     const variantMoves = chess.history().map(
@@ -30,7 +30,7 @@ const Variants = () => {
       )
     );
     variants.push(
-      <div className="VariantLine" key={i}>
+      <div className="VariantLine" key={line}>
         {variantMoves}
       </div>
     )
@@ -85,6 +85,8 @@ const MainLine = () => {
     const moves = chessVariants[mainLine]['moves'];
     const chess = moves[moves.length - 1];
     const historyLength = chess.history().length
+
+    const linePriority = getLinePriority(chessVariants);
     
     chess.history().forEach((move, i) => {
 
@@ -100,6 +102,10 @@ const MainLine = () => {
             </div>
           </div>
         );
+      }
+
+      if(linePriority[i]){
+        moveRows.push( <Variants key={'0' + i} lines={linePriority[i]} />)
       }
     })
 
@@ -176,7 +182,7 @@ const Move = ({ notation, id, cursor }) => {
     theme 
   } = useGameContext();
 
-  const {currLine, currMove} = currVariant;
+  const { currMove } = currVariant;
   
 
   const handleClick = (e) => {

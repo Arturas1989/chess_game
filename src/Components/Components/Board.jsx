@@ -29,15 +29,16 @@ const PromotionBoard = () => {
     themes,
     theme,
     promotion,
-    chessHistory,
-    currMove,
+    chessVariants,
+    currVariant,
     preComputedMaps,
     promotionPiecesList
   } = useGameContext();
 
     const { pieces } = themes[theme.pieces];
     const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
-    const chess = chessHistory[currMove];
+    const { currLine, currMove} = currVariant
+    const chess = chessVariants[currLine]['moves'][currMove];
 
     return (
       <div className={'Board promotion-board'}>

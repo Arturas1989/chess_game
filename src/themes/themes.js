@@ -2,7 +2,8 @@ import standard from './standard/pieces.js';
 
 const themes = {
     standard : standard,
-    moveListFontSize: '16px'
+    mainLineFontSize: '16px',
+    variantsFontSize: '12px',
 };
 
 export default themes;

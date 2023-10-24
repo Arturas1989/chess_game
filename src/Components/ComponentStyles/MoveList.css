@@ -21,7 +21,7 @@
     justify-content: center;
     width: 10%;
     padding: var(--moveRowPadding);
-    background-color: rgba(128, 128, 128, 0.3);
+    background-color: var(--moveNumberColor);
 }
 
 .MovesCol{
@@ -52,29 +52,33 @@
     padding: var(--moveRowPadding);
 }
 
+.RegularMoveContainer:hover, .VariantMove:hover{
+    background-color: rgba(0, 0, 255, 0.5);
+}
+
 .Variants{
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 
 .VariantLine{
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    width: 100%;
+    background-color: var(--variantColor);
 }
 
 .VariantMove{
     display: flex;
     flex-direction: row;
     cursor: pointer;
+    align-items: center;
 }
 
 .VariantMoveNumber{
-    margin: 0px 5px;
-}
-
-.MoveContainer:hover{
-    background-color: rgba(0, 0, 255, 0.5);
+    margin-left: 5px;
 }
 
 .currMove {

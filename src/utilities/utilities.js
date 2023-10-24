@@ -43,7 +43,7 @@ const getLinePriority = (chessVariants) => {
   if(fromLines['line1']){
     for(const line of fromLines['line1']){
       const fromMove = chessVariants[line]['fromMove'];
-      linePriority[fromMove] = [line];
+      linePriority[fromMove] ? linePriority[fromMove].push(line) : linePriority[fromMove] = [line];
       let unchecked = [line];
       while(unchecked.length!==0){
         let newUnchecked = [];

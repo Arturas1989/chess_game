@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { useGameContext } from '../../GameApp.js';
-import { changeStyles } from '../../utilities/utilities.js';
+import { changeStyles, setVariant } from '../../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 
@@ -57,10 +57,10 @@ const ChessPiece = (props) => {
     const {
       promotion, 
       setPromotion, 
-      chessHistory,
-      setChessHistory, 
-      currMove,
-      setCurrMove,
+      chessVariants,
+      setChessVariants, 
+      currVariant,
+      setCurrVariant,
       initialStyles, 
       setStyles, 
       preComputedMaps,
@@ -69,11 +69,13 @@ const ChessPiece = (props) => {
 
     const handleClick = (e) => {
       const pieceType = e.currentTarget.getAttribute('piece-type');
-      const chess = chessHistory[currMove];
+      const {currLine, currMove} = currVariant;
+      const chess = chessVariants[currLine]['moves'][currMove];
       const chessClone = cloneDeep(chess);
       chessClone.move({from: promotion.from, to: promotion.to, promotion: pieceType});
-      setChessHistory([...chessHistory, chessClone]);
-      setCurrMove(currMove + 1);
+
+      const newChessVariants = cloneDeep(chessVariants);
+      setVariant(newChessVariants, currLine, currMove, chessClone, setChessVariants, setCurrVariant);
 
       let newStyles = {...initialStyles};
       changeStyles(promotion.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);

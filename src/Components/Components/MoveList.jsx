@@ -24,8 +24,7 @@ const Variants = ({ lines }) => {
     const variantMoves = chess.history().map(
       (notation, i) => (
         <React.Fragment key={i}>
-          {i % 2 === 0 ? <MoveNumber className="VariantMoveNumber" i={i} /> : ''}
-          <VariantMove notation={notation}  id={`${line},${i}`} />
+          <VariantMove notation={notation} i={i}  id={`${line},${i}`} />
         </React.Fragment>
       )
     );
@@ -44,7 +43,7 @@ const Variants = ({ lines }) => {
   
 }
 
-const VariantMove = ({ notation, id }) => {
+const VariantMove = ({ notation, i, id }) => {
   const { 
     setCurrVariant, 
     initialStyles, 
@@ -73,7 +72,14 @@ const VariantMove = ({ notation, id }) => {
 
   return (
     <div className="VariantMove" id={id} onClick={(e) => handleClick(e)}>
-        <Notation notation={notation}/>
+        {i % 2 === 0 ? 
+          <MoveNumber 
+            className="VariantMoveNumber" 
+            i={i} 
+            fontSizeType={'variantsFontSize'} 
+          /> 
+        : ''}
+        <Notation notation={notation} fontSizeType={'variantsFontSize'}/>
     </div>
   )
 }
@@ -96,7 +102,7 @@ const MainLine = () => {
         moveRow.push(<Move key={i} id={`${mainLine},${i}`} notation={move} cursor='pointer' />)
         moveRows.push(
           <div key={i} className="MoveRow">
-            <MoveNumber i={i} className="MoveNumber" />
+            <MoveNumber i={i} className="MoveNumber" fontSizeType={'mainLineFontSize'}/>
             <div className="MovesCol">
               {moveRow}
             </div>
@@ -132,15 +138,18 @@ const MainLine = () => {
     return moveRows;
 }
 
-const MoveNumber = ({ i, className }) => {
-  const moveNumber = Math.floor(i / 2) + 1;
-  return <span className={className}>{moveNumber}</span>
+const MoveNumber = ({ i, className, fontSizeType }) => {
+  const { themes } = useGameContext();
+  const font_size = themes[fontSizeType];
+  let moveNumber = Math.floor(i / 2) + 1;
+  if(className === 'VariantMoveNumber') moveNumber += '.';
+  return <span style={{fontSize: font_size}} className={className}>{moveNumber}</span>
 }
 
-const Notation = ({ notation }) => {
+const Notation = ({ notation, fontSizeType }) => {
   const { pieceType, svgType, notations, isPromoting, spanRight } = getTypeNotations(notation);
   const { themes } = useGameContext();
-  const font_size = themes.moveListFontSize;
+  const font_size = themes[fontSizeType];
   const { 
     pieceSpace, 
     left, 
@@ -182,7 +191,7 @@ const Move = ({ notation, id, cursor }) => {
     theme 
   } = useGameContext();
 
-  const { currMove } = currVariant;
+  const { currLine, currMove } = currVariant;
   
 
   const handleClick = (e) => {
@@ -204,9 +213,10 @@ const Move = ({ notation, id, cursor }) => {
     setStyles(newStyles);
   }
   
-  const moveIndex = parseInt(id.split(',')[1]);
+  let [line, moveIndex] = id.split(',');
+  moveIndex = parseInt(moveIndex);
   let className = `RegularMoveContainer ${cursor}`;
-  if (currMove - 1 === moveIndex) className += ' currMove';
+  if (currLine === line && currMove - 1 === moveIndex) className += ' currMove';
 
   return (
     <div 
@@ -215,7 +225,7 @@ const Move = ({ notation, id, cursor }) => {
       id={id}
     >
       <div className="RegularMove">
-        <Notation notation={notation}/>
+        <Notation notation={notation} fontSizeType={'mainLineFontSize'}/>
       </div>
     </div>
   )

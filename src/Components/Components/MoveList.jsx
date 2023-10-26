@@ -74,8 +74,6 @@ const VariantMove = ({ notation, i, id }) => {
   let [line, moveIndex] = id.split(',');
   moveIndex = parseInt(moveIndex) + 1;
 
-  console.log(line, moveIndex, currVariant['currLine'], currVariant['currMove'])
-
   const {notationPiece} = themes[theme.background];
   let className = `VariantMove ${notationPiece} `;
   if(currVariant['currLine'] === line && currVariant['currMove'] === moveIndex){

@@ -5,8 +5,10 @@
     stroke-width: 1.5;
 }
 
-.lightThemeMove:hover *{
+.lightThemeMove:hover * {
     stroke: white;
-    stroke-width: 3;
+    stroke-width: 4;
     color: white;
+    font-weight: bold;
 }
+

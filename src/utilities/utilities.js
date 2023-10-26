@@ -29,8 +29,9 @@ const notationSymbols = {
 const getLinePriority = (chessVariants) => {
   let variantsClone = cloneDeep(chessVariants);
   delete variantsClone['lastLine'];
-  let fromLines = {};
+  delete variantsClone['movesLines'];
 
+  let fromLines = {};
   for(const line in variantsClone){
     const fromLine = variantsClone[line]['fromLine'];
     if(line !== fromLine){
@@ -39,7 +40,6 @@ const getLinePriority = (chessVariants) => {
   }
 
   let linePriority = {};
-
   if(fromLines['line1']){
     for(const line of fromLines['line1']){
       const fromMove = chessVariants[line]['fromMove'];
@@ -63,9 +63,10 @@ const getLinePriority = (chessVariants) => {
 
 const setVariant = (newChessVariants, currLine, currMove, chessClone, setChessVariants, setCurrVariant) => {
   const prevMoves = [...newChessVariants[currLine]['moves']];
-  const nextMoveIndex = currMove + 1;
+  let nextMoveIndex = currMove + 1;
   const prevHistory = prevMoves[prevMoves.length - 1].history();
   const nextHistory = chessClone.history();
+  const nextHistoryText = nextHistory.join('');
   const lastMove = prevHistory[currMove] || '';
   const nextMove = nextHistory[currMove];
 
@@ -73,18 +74,27 @@ const setVariant = (newChessVariants, currLine, currMove, chessClone, setChessVa
 
   if(lastMove){
     if(nextMove !== lastMove){
-      const prevLine = currLine;
-      newChessVariants['lastLine']++;
-      currLine = 'line' + newChessVariants['lastLine'];
-      newChessVariants[currLine] = {
-        'fromLine' : prevLine,
-        'fromMove' : currMove
-      };
+      if(!newChessVariants['movesLines'][nextHistoryText]){
+        
+        const prevLine = currLine;
+        newChessVariants['lastLine']++;
+        currLine = 'line' + newChessVariants['lastLine'];
+        newChessVariants[currLine] = {
+          'fromLine' : prevLine,
+          'fromMove' : currMove
+        };
+        nextMoveIndex = nextHistory.length;
+        
+      } else {
+        currLine = newChessVariants['movesLines'][nextHistoryText];
+      }
+      
     } else {
       newMoves = prevMoves;
     }
   }
-  
+
+  newChessVariants['movesLines'][nextHistoryText] = currLine;
   newChessVariants[currLine]['moves'] = newMoves;
   setChessVariants(newChessVariants);
   setCurrVariant({'currLine' : currLine, 'currMove' : nextMoveIndex});

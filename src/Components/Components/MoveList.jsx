@@ -16,7 +16,6 @@ const MoveList = () => {
 
 const Variants = ({ lines }) => {
   const { chessVariants } = useGameContext();
-
   let variants = [];
   for(const line of lines){
     const length = chessVariants[line]['moves'].length;
@@ -45,6 +44,7 @@ const Variants = ({ lines }) => {
 
 const VariantMove = ({ notation, i, id }) => {
   const { 
+    currVariant,
     setCurrVariant, 
     initialStyles, 
     setStyles, 
@@ -71,9 +71,18 @@ const VariantMove = ({ notation, i, id }) => {
     setStyles(newStyles);
   }
 
+  let [line, moveIndex] = id.split(',');
+  moveIndex = parseInt(moveIndex) + 1;
+
+  const {notationPiece} = themes[theme.background];
+  let className = `VariantMove ${notationPiece} `;
+  if(currVariant['currLine'] === line && currVariant['currMove'] === moveIndex){
+    className += `currMove`;
+  } 
+
   return (
     <div 
-      className={`VariantMove ${themes[theme.background].notationPiece}`} 
+      className={className} 
       id={id} 
       onClick={(e) => handleClick(e)}
     >
@@ -98,7 +107,7 @@ const MainLine = () => {
     const historyLength = chess.history().length
 
     const linePriority = getLinePriority(chessVariants);
-    
+
     chess.history().forEach((move, i) => {
 
       if(i % 2 === 0){
@@ -218,10 +227,14 @@ const Move = ({ notation, id, cursor }) => {
     setCurrVariant({'currLine' : line, 'currMove' : newCurrMove});
     setStyles(newStyles);
   }
+
+  const { notationPiece } = themes[theme.background]
   let [line, moveIndex] = id.split(',');
   moveIndex = parseInt(moveIndex);
-  let className = `RegularMoveContainer ${themes[theme.background].notationPiece} ${cursor}`;
-  if (currLine === line && currMove - 1 === moveIndex) className += ' currMove';
+  let className = `RegularMoveContainer ${notationPiece} ${cursor} `;
+  if (currLine === line && currMove - 1 === moveIndex){
+    className +=  `currMove`;
+  } 
 
   return (
     <div 

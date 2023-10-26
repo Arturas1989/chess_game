@@ -17,7 +17,8 @@ const GameApp = () => {
       'fromMove' : 0,
       'fromLine' : 'line1'
     },
-    'lastLine' : 1
+    'lastLine' : 1,
+    'movesLines' : {}
   });
   const [currVariant, setCurrVariant] = useState({'currLine' : 'line1', 'currMove' : 0});
   const [isReversed, setIsReversed] = useState(false);

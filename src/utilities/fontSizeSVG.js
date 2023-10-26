@@ -43,7 +43,7 @@ const fontSizeSVG = {
     '12px' : {
         left: {
             left: '-8',
-            top: '-6',
+            top: '-5.5',
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '0px',
@@ -53,7 +53,7 @@ const fontSizeSVG = {
 
         middle: {
             left: '-3',
-            top: '-6',
+            top: '-5.5',
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '6px',
@@ -63,7 +63,7 @@ const fontSizeSVG = {
 
         right: {
             left: '-3',
-            top: '-6',
+            top: '-5.5',
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '6px',

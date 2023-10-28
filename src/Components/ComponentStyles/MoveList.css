@@ -77,6 +77,16 @@
     align-items: center;
 }
 
+.VariantMove::after{
+    content: '';
+    display: inline-block;
+    width: 4px;
+}
+
+.VariantMove:hover::after{
+    width: 0px;
+}
+
 .VariantMoveNumber{
     margin-left: 5px;
 }

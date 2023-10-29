@@ -70,12 +70,7 @@
     background-color: var(--variantColor);
 }
 
-.VariantMove{
-    display: flex;
-    flex-direction: row;
-    cursor: pointer;
-    align-items: center;
-}
+
 
 .VariantMoveNumber{
     margin-left: 5px;
@@ -86,6 +81,18 @@
 }
 
 .currMove * {
+    stroke-width: 4;
+    font-weight: bold;
+}
+
+.VariantMove{
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
+    align-items: center;
+}
+
+.VariantMove * {
     stroke-width: 4;
     font-weight: bold;
 }

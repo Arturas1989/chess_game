@@ -20,13 +20,34 @@ const Variants = ({ lines }) => {
   for(const line of lines){
     const length = chessVariants[line]['moves'].length;
     const chess = chessVariants[line]['moves'][length - 1];
-    const variantMoves = chess.history().map(
-      (notation, i) => (
-        <React.Fragment key={i}>
-          <VariantMove notation={notation} i={i}  id={`${line},${i}`} />
+    let fromMove = chessVariants[line]['fromMove'];
+    const moveIndex = fromMove - 1;
+    const notation = chess.history()[fromMove];
+    let variantMoves;
+    if(fromMove % 2 === 1){
+      variantMoves = [
+        <React.Fragment key={fromMove}>
+          <VariantMove notation={notation} i={moveIndex}  id={`${line},${fromMove}`} dots={'...'}/>
         </React.Fragment>
-      )
+      ]
+      fromMove++;
+    } else {
+      variantMoves = []
+    }
+
+    const remainingVariantMoves = chess.history().slice(fromMove).map(
+      (notation, i) => 
+        { 
+          const moveIndex = fromMove + i;
+          return (
+            <React.Fragment key={i}>
+              <VariantMove notation={notation} i={moveIndex}  id={`${line},${moveIndex}`} dots={'.'} />
+            </React.Fragment>
+          )
+        }
     );
+
+    variantMoves = [...variantMoves, remainingVariantMoves];
     variants.push(
       <div className="VariantLine" key={line}>
         {variantMoves}
@@ -42,7 +63,7 @@ const Variants = ({ lines }) => {
   
 }
 
-const VariantMove = ({ notation, i, id }) => {
+const VariantMove = ({ notation, i, id, dots }) => {
   const { 
     currVariant,
     setCurrVariant, 
@@ -90,7 +111,8 @@ const VariantMove = ({ notation, i, id }) => {
           <MoveNumber 
             className="VariantMoveNumber" 
             i={i} 
-            fontSizeType={'variantsFontSize'} 
+            fontSizeType={'variantsFontSize'}
+            dots={dots} 
           /> 
         : ''}
         <Notation notation={notation} fontSizeType={'variantsFontSize'}/>
@@ -152,11 +174,11 @@ const MainLine = () => {
     return moveRows;
 }
 
-const MoveNumber = ({ i, className, fontSizeType }) => {
+const MoveNumber = ({ i, className, fontSizeType, dots }) => {
   const { themes } = useGameContext();
   const font_size = themes[fontSizeType];
   let moveNumber = Math.floor(i / 2) + 1;
-  if(className === 'VariantMoveNumber') moveNumber += '.';
+  if(className === 'VariantMoveNumber') moveNumber += dots;
   return <span style={{fontSize: font_size}} className={className}>{moveNumber}</span>
 }
 

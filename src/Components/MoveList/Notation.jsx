@@ -1,4 +1,6 @@
 import { useGameContext } from '../../GameApp.js';
+import { getTypeNotations } from '../../utilities/utilities.js';
+import fontSizeSVG from '../../utilities/fontSizeSVG.js';
 
 
 const King = ({ className }) => {
@@ -91,4 +93,38 @@ const King = ({ className }) => {
     );
   }
 
-  export default Piece;
+  const Notation = ({ notation, fontSizeType }) => {
+    const { pieceType, svgType, notations, isPromoting, spanRight } = getTypeNotations(notation);
+    const { themes } = useGameContext();
+    const font_size = themes[fontSizeType];
+    const { 
+      pieceSpace, 
+      left, 
+      top, 
+      viewBoxWidth, 
+      viewBoxHeight, 
+      textSpace,
+      pieceWidth
+    } = fontSizeSVG[font_size][svgType]
+  
+    let NotationPiece = [
+      pieceType && 
+      <div key={0} style={{paddingLeft: pieceSpace, width: pieceWidth}}>
+        <Piece 
+          pieceType={pieceType} 
+          left={left} 
+          top={top} 
+          viewBoxWidth={viewBoxWidth} 
+          viewBoxHeight={viewBoxHeight} 
+        />
+      </div>,
+      <span key={1} style={{paddingLeft: textSpace, fontSize: font_size}}>{notations}</span>,
+      spanRight ? <span key={2} style={{fontSize: font_size}}>{notation[notation.length - 1]}</span> : ''
+    ] 
+  
+    if(isPromoting) [NotationPiece[1], NotationPiece[0]] = [NotationPiece[0], NotationPiece[1]];
+  
+    return NotationPiece
+  }
+
+  export {Notation, Piece};

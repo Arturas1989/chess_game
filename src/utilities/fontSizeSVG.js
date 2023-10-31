@@ -47,7 +47,7 @@ const fontSizeSVG = {
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '0px',
-            pieceSpace: '2px',
+            pieceSpace: '4px',
             pieceWidth: '12px'
         },
 

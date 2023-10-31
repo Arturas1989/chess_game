@@ -1,8 +1,8 @@
 import './App.css';
 import { useState, createContext, useContext } from 'react';
 import themes from './themes/themes.js';
-import { Board, PromotionBoard } from './Components/Components/Board';
-import MoveList from './Components/Components/MoveList.jsx';
+import { Board, PromotionBoard } from './Components/Board/Board.jsx';
+import MoveList from './Components/MoveList/MoveList.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
 

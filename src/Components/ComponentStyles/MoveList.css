@@ -37,10 +37,6 @@
     border: 1px solid black;
 }
 
-.pointer{
-    cursor: pointer;
-}
-
 .RegularMoveContainer *, .VariantMove * {
     pointer-events: none;
 }
@@ -54,6 +50,7 @@
 
 .RegularMoveContainer:hover, .VariantMove:hover{
     background-color: rgba(0, 0, 255, 0.5);
+    cursor: pointer;
 }
 
 .Variants{
@@ -71,8 +68,6 @@
     align-items: center;
 }
 
-
-
 .VariantMoveNumber{
     margin-left: 5px;
 }
@@ -88,8 +83,6 @@
 
 .VariantMove{
     display: flex;
-    flex-direction: row;
-    cursor: pointer;
     align-items: center;
     height: 2rem
 }
@@ -97,5 +90,4 @@
 .VariantMove * {
     stroke-width: 4;
     font-weight: bold;
-    
 }

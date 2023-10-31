@@ -213,6 +213,7 @@ const handleDragStart = (e, handlerArgs) => {
       }
 
       //highlight new cell
+      if(!idToCoordList[initialPos.pos]) return;
       const [row, col] = idToCoordList[initialPos.pos].split(',');
       const nextRow = parseInt(row) + Math.round((e.clientY - initialPos.y) / squareWidth);
       const nextCol = parseInt(col) + Math.round((e.clientX - initialPos.x) / squareWidth);

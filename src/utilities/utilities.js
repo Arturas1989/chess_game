@@ -149,7 +149,7 @@ const getCoordClass = (id, idToCoord, theme, coordType) => {
 }
 
 const getSquareType = (id, idToCoord) => {
-  
+  if(!idToCoord[id]) return;
   const [row, col] = idToCoord[id].split(',');
   const index = parseInt(row) * 8 + parseInt(col);
   return index % 2 === row % 2 ? 'White' : 'Black';

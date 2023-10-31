@@ -20,7 +20,7 @@ const Variants = ({ lines }) => {
   for(const line of lines){
     const length = chessVariants[line]['moves'].length;
     const chess = chessVariants[line]['moves'][length - 1];
-    let fromMove = chessVariants[line]['fromMove'];
+    let {fromMove, fromLine} = chessVariants[line];
     const moveIndex = fromMove - 1;
     const notation = chess.history()[fromMove];
     let variantMoves;
@@ -47,7 +47,12 @@ const Variants = ({ lines }) => {
         }
     );
 
-    variantMoves = [...variantMoves, remainingVariantMoves];
+    variantMoves = 
+    [
+      <FromLine key={'fromLine'} fromLine={fromLine} line={line} />,
+      ...variantMoves, 
+      remainingVariantMoves
+    ];
     variants.push(
       <div className="VariantLine" key={line}>
         {variantMoves}
@@ -117,6 +122,16 @@ const VariantMove = ({ notation, i, id, dots }) => {
         : ''}
         <Notation notation={notation} fontSizeType={'variantsFontSize'}/>
     </div>
+  )
+}
+
+const FromLine = ({fromLine, line}) => {
+  const innerText = `(from: ${fromLine})`.replace('line1', 'Main Line');
+
+  return (
+    <span style={{fontWeight: 'normal', fontSize: '9px', lineHeight: '1', verticalAlign: 'bottom' }}>
+      <strong>{line}</strong> {innerText}
+    </span>
   )
 }
 

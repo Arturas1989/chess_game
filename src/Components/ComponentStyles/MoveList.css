@@ -68,6 +68,7 @@
     flex-wrap: wrap;
     width: 100%;
     background-color: var(--variantColor);
+    align-items: center;
 }
 
 
@@ -90,9 +91,11 @@
     flex-direction: row;
     cursor: pointer;
     align-items: center;
+    height: 2rem
 }
 
 .VariantMove * {
     stroke-width: 4;
     font-weight: bold;
+    
 }

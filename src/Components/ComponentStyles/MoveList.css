@@ -19,9 +19,16 @@
 .MoveNumber{
     display: flex;
     justify-content: center;
+    align-items: center;
     width: 10%;
-    padding: var(--moveRowPadding);
+    padding: 0 var(--moveRowPadding);
     background-color: var(--moveNumberColor);
+}
+
+.FromLine{
+    font-weight: normal;
+    font-size: 9px;
+    line-height: 1;
 }
 
 .MovesCol{
@@ -63,9 +70,10 @@
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
-    width: 100%;
+    width: var(--variantLineWidth);
     background-color: var(--variantColor);
     align-items: center;
+    padding: 0 var(--variantLinePadding);
 }
 
 .VariantMoveNumber{
@@ -76,18 +84,17 @@
     background-color: rgba(0, 0, 255, 0.2);
 }
 
-.currMove * {
-    stroke-width: 4;
-    font-weight: bold;
-}
-
 .VariantMove{
     display: flex;
     align-items: center;
+    justify-content: center;
     height: 2rem
 }
 
 .VariantMove * {
     stroke-width: 4;
     font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
 }

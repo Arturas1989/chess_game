@@ -84,6 +84,11 @@
     background-color: rgba(0, 0, 255, 0.2);
 }
 
+.currMove * {
+    stroke-width: 4;
+    font-weight: bold;
+}
+
 .VariantMove{
     display: flex;
     align-items: center;

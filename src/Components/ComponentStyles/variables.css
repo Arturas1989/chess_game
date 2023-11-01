@@ -17,4 +17,6 @@
     --moveRowPadding: 3px;
     --moveNumberColor: rgba(128, 128, 128, 0.3);
     --variantColor: rgba(128, 128, 128, 0.3);
+    --variantLinePadding: 5px;
+    --variantLineWidth: calc( 100% - var(--variantLinePadding) * 2 );
 }

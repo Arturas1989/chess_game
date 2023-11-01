@@ -93,9 +93,9 @@ const setVariant = (newChessVariants, currLine, currMove, chessClone, setChessVa
       newMoves = prevMoves;
     }
   }
-
+  
+  if(!newChessVariants['movesLines'][nextHistoryText]) newChessVariants[currLine]['moves'] = newMoves;
   newChessVariants['movesLines'][nextHistoryText] = currLine;
-  newChessVariants[currLine]['moves'] = newMoves;
   setChessVariants(newChessVariants);
   setCurrVariant({'currLine' : currLine, 'currMove' : nextMoveIndex});
 }

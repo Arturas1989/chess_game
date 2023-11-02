@@ -165,7 +165,7 @@ const RegularSquare = ({ pos, source}) => {
   const cancelPromotion = () => {
     setPromotion({...promotion, isPromoting: false});
     let newStyles = {...initialStyles};
-    changeStyles(promotion.from, preComputedMaps[2], theme + 'DragStartEnd', newStyles);
+    changeStyles(promotion.from, preComputedMaps[2], theme.squares + 'DragStartEnd', newStyles);
     setStyles(newStyles);
     setPieceClicked({
       ...pieceClicked,

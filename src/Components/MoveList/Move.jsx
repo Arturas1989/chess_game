@@ -60,7 +60,7 @@ const VariantMove = ({ notation, i, id, dots }) => {
     )
   }
 
-  const Move = ({ notation, id, cursor }) => {
+  const Move = ({ notation, id, className }) => {
     const {
       currVariant, 
       setCurrVariant, 
@@ -73,16 +73,15 @@ const VariantMove = ({ notation, i, id, dots }) => {
     } = useGameContext();
   
     const { currLine, currMove } = currVariant;
-    
   
     const handleClick = (e) => {
-      
+      if(className.includes('empty')) return;
+
       let newStyles = {...initialStyles};
       const [line, i] = e.target.id.split(',');
   
       const newCurrMove = parseInt(i) + 1;
       const chess = chessVariants[line]['moves'][newCurrMove];
-  
       
       if(!chess) return;
       
@@ -97,11 +96,9 @@ const VariantMove = ({ notation, i, id, dots }) => {
     const { notationPiece } = themes[theme.background]
     let [line, moveIndex] = id.split(',');
     moveIndex = parseInt(moveIndex);
-    let className = `RegularMoveContainer ${notationPiece} ${cursor} `;
-    if (currLine === line && currMove - 1 === moveIndex){
-      className +=  `currMove`;
-    } 
-  
+    className += ` ${notationPiece} `;
+    if (currLine === line && currMove - 1 === moveIndex) className +=  `currMove`;
+    
     return (
       <div 
         className={className}

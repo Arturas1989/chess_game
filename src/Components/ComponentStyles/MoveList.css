@@ -37,7 +37,7 @@
     width: 90%;
 }
   
-.RegularMoveContainer{
+.RegularMoveContainer, .empty{
     display: flex;
     flex-direction: row;
     width: 50%;
@@ -48,16 +48,16 @@
     pointer-events: none;
 }
 
+.RegularMoveContainer:hover, .VariantMove:hover{
+    background-color: rgba(0, 0, 255, 0.5);
+    cursor: pointer;
+}
+
 .RegularMove{
     width: 100%;
     display: flex;
     flex-direction: row;
     padding: var(--moveRowPadding);
-}
-
-.RegularMoveContainer:hover, .VariantMove:hover{
-    background-color: rgba(0, 0, 255, 0.5);
-    cursor: pointer;
 }
 
 .Variants{

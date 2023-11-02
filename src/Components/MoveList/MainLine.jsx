@@ -17,9 +17,9 @@ const MainLine = () => {
       chess.history().forEach((move, i) => {
   
         if(i % 2 === 0){
-          moveRow = [<Move key={i} id={`${mainLine},${i}`} notation={move} cursor='pointer' />];
+          moveRow = [<Move key={i} id={`${mainLine},${i}`} notation={move} className='RegularMoveContainer' />];
         } else {
-          moveRow.push(<Move key={i} id={`${mainLine},${i}`} notation={move} cursor='pointer' />)
+          moveRow.push(<Move key={i} id={`${mainLine},${i}`} notation={move} className='RegularMoveContainer' />)
           moveRows.push(
             <div key={i} className="MoveRow">
               <MoveNumber i={i} className="MoveNumber" fontSizeType={'mainLineFontSize'}/>
@@ -42,7 +42,7 @@ const MainLine = () => {
             key={historyLength} 
             id={`${mainLine},${historyLength}`} 
             notation=''
-            cursor=''
+            className='empty'
           />
         )
         moveRows.push(

@@ -2,32 +2,32 @@ const fontSizeSVG = {
     '16px' : {
         left: {
             left: '-8',
-            top: '0',
+            top: '-4',
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '0px',
             pieceSpace: '1px',
-            pieceWidth: '19px'
+            pieceWidth: '17px'
         },
 
         middle: {
             left: '-3',
-            top: '-1',
+            top: '-4',
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '6px',
             pieceSpace: '0px',
-            pieceWidth: '19px'
+            pieceWidth: '17px'
         },
 
         right: {
             left: '-3',
-            top: '-1',
+            top: '-4',
             viewBoxWidth: '50',
             viewBoxHeight: '50',
             textSpace: '6px',
             pieceSpace: '0px',
-            pieceWidth: '19px'
+            pieceWidth: '17px'
         },
 
         none: {

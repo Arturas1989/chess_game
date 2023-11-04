@@ -1,33 +1,33 @@
 const fontSizeSVG = {
     '16px' : {
         left: {
-            left: '-8',
-            top: '-4',
-            viewBoxWidth: '50',
-            viewBoxHeight: '50',
+            left: '-3',
+            top: '0',
+            viewBoxWidth: '45',
+            viewBoxHeight: '45',
             textSpace: '0px',
-            pieceSpace: '1px',
-            pieceWidth: '17px'
+            pieceSpace: '3px',
+            pieceWidth: '16px'
         },
 
         middle: {
-            left: '-3',
-            top: '-4',
-            viewBoxWidth: '50',
-            viewBoxHeight: '50',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '45',
+            viewBoxHeight: '45',
             textSpace: '6px',
             pieceSpace: '0px',
-            pieceWidth: '17px'
+            pieceWidth: '16px'
         },
 
         right: {
-            left: '-3',
-            top: '-4',
-            viewBoxWidth: '50',
-            viewBoxHeight: '50',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '45',
+            viewBoxHeight: '45',
             textSpace: '6px',
             pieceSpace: '0px',
-            pieceWidth: '17px'
+            pieceWidth: '16px'
         },
 
         none: {
@@ -42,33 +42,33 @@ const fontSizeSVG = {
     },
     '12px' : {
         left: {
-            left: '-8',
-            top: '-3',
-            viewBoxWidth: '50',
-            viewBoxHeight: '50',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '44',
+            viewBoxHeight: '44',
             textSpace: '0px',
             pieceSpace: '4px',
-            pieceWidth: '13px'
+            pieceWidth: '12px'
         },
 
         middle: {
-            left: '-3',
-            top: '-3',
-            viewBoxWidth: '50',
-            viewBoxHeight: '50',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '44',
+            viewBoxHeight: '44',
             textSpace: '6px',
             pieceSpace: '0px',
-            pieceWidth: '13px'
+            pieceWidth: '12px'
         },
 
         right: {
-            left: '-3',
-            top: '-3',
-            viewBoxWidth: '50',
-            viewBoxHeight: '50',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '44',
+            viewBoxHeight: '44',
             textSpace: '6px',
             pieceSpace: '0px',
-            pieceWidth: '13px'
+            pieceWidth: '12px'
         },
 
         none: {

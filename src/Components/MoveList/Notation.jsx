@@ -70,7 +70,7 @@ const King = ({ className }) => {
     )
   }
   
-  const Piece = ({ pieceType, left, top, viewBoxWidth, viewBoxHeight }) => {
+  const Piece = ({ pieceType, left, top, viewBoxWidth, viewBoxHeight, font_size }) => {
     const { theme, themes } = useGameContext();
   
     const componentMap = {
@@ -80,11 +80,11 @@ const King = ({ className }) => {
       'K' : <King className={themes[theme.background].notationPiece}/>,
       'R' : <Rook className={themes[theme.background].notationPiece}/>,
     }
-  
+    
     return (
       <svg
-        width='100%'
-        height='100%'
+        width={font_size}
+        height={font_size}
         viewBox={`${left} ${top} ${viewBoxWidth} ${viewBoxHeight}`}
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -108,23 +108,31 @@ const King = ({ className }) => {
     } = fontSizeSVG[font_size][svgType]
   
     let NotationPiece = [
-      pieceType && 
-      <div key={0} style={{paddingLeft: pieceSpace, width: pieceWidth}}>
-        <Piece 
-          pieceType={pieceType} 
-          left={left} 
-          top={top} 
-          viewBoxWidth={viewBoxWidth} 
-          viewBoxHeight={viewBoxHeight} 
-        />
-      </div>,
-      <span key={1} style={{paddingLeft: textSpace, fontSize: font_size}}>{notations}</span>,
-      spanRight ? <span key={2} style={{fontSize: font_size}}>{notation[notation.length - 1]}</span> : ''
+      
+        pieceType &&
+          <Piece
+            key={0} 
+            pieceType={pieceType} 
+            left={left} 
+            top={top} 
+            viewBoxWidth={viewBoxWidth} 
+            viewBoxHeight={viewBoxHeight}
+            font_size={font_size}
+          />,
+        <span key={1} style={{paddingLeft: textSpace, fontSize: font_size}}>{notations}</span>,
+        spanRight ? <span key={2} style={{fontSize: font_size}}>{notation[notation.length - 1]}</span> : ''
+      
+      
     ] 
   
     if(isPromoting) [NotationPiece[1], NotationPiece[0]] = [NotationPiece[0], NotationPiece[1]];
   
-    return NotationPiece
+    return (
+      <div className={'Notation'} key={0} style={{paddingLeft: pieceSpace}}>
+        {NotationPiece}
+      </div>
+    )
+    
   }
 
   export {Notation, Piece};

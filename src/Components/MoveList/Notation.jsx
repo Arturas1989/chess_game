@@ -80,11 +80,11 @@ const King = ({ className }) => {
       'K' : <King className={themes[theme.background].notationPiece}/>,
       'R' : <Rook className={themes[theme.background].notationPiece}/>,
     }
-    
+
     return (
       <svg
-        width={font_size}
-        height={font_size}
+        width="48"
+        height="48"
         viewBox={`${left} ${top} ${viewBoxWidth} ${viewBoxHeight}`}
         xmlns="http://www.w3.org/2000/svg"
       >
@@ -110,17 +110,19 @@ const King = ({ className }) => {
     let NotationPiece = [
       
         pieceType &&
-          <Piece
-            key={0} 
-            pieceType={pieceType} 
-            left={left} 
-            top={top} 
-            viewBoxWidth={viewBoxWidth} 
-            viewBoxHeight={viewBoxHeight}
-            font_size={font_size}
-          />,
-        <span key={1} style={{paddingLeft: textSpace, fontSize: font_size}}>{notations}</span>,
-        spanRight ? <span key={2} style={{fontSize: font_size}}>{notation[notation.length - 1]}</span> : ''
+          <div key={0} className="svgContainer">
+            <Piece
+               
+              pieceType={pieceType} 
+              left={left} 
+              top={top} 
+              viewBoxWidth={viewBoxWidth} 
+              viewBoxHeight={viewBoxHeight}
+              font_size={font_size}
+            />
+          </div>,
+          <span key={1} style={{paddingLeft: textSpace}}>{notations}</span>,
+          spanRight ? <span key={2}>{notation[notation.length - 1]}</span> : ''
       
       
     ] 

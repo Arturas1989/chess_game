@@ -42,10 +42,20 @@
     flex-direction: row;
     width: 50%;
     border: 1px solid black;
+    height: 2rem;
 }
 
 .RegularMoveContainer *, .VariantMove * {
     pointer-events: none;
+}
+
+.VariantMove * {
+    stroke-width: 4;
+    font-weight: bold;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 12px;
 }
 
 .RegularMoveContainer:hover, .VariantMove:hover{
@@ -58,6 +68,10 @@
     display: flex;
     flex-direction: row;
     padding: var(--moveRowPadding);
+}
+
+.RegularMove * {
+    font-size: 16px;
 }
 
 .Variants{
@@ -74,6 +88,7 @@
     background-color: var(--variantColor);
     align-items: center;
     padding: 0 var(--variantLinePadding);
+    
 }
 
 .VariantMoveNumber{
@@ -99,18 +114,33 @@
 .RegularMove {
     display: flex;
     align-items: center;
-    height: 1.5rem
+    /* height: 1.5rem */
 }
 
-.VariantMove * {
-    stroke-width: 4;
-    font-weight: bold;
-    height: 100%;
-    display: flex;
-    align-items: center;
+
+
+.svgContainer{
+    display: inline-flex;
+    align-self: center;
+}
+
+.svgContainer svg{
+    height: 1em;
+    width: 1em;
+    top: 0.125em;
+    position: relative;
 }
 
 .Notation{
+    padding:0;
+    position:relative;
+}
+
+.Notation * {
+    line-height:1;
+}
+
+/* .Notation{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -119,3 +149,12 @@
 .Notation > span, .VariantLine  span {
     line-height: 1;
 }
+
+.Notation  svg{
+    position: relative;
+}
+
+.Notation  g{
+    position: absolute;
+    top: 0;
+} */

@@ -39,7 +39,7 @@ const VariantMove = ({ notation, i, id, dots }) => {
     let className = `VariantMove ${notationPiece} `;
     if(currVariant['currLine'] === line && currVariant['currMove'] === moveIndex){
       className += `currMove`;
-    } 
+    }
   
     return (
       <div 
@@ -112,12 +112,10 @@ const VariantMove = ({ notation, i, id, dots }) => {
     )
   }
 
-  const MoveNumber = ({ i, className, fontSizeType, dots }) => {
-    const { themes } = useGameContext();
-    const font_size = themes[fontSizeType];
+  const MoveNumber = ({ i, className, dots }) => {
     let moveNumber = Math.floor(i / 2) + 1;
     if(className === 'VariantMoveNumber') moveNumber += dots;
-    return <span style={{fontSize: font_size}} className={className}>{moveNumber}</span>
+    return <span className={className}>{moveNumber}</span>
   }
 
   export {VariantMove, Move, MoveNumber};

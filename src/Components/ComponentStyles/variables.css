@@ -13,7 +13,10 @@
       var(--GameContainerRemainingWidth) - var(--BoardWidth)
       - 2 * (var(--board-margin) + var(--MoveList-margin))
       );
-    --MoveListHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
+    --MoveListContainerHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
+    --ButtonsContainerPadding: 4px;
+    --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / 13);
+    --MoveListHeight: calc(var(--MoveRowHeight)*13);
     --moveRowPadding: 3px;
     --moveNumberColor: rgba(128, 128, 128, 0.3);
     --variantColor: rgba(128, 128, 128, 0.3);

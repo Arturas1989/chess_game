@@ -2,7 +2,7 @@ import './App.css';
 import { useState, createContext, useContext } from 'react';
 import themes from './themes/themes.js';
 import { Board, PromotionBoard } from './Components/Board/Board.jsx';
-import MoveList from './Components/MoveList/MoveList.jsx';
+import MoveContainer from './Components/MoveList/MoveContainer.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
 
@@ -82,8 +82,7 @@ const GameContainer = ({ isPromoting }) => {
           :
           <Board/>
         }
-        
-        <MoveList />
+        <MoveContainer />
       </div>
   );
 }

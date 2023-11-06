@@ -7,4 +7,30 @@
     height: var(--MoveRowHeight);
     width: calc(100% - var(--ButtonsContainerPadding)*2);
     padding: var(--ButtonsContainerPadding);
+    gap: 10px;
+}
+
+.ButtonsContainer>button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.MoveControlSvg > g{
+    stroke: none;
+    stroke-width: 1;
+    fill: none;
+    fill-rule: evenodd
+}
+
+.MoveControlSvg > g > g{
+    fill: #434343;
+}
+
+.ReverseIcon > g{
+    fill: #434343;
+    stroke-width: 100;
 }

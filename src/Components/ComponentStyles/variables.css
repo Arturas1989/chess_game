@@ -15,7 +15,7 @@
       );
     --MoveListContainerHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
     --ButtonsContainerPadding: 4px;
-    --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / 13);
+    --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / 14);
     --MoveListHeight: calc(var(--MoveRowHeight)*13);
     --moveRowPadding: 3px;
     --moveNumberColor: rgba(128, 128, 128, 0.3);

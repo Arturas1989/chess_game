@@ -4,7 +4,7 @@ import {
   highlightValidMoves, 
   isMoveValid, 
   setVariant 
-} from '../utilities/utilities.js';
+} from '../../utilities/utilities.js';
 
 const cloneDeep = require('lodash/cloneDeep');
 

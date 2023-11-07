@@ -46,7 +46,7 @@
     display: flex;
     flex-direction: row;
     width: 50%;
-    box-shadow: inset 0 0 0 1px #000;
+    box-shadow: var(--moveRowShadow);
 }
 
 .RegularMoveContainer *, .VariantMove * {
@@ -92,7 +92,7 @@
     background-color: var(--variantColor);
     align-items: center;
     padding: 0 var(--variantLinePadding);
-    box-shadow: inset 0 0 0 1px #000;
+    box-shadow: var(--moveRowShadow);
 }
 
 .VariantMoveNumber{
@@ -139,26 +139,3 @@
     position:relative;
     line-height: 1;
 }
-
-/* .Notation * {
-    line-height:1;
-} */
-
-/* .Notation{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.Notation > span, .VariantLine  span {
-    line-height: 1;
-}
-
-.Notation  svg{
-    position: relative;
-}
-
-.Notation  g{
-    position: absolute;
-    top: 0;
-} */

@@ -8,9 +8,9 @@ import {
   handleDrag, 
   enableDrag, 
   preventDragStart 
-} from '../../eventHandlers/drag.js';
-import handleMouseEnter from '../../eventHandlers/mouseMove.js';
-import handleSquareClick from '../../eventHandlers/click.js';
+} from '../../eventHandlers/Square/drag.js';
+import handleMouseEnter from '../../eventHandlers/Square/mouseMove.js';
+import handleSquareClick from '../../eventHandlers/Square/click.js';
 import { changeStyles, getSquareWidth } from '../../utilities/utilities.js';
 
 const Square = ({ index }) => {

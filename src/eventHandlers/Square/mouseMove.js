@@ -1,4 +1,4 @@
-import { changeStyles, isMoveValid, highlightValidMoves } from '../utilities/utilities.js';
+import { changeStyles, isMoveValid, highlightValidMoves } from '../../utilities/utilities.js';
 
 const handleMouseEnter = (e, handlerArgs) => {
     const {

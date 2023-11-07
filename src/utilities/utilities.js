@@ -164,6 +164,19 @@ const changeStyles = (id, idToCoord, className, newStyles) => {
   newStyles[id] = className + getSquareType(id, idToCoord);
 };
 
+const setFromToStyles = (moves, moveIndex, preComputedMaps, initialStyles, theme, setStyles) => {
+  const newStyles = {...initialStyles};
+  if(moveIndex !== 0){
+    const chess = moves[moveIndex];
+    const {from, to} = chess.history({verbose: true})[moveIndex - 1];
+    const idToCoord = preComputedMaps[2];
+    const clickStartEndClass = theme.squares + 'ClickStartEnd';
+    changeStyles(from, idToCoord, clickStartEndClass, newStyles);
+    changeStyles(to, idToCoord, clickStartEndClass, newStyles);
+  }
+  setStyles(newStyles);
+}
+
 const highlightValidMoves = (chess, id, idToCoord, emptySquareClass, pieceClass, newStyles) => {
   const validMoves = chess.moves({ square: id, verbose: true });
   for(const move of validMoves){
@@ -242,7 +255,8 @@ export  {
   getSquareWidth,
   getSquareType,
   getCoordClass, 
-  changeStyles, 
+  changeStyles,
+  setFromToStyles, 
   highlightValidMoves, 
   isMoveValid, 
   getPromotionIds, 

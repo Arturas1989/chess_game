@@ -1,9 +1,12 @@
 import React from 'react';
 import { useGameContext } from '../../GameApp.js';
+import { goToEnd } from '../../eventHandlers/Buttons/click.js'
 
 const EndPosition = () => {
+    const gameContext = useGameContext();
+
     return (
-        <button className='EndPosition'>
+        <button onClick={() => goToEnd(gameContext)} className='EndPosition'>
             <TrianglesRight />
         </button>
     )

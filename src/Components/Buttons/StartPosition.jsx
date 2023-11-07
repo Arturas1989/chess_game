@@ -1,9 +1,12 @@
 import React from 'react';
 import { useGameContext } from '../../GameApp.js';
+import { goBackToStart } from '../../eventHandlers/Buttons/click.js'
 
 const StartPosition = () => {
+    const gameContext = useGameContext();
+    
     return (
-        <button className='StartPosition'>
+        <button onClick={() => goBackToStart(gameContext)} className='StartPosition'>
             <TrianglesLeft />
         </button>
     )

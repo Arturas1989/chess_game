@@ -1,9 +1,12 @@
 import React from 'react';
 import { useGameContext } from '../../GameApp.js';
+import { goToPrevMove } from '../../eventHandlers/Buttons/click.js'
 
 const PrevMove = () => {
+    const gameContext = useGameContext();
+
     return (
-        <button className='PrevMove'>
+        <button onClick={() => goToPrevMove(gameContext)} className='PrevMove'>
             <TriangleLeft />
         </button>
     )

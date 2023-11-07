@@ -1,9 +1,12 @@
 import React from 'react';
 import { useGameContext } from '../../GameApp.js';
+import { reverseBoard } from '../../eventHandlers/Buttons/click.js'
 
 const ReverseBoard = () => {
+    const gameContext = useGameContext();
+
     return (
-        <button className='ReverseBoard'>
+        <button onClick={() => reverseBoard(gameContext)} className='ReverseBoard'>
             <ReverseIcon />          
         </button>
     )

@@ -1,9 +1,12 @@
 import React from 'react';
+import useKeyPress from '../../hooks/useKeyPress.jsx';
 import { useGameContext } from '../../GameApp.js';
 import { goToPrevMove } from '../../eventHandlers/Buttons/click.js'
 
 const PrevMove = () => {
     const gameContext = useGameContext();
+
+    useKeyPress(goToPrevMove, gameContext, 'ArrowLeft');
 
     return (
         <button onClick={() => goToPrevMove(gameContext)} className='PrevMove'>

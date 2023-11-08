@@ -12,6 +12,7 @@
 .MoveList{
     height: var(--MoveListHeight);
     overflow-x: auto;
+    scroll-behavior: smooth;
 }
 
 .MoveRow{

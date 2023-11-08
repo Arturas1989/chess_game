@@ -1,10 +1,13 @@
 import React from 'react';
+import useKeyPress from '../../hooks/useKeyPress.jsx';
 import { useGameContext } from '../../GameApp.js';
 import { goToNextMove } from '../../eventHandlers/Buttons/click.js'
 
 const NextMove = () => {
 
     const gameContext = useGameContext();
+
+    useKeyPress(goToNextMove, gameContext, 'ArrowRight');
 
     return (
         <button onClick={() => goToNextMove(gameContext)} className='NextMove'>

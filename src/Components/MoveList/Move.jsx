@@ -15,7 +15,7 @@ const VariantMove = ({ notation, i, id, dots }) => {
       themes
     } = useGameContext();
   
-    const handleClick = (e) => {
+    const goToMove = (e) => {
       
       let newStyles = {...initialStyles};
       let [currLine, newCurrMove] = e.target.id.split(',');
@@ -45,7 +45,7 @@ const VariantMove = ({ notation, i, id, dots }) => {
       <div 
         className={className} 
         id={id} 
-        onClick={(e) => handleClick(e)}
+        onClick={(e) => goToMove(e)}
       >
           {i % 2 === 0 ? 
             <MoveNumber 
@@ -74,7 +74,7 @@ const VariantMove = ({ notation, i, id, dots }) => {
   
     const { currLine, currMove } = currVariant;
   
-    const handleClick = (e) => {
+    const goToMove = (e) => {
       if(className.includes('empty')) return;
 
       let newStyles = {...initialStyles};
@@ -91,6 +91,8 @@ const VariantMove = ({ notation, i, id, dots }) => {
   
       setCurrVariant({'currLine' : line, 'currMove' : newCurrMove});
       setStyles(newStyles);
+      
+
     }
   
     const { notationPiece } = themes[theme.background]
@@ -102,7 +104,7 @@ const VariantMove = ({ notation, i, id, dots }) => {
     return (
       <div 
         className={className}
-        onClick={(e) => handleClick(e)}
+        onClick={(e) => goToMove(e)}
         id={id}
       >
         <div className="RegularMove">

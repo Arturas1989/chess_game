@@ -1,10 +1,10 @@
 const fontSizeSVG = {
     '16px' : {
         left: {
-            left: '-5',
+            left: '-8',
             top: '0',
-            viewBoxWidth: '47',
-            viewBoxHeight: '47',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '0px',
             pieceSpace: '3px',
             pieceWidth: '16px'
@@ -13,8 +13,8 @@ const fontSizeSVG = {
         middle: {
             left: '0',
             top: '0',
-            viewBoxWidth: '47',
-            viewBoxHeight: '47',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '6px',
             pieceSpace: '0px',
             pieceWidth: '16px'
@@ -23,8 +23,8 @@ const fontSizeSVG = {
         right: {
             left: '0',
             top: '0',
-            viewBoxWidth: '47',
-            viewBoxHeight: '47',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '6px',
             pieceSpace: '0px',
             pieceWidth: '16px'
@@ -42,10 +42,10 @@ const fontSizeSVG = {
     },
     '12px' : {
         left: {
-            left: '-11',
+            left: '-5',
             top: '0',
-            viewBoxWidth: '52',
-            viewBoxHeight: '52',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '0px',
             pieceSpace: '4px',
             pieceWidth: '12px'
@@ -54,18 +54,18 @@ const fontSizeSVG = {
         middle: {
             left: '0',
             top: '0',
-            viewBoxWidth: '52',
-            viewBoxHeight: '52',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '6px',
             pieceSpace: '0px',
             pieceWidth: '12px'
         },
 
         right: {
-            left: '-8',
+            left: '0',
             top: '0',
-            viewBoxWidth: '52',
-            viewBoxHeight: '52',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '6px',
             pieceSpace: '0px',
             pieceWidth: '12px'

@@ -47,15 +47,16 @@ const VariantMove = ({ notation, i, id, dots }) => {
         id={id} 
         onClick={(e) => goToMove(e)}
       >
-          {i % 2 === 0 ? 
+        
+          {/* {i % 2 === 0 ? 
             <MoveNumber 
               className="VariantMoveNumber" 
               i={i} 
               fontSizeType={'variantsFontSize'}
               dots={dots} 
             /> 
-          : ''}
-          <Notation notation={notation} fontSizeType={'variantsFontSize'}/>
+          : ''} */}
+          <Notation notation={notation} i={i} dots={dots} fontSizeType={'variantsFontSize'}/>
       </div>
     )
   }

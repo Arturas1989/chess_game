@@ -20,7 +20,7 @@ const goToNextMove = (gameContext) => {
     const {currLine, currMove} = currVariant;
     const nextMove = currMove + 1;
     if(chessVariants[currLine]['moves'][nextMove]){
-        const moves = chessVariants['line1']['moves'];
+        const moves = chessVariants[currLine]['moves'];
         setFromToStyles(moves, nextMove, preComputedMaps, initialStyles, theme, setStyles);
         setCurrVariant({...currVariant, currMove: nextMove});
     }

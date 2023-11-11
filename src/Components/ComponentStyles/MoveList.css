@@ -15,6 +15,12 @@
     scroll-behavior: smooth;
 }
 
+.MovesCol{
+    display: flex;
+    flex-direction: row;
+    width: 90%;
+}
+
 .MoveRow{
     display: flex;
     width: 100%;
@@ -22,27 +28,6 @@
     flex-direction: row;
 }
 
-.MoveNumber{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 10%;
-    padding: 0 var(--moveRowPadding);
-    background-color: var(--moveNumberColor);
-}
-
-.FromLine{
-    font-weight: normal;
-    font-size: 9px;
-    line-height: 1;
-}
-
-.MovesCol{
-    display: flex;
-    flex-direction: row;
-    width: 90%;
-}
-  
 .RegularMoveContainer, .empty{
     display: flex;
     flex-direction: row;
@@ -54,15 +39,6 @@
     pointer-events: none;
 }
 
-.VariantMove * {
-    stroke-width: 4;
-    font-weight: bold;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 12px;
-}
-
 .RegularMoveContainer:hover, .VariantMove:hover{
     background-color: rgba(0, 0, 255, 0.5);
     cursor: pointer;
@@ -71,12 +47,52 @@
 .RegularMove{
     width: 100%;
     display: flex;
+    align-items: center;
     flex-direction: row;
     padding: var(--moveRowPadding);
 }
 
 .RegularMove * {
     font-size: 16px;
+}
+
+.currMove {
+    background-color: rgba(0, 0, 255, 0.2);
+}
+
+.currMove * {
+    stroke-width: 4;
+    font-weight: bold;
+}
+
+
+.Notation{
+    margin:0;
+    padding:0;
+    line-height:1;
+    font-weight:normal;
+    position:relative;
+}
+
+.MoveNumber{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 10%;
+    padding: 0 var(--moveRowPadding);
+    background-color: var(--moveNumberColor);
+}
+
+.svgContainer{
+    display: inline-flex;
+    align-self: center;
+}
+
+.svgContainer svg{
+    height: 1em;
+    width: 1em;
+    top: 0.14em;
+    position: relative;
 }
 
 .Variants{
@@ -96,47 +112,30 @@
     box-shadow: var(--moveRowShadow);
 }
 
-.VariantMoveNumber{
-    margin-left: 5px;
-}
-
-.currMove {
-    background-color: rgba(0, 0, 255, 0.2);
-}
-
-.currMove * {
-    stroke-width: 4;
-    font-weight: bold;
+.FromLine{
+    font-weight: normal;
+    font-size: 9px;
+    line-height: 1;
 }
 
 .VariantMove {
+    height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: var(--MoveRowHeight);
 }
 
-.RegularMove {
-    display: flex;
-    align-items: center;
+.VariantMove .Notation, .VariantMove span {
+    font-size: 12px;
+    font-weight: bold;
+    outline: 1px solid rgba(0, 0, 0, 0);
 }
 
-
-
-.svgContainer{
-    display: inline-flex;
-    align-self: center;
+.VariantMoveNumber{
+    margin-left: 5px;
 }
 
-.svgContainer svg{
-    height: 1em;
-    width: 1em;
-    top: 0.125em;
-    position: relative;
-}
-
-.Notation{
-    padding:0;
-    position:relative;
-    line-height: 1;
+.VariantMove g {
+    stroke-width: 4
 }

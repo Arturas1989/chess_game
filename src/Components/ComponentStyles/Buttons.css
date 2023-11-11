@@ -19,6 +19,10 @@
     cursor: pointer;
 }
 
+.ButtonsContainer button:focus-visible{
+    outline: none;
+}
+
 .MoveControlSvg > g{
     stroke: none;
     stroke-width: 1;

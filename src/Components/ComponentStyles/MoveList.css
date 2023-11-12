@@ -88,11 +88,15 @@
     align-self: center;
 }
 
-.svgContainer svg{
+.N, .B, .Q, .R, .K, .invisible{
     height: 1em;
     width: 1em;
-    top: 0.14em;
+    top: 0.125em;
     position: relative;
+}
+
+.invisible{
+    width: 0;
 }
 
 .Variants{

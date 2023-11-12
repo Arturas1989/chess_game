@@ -130,6 +130,10 @@
     min-height: var(--MoveRowHeight);
 }
 
+.Variants .VariantLine .VariantMove *{
+    stroke-width: 4;
+}
+
 .VariantMove .Notation, .VariantMove span {
     font-size: 12px;
     font-weight: bold;
@@ -140,6 +144,6 @@
     margin-left: 5px;
 }
 
-.VariantMove g {
+/* .VariantMove g {
     stroke-width: 4
-}
+} */

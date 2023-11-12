@@ -31,13 +31,13 @@ const fontSizeSVG = {
         },
 
         none: {
-            left: '',
-            top: '',
-            viewBoxWidth: '',
-            viewBoxHeight: '',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '6px',
-            pieceSpace: '',
-            pieceWidth: ''
+            pieceSpace: '0',
+            pieceWidth: '0'
         }
     },
     '12px' : {
@@ -72,13 +72,13 @@ const fontSizeSVG = {
         },
 
         none: {
-            left: '',
-            top: '',
-            viewBoxWidth: '',
-            viewBoxHeight: '',
+            left: '0',
+            top: '0',
+            viewBoxWidth: '48',
+            viewBoxHeight: '48',
             textSpace: '6px',
-            pieceSpace: '',
-            pieceWidth: ''
+            pieceSpace: '0',
+            pieceWidth: '0'
         }
     }
 }

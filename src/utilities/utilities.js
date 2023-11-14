@@ -101,7 +101,7 @@ const setVariant = (newChessVariants, currLine, currMove, chessClone, setChessVa
 }
 
 const getTypeNotations = (notation) => {
-  let pieceType = 'invisible',
+  let pieceType,
   svgType, 
   notations, 
   isPromoting,

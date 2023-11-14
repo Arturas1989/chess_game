@@ -1,3 +1,8 @@
+@font-face{
+    font-family: 'FreeSerif';
+    src: url('../../fonts/FreeSerif/FreeSerif-4aeK.ttf');
+}
+
 @import './variables.css';
 
 .MoveContainer{
@@ -52,6 +57,10 @@
     padding: var(--moveRowPadding);
 }
 
+.RegularMove, .VariantLine{
+    font-family: 'FreeSerif', 'Segoe UI', Roboto, sans-serif;
+}
+
 .RegularMove * {
     font-size: 16px;
 }
@@ -61,17 +70,11 @@
 }
 
 .currMove * {
-    stroke-width: 4;
     font-weight: bold;
 }
 
-
-.Notation{
-    margin:0;
-    padding:0;
-    line-height:1;
-    font-weight:normal;
-    position:relative;
+.pieceContainer{
+    padding-left: 5px;
 }
 
 .MoveNumber{
@@ -83,20 +86,9 @@
     background-color: var(--moveNumberColor);
 }
 
-.svgContainer{
+.pieceContainer{
     display: inline-flex;
     align-self: center;
-}
-
-.N, .B, .Q, .R, .K, .invisible{
-    height: 1em;
-    width: 1em;
-    top: 0.14em;
-    position: relative;
-}
-
-.invisible{
-    width: 0;
 }
 
 .Variants{
@@ -119,7 +111,6 @@
 .FromLine{
     font-weight: normal;
     font-size: 9px;
-    line-height: 1;
 }
 
 .VariantMove {
@@ -138,8 +129,4 @@
 
 .VariantMoveNumber{
     margin-left: 5px;
-}
-
-.VariantMove g {
-    stroke-width: 4
 }

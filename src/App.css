@@ -3,6 +3,10 @@
 @import './Components/ComponentStyles/MoveList.css';
 @import './Components/ComponentStyles/Buttons.css';
 
+body{
+  font-family: 'FreeSerif', 'Segoe UI', Roboto, sans-serif;
+}
+
 .GameContainer{
   display: flex;
   align-items: center;

@@ -57,12 +57,8 @@
     padding: var(--moveRowPadding);
 }
 
-.RegularMove, .VariantLine{
-    font-family: 'FreeSerif', 'Segoe UI', Roboto, sans-serif;
-}
-
 .RegularMove * {
-    font-size: 16px;
+    font-size: var(--RegularMoveFontSize);
 }
 
 .currMove {
@@ -110,7 +106,7 @@
 
 .FromLine{
     font-weight: normal;
-    font-size: 9px;
+    font-size: var(--FromLineFontSize);
 }
 
 .VariantMove {
@@ -121,8 +117,8 @@
     min-height: var(--MoveRowHeight);
 }
 
-.VariantMove .Notation, .VariantMove span {
-    font-size: 12px;
+.VariantMove .Notation{
+    font-size: var(--VariantMoveFontSize);
     font-weight: bold;
     outline: 1px solid rgba(0, 0, 0, 0);
 }

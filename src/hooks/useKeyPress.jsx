@@ -13,7 +13,7 @@ const useKeyPress = (eventHandler, handlerArg, key) => {
             document.removeEventListener('keydown', nextMoveOnKeyPress);
         }
     
-    }, [handlerArg])
+    }, [handlerArg, key, eventHandler])
 }
 
 export default useKeyPress

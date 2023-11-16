@@ -1,11 +1,14 @@
 :root{
     --board-margin: 30px;
+    --searchBarMargin: var(--board-margin);
+    --searchBarMinHeight: 30px;
     --MoveList-margin: 30px;
     --GameContainerMarginTop: 20px;
     --GameContainerMarginLeft: 13dvw;
     --GameContainerRemainingWidth: calc(100dvw - var(--GameContainerMarginLeft)*2);
     --GameContainerHeight: 80dvh;
-    --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) - var(--board-margin) * 2) );
+    --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) 
+    - var(--board-margin) * 2) - var(--searchBarMargin) - var(--searchBarMinHeight) );
     --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
     --CoordFontSizeMinimum: max(calc(var(--BoardWidth) * 0.035), 8px);
     --CoordFontSize: min(var(--CoordFontSizeMinimum), 15px);
@@ -16,9 +19,9 @@
     --MoveListContainerHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
     --ButtonsContainerPadding: 4px;
     --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / 14);
-    --RegularMoveFontSize: calc(var(--MoveRowHeight) * 0.5);
-    --VariantMoveFontSize: calc(var(--MoveRowHeight) * 0.4);
-    --FromLineFontSize: calc(var(--MoveRowHeight) * 0.3);
+    --RegularMoveFontSize: clamp(1rem, calc(var(--MoveRowHeight) * 0.5), 1.5rem);
+    --VariantMoveFontSize: clamp(0.8rem, calc(var(--MoveRowHeight) * 0.4), 1.2rem);
+    --FromLineFontSize: clamp(0.6rem, calc(var(--MoveRowHeight) * 0.3), 1rem);
     --MoveListHeight: calc(var(--MoveRowHeight)*13 + 0.2px);
     --moveRowPadding: 3px;
     --moveNumberColor: rgba(128, 128, 128, 0.3);
@@ -26,4 +29,8 @@
     --variantLinePadding: 5px;
     --variantLineWidth: calc( 100% - var(--variantLinePadding) * 2 );
     --moveRowShadow: inset 0 0 0 1px #000;
+    --searchContainerWidth: var(--BoardWidth);
+    --searchInputPadding: 5px;
+    --searchInputBorder: 1px solid black;
+    
 }

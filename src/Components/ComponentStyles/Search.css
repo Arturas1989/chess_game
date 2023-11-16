@@ -1,0 +1,22 @@
+@import './variables.css';
+
+.SearchContainer{
+    display: flex;
+    gap: 20px;
+    min-height: var(--searchBarMinHeight);
+    margin-left: var(--board-margin);
+    margin-top: var(--board-margin);
+    width: var(--searchContainerWidth);
+}
+
+.SearchContainer > input {
+    width: 50%;
+    min-height: 100%;
+    padding: var(--searchInputPadding);
+    border: var(--searchInputBorder);
+}
+
+.select-group{
+    display: flex;
+    flex-direction: column;
+}

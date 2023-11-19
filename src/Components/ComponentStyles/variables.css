@@ -32,5 +32,7 @@
     --searchContainerWidth: var(--BoardWidth);
     --searchInputPadding: 5px;
     --searchInputBorder: 1px solid black;
+    --searchInputWidth: calc(100% - var(--searchInputPadding) * 2);
+    --searchInputHeight: calc(100% - var(--searchInputPadding) * 2 - 2px);
     
 }

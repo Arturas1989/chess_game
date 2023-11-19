@@ -48,24 +48,31 @@ body{
     margin-left: 0;
   }
   
-  .SearchContainer > .select-group{
-    width: 100%;
+  .SearchContainer > .select-group, .SearchContainer > .SearchBar{
+    min-width: 100%;
   }
 
   .SearchContainer > input{
-    width: calc(100% - var(--searchInputBorder) * 2 - var(--searchInputPadding) * 2)
+    min-width: calc(100% - var(--searchInputBorder) * 2 - var(--searchInputPadding) * 2)
   }
 }
 
 @media (max-width: 20em){
   .Board{
-    min-width: 200px;
     min-height: 200px;
+  }
+
+  .Board, .SearchContainer{
     align-self: normal;
   }
 
-  .MoveContainer, .MoveList{
+  .Board, .MoveContainer, .MoveList, .SearchContainer{
     min-width: 200px;
+  }
+
+  .SearchContainer, .Board{
+    margin: var(--board-margin);
+    margin-bottom: 0;
   }
 
   .GameControls{

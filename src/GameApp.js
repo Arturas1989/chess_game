@@ -3,6 +3,7 @@ import { useState, createContext, useContext } from 'react';
 import themes from './themes/themes.js';
 import { Board, PromotionBoard } from './Components/Board/Board.jsx';
 import MoveContainer from './Components/MoveList/MoveContainer.jsx';
+import SearchContainer from './Components/Search/SearchContainer.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
 
@@ -75,8 +76,10 @@ const GameApp = () => {
 }
 
 const GameContainer = ({ isPromoting }) => {
-  return (
-      <div className="GameContainer">
+  return (   
+    <div className="GameContainer">
+      <SearchContainer />
+      <div className="GameControls">
         {isPromoting ?
           <PromotionBoard/>
           :
@@ -84,6 +87,7 @@ const GameContainer = ({ isPromoting }) => {
         }
         <MoveContainer />
       </div>
+    </div>
   );
 }
 

@@ -1,0 +1,49 @@
+@import './variables.css';
+
+.SearchContainer{
+    display: flex;
+    gap: 20px;
+    min-height: var(--searchBarMinHeight);
+    margin-left: var(--board-margin);
+    margin-top: var(--board-margin);
+    width: var(--searchContainerWidth);
+}
+
+.SearchBar > input {
+    min-width: var(--searchInputWidth);
+    height: var(--searchInputHeight);
+    padding: var(--searchInputPadding);
+    border: var(--searchInputBorder);
+    border-radius: 20px;
+}
+
+.SearchBar > input:focus, .select-group > select:focus{
+    outline:none;
+    box-shadow:1px 1px 1px 1px lightblue;
+    border: blue;
+}
+
+.SearchBar{
+    position: relative;
+    min-width: 65%;
+}
+
+.SearchButton{
+    display: flex;
+    align-items: center;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 2px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+}
+.SearchButton > img{
+    height: 50%;
+}
+
+.select-group{
+    display: flex;
+    flex-direction: column;
+}

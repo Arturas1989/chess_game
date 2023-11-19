@@ -2,14 +2,15 @@
 @import './Components/ComponentStyles/Board.css';
 @import './Components/ComponentStyles/MoveList.css';
 @import './Components/ComponentStyles/Buttons.css';
+@import './Components/ComponentStyles/Search.css';
 
 body{
-  font-family: 'FreeSerif', 'Segoe UI', Roboto, sans-serif;
+  font-family: 'FreeSerif', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .GameContainer{
   display: flex;
-  align-items: center;
+  flex-direction: column;
   border: 1px solid black;
   margin-top: var(--GameContainerMarginTop);
   margin-bottom: var(--GameContainerMarginTop);
@@ -17,6 +18,11 @@ body{
   margin-right: var(--GameContainerMarginLeft);
   width: var(--GameContainerRemainingWidth);
   min-height: var(--GameContainerHeight);
+}
+
+.GameControls{
+  display: flex;
+  align-items: center;
 }
 
 @media (max-width: 85em){
@@ -29,26 +35,47 @@ body{
   :root{
     --MoveListWidth: calc(var(--GameContainerRemainingWidth) - 2 *  var(--MoveList-margin));
   }
-  .GameContainer{
+
+  .GameControls, .SearchContainer{
     flex-direction: column;
   }
-  .Board{
+
+  .Board, .SearchContainer{
     align-self: center;
+  }
+
+  .SearchContainer{
+    margin-left: 0;
+  }
+  
+  .SearchContainer > .select-group, .SearchContainer > .SearchBar{
+    min-width: 100%;
+  }
+
+  .SearchContainer > input{
+    min-width: calc(100% - var(--searchInputBorder) * 2 - var(--searchInputPadding) * 2)
   }
 }
 
 @media (max-width: 20em){
   .Board{
-    min-width: 200px;
     min-height: 200px;
+  }
+
+  .Board, .SearchContainer{
     align-self: normal;
   }
 
-  .MoveContainer, .MoveList{
+  .Board, .MoveContainer, .MoveList, .SearchContainer{
     min-width: 200px;
   }
 
-  .GameContainer{
+  .SearchContainer, .Board{
+    margin: var(--board-margin);
+    margin-bottom: 0;
+  }
+
+  .GameControls{
     min-width: 300px;
     align-items: normal;
   }

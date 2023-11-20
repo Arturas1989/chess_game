@@ -1,10 +1,14 @@
 import React from 'react'
 
-const Select = () => {
+const Select = ({searchVals, onSearchValsChange}) => {
     return(
         <div className="select-group">
-            <label htmlFor="titles">Choose a title:</label>
-            <select name="titles" id="titles">
+            <label htmlFor="titles">Or choose a  player's title:</label>
+            <select 
+                name="titles" 
+                id="titles"
+                onChange={(e) => onSearchValsChange({...searchVals, title : e.target.value})}
+            >
                 <option value=""></option>
                 <option value="GM">GM</option>
                 <option value="WGM">WGM</option>

@@ -23,9 +23,13 @@
     border: blue;
 }
 
+.select-group>label{
+    margin-bottom: 3px;
+}
+
 .SearchBar{
     position: relative;
-    min-width: 65%;
+    min-width: 60%;
 }
 
 .SearchButton{

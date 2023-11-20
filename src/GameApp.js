@@ -81,9 +81,7 @@ const GameApp = () => {
 
 const GameContainer =  ({ isPromoting }) => {
   const {apiData} = useGameContext();
-
-  // searchChessGames(API_URL, searchVals, setApiData)
-  console.log(apiData)
+  
   return (
     apiData.length !== 0 ?
       <div className="SearchResults">

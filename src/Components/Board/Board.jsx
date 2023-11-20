@@ -38,6 +38,7 @@ const PromotionBoard = () => {
     const { pieces } = themes[theme.pieces];
     const promotionIds = getPromotionIds(promotion.to, preComputedMaps, promotionPiecesList);
     const { currLine, currMove} = currVariant
+    
     const chess = chessVariants[currLine]['moves'][currMove];
 
     return (

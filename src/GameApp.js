@@ -6,6 +6,7 @@ import MoveContainer from './Components/MoveList/MoveContainer.jsx';
 import SearchContainer from './Components/Search/SearchContainer.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
+import Table from './Components/Search/Table.jsx';
 
 const GameContext = createContext();
 
@@ -25,6 +26,7 @@ const GameApp = () => {
   const [isReversed, setIsReversed] = useState(false);
   const [pieceClicked, setPieceClicked] = useState({});
   const [boardBoundaries, setBoardBoundaries] = useState(null);
+  const [apiData, setApiData] = useState([]);
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
@@ -65,7 +67,9 @@ const GameApp = () => {
     pieceClicked,
     setPieceClicked,
     boardBoundaries, 
-    setBoardBoundaries
+    setBoardBoundaries,
+    apiData, 
+    setApiData
   }
 
   return (
@@ -75,19 +79,30 @@ const GameApp = () => {
   )
 }
 
-const GameContainer = ({ isPromoting }) => {
-  return (   
-    <div className="GameContainer">
-      <SearchContainer />
-      <div className="GameControls">
-        {isPromoting ?
-          <PromotionBoard/>
-          :
-          <Board/>
-        }
-        <MoveContainer />
+const GameContainer =  ({ isPromoting }) => {
+  const {apiData} = useGameContext();
+
+  // searchChessGames(API_URL, searchVals, setApiData)
+  console.log(apiData)
+  return (
+    apiData.length !== 0 ?
+      <div className="SearchResults">
+        <Table data={apiData} />
       </div>
-    </div>
+      :
+      <div className="GameContainer">
+        <SearchContainer />
+        <div className="GameControls">
+          {isPromoting ?
+            <PromotionBoard/>
+            :
+            <Board/>
+          }
+          <MoveContainer />
+        </div>
+      </div>
+      
+      
   );
 }
 

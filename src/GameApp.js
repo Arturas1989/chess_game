@@ -6,9 +6,10 @@ import MoveContainer from './Components/MoveList/MoveContainer.jsx';
 import SearchContainer from './Components/Search/SearchContainer.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
-import Table from './Components/Search/Table.jsx';
+import SearchResults from './Components/Search/SearchResults.jsx'
 
 const GameContext = createContext();
+const API_URL = 'https://api.chess.com/pub/player/'
 
 const GameApp = () => {
   const [theme, setTheme] = useState({squares: 'standard', pieces: 'standard', background: 'light'});
@@ -27,6 +28,7 @@ const GameApp = () => {
   const [pieceClicked, setPieceClicked] = useState({});
   const [boardBoundaries, setBoardBoundaries] = useState(null);
   const [apiData, setApiData] = useState([]);
+  const [searchVals, setSearchVals] = useState({username : '', title : ''});
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
@@ -47,7 +49,6 @@ const GameApp = () => {
   const [styles, setStyles] = useState({...initialStyles});
 
   const GameContextValues = {
-
     themes,
     theme,
     setTheme,
@@ -69,7 +70,10 @@ const GameApp = () => {
     boardBoundaries, 
     setBoardBoundaries,
     apiData, 
-    setApiData
+    setApiData,
+    searchVals, 
+    setSearchVals,
+    API_URL
   }
 
   return (
@@ -84,9 +88,7 @@ const GameContainer =  ({ isPromoting }) => {
   
   return (
     apiData.length !== 0 ?
-      <div className="SearchResults">
-        <Table data={apiData} />
-      </div>
+      <SearchResults data={apiData}/>
       :
       <div className="GameContainer">
         <SearchContainer />

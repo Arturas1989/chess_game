@@ -3,10 +3,10 @@ import { useGameContext } from '../../GameApp.js';
 import logo from './icons/loupe_751463.png';
 import {searchChessGames} from '../../utilities/api.js';
 
-const API_URL = 'https://api.chess.com/pub/player/'
+
 
 const SearchButton = ({searchVals}) => {
-    const {setApiData} = useGameContext();
+    const {setApiData, API_URL} = useGameContext();
 
     return (
         <button 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 
 const API_URL = 'https://api.chess.com/pub/titled/';

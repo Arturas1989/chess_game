@@ -1,4 +1,3 @@
-import React, { useState } from 'react';
 import SearchBar from './SearchBar.jsx';
 import Select from './Select.jsx';
 

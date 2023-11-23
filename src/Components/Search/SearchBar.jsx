@@ -1,4 +1,3 @@
-import React from 'react'
 import SearchButton from './SearchButton.jsx'
 import { useGameContext } from '../../GameApp.js';
 

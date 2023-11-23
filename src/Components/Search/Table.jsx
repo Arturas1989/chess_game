@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 import { Chess } from 'chess.js';
 import {getResult, getDate, getMoveLines} from '../../utilities/api.js';

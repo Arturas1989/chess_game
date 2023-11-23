@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 import logo from './icons/loupe_751463.png';
 import {searchChessGames} from '../../utilities/api.js';

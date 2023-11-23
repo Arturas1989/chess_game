@@ -1,4 +1,3 @@
-import React from 'react';
 import useKeyPress from '../../hooks/useKeyPress.jsx';
 import { useGameContext } from '../../GameApp.js';
 import { goToNextMove } from '../../eventHandlers/Buttons/click.js'

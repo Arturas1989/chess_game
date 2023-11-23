@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 import { changeStyles } from '../../utilities/utilities.js';
 import { Notation } from './Notation.jsx';

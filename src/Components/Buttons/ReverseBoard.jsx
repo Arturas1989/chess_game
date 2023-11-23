@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 import { reverseBoard } from '../../eventHandlers/Buttons/click.js'
 

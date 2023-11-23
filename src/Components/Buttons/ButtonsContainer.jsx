@@ -1,4 +1,3 @@
-import React from 'react';
 import EndPosition from './EndPosition.jsx';
 import NextMove from './NextMove.jsx';
 import PrevMove from './PrevMove.jsx';

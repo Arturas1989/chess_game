@@ -15,7 +15,7 @@ const searchByUserName = async (API_URL, username, setApiData) => {
         console.error(`Error: no such property found: "archives"`);
         return;
     }
-    
+
     const gameLimit = 100
     let count = 0;
     let gameData = [];
@@ -47,17 +47,13 @@ const searchByUserName = async (API_URL, username, setApiData) => {
             } 
         }
     }
+    setApiData(gameData);
 }
 
 const searchChessGames = async (API_URL, searchVals, setApiData) => {
-    const {username, title} = searchVals;
-    if(username) searchByUserName(API_URL, username, setApiData);
+    const {username} = searchVals;
+    if(username) await searchByUserName(API_URL, username, setApiData);
 }
-
-
-
-
-
 
 const getResult = (pgn) => {
     if(pgn.includes('1-0')) return '1-0 white wins';
@@ -88,4 +84,30 @@ const getMoveLines = (history, line) => {
     return [historyLines, moves]
 }
 
-export {searchChessGames, getResult, getDate, getMoveLines};
+const filterTitledPlayers = (players, partname) => {
+    const partNameLower = partname.toLowerCase();
+    return players.filter(apiUsername => apiUsername.toLowerCase().includes(partNameLower));
+}
+
+const searchTitledPlayers = async (e, API_URL, setApiData, setSearchVals, setCurrView, partname) => {
+    const response = await fetch(`${API_URL}${e.target.value}`);
+    if (!response.ok) {
+        console.error(`Error: ${response.status} - ${response.statusText}`);
+        return;
+    }
+    let data = await response.json();
+    let players = data.players;
+    if(partname) players = filterTitledPlayers(players, partname);
+    setApiData(players);
+    setSearchVals({username: '', title: e.target.value})
+    if(e.target.value) setCurrView('title');
+}
+
+export {
+    searchTitledPlayers, 
+    filterTitledPlayers, 
+    searchChessGames, 
+    getResult, 
+    getDate, 
+    getMoveLines
+};

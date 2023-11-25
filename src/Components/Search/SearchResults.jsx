@@ -3,13 +3,13 @@ import { useGameContext } from '../../GameApp.js';
 import TitledPlayerResults from './TitledPlayerResults.jsx';
 
 const SearchResults = ({ data }) => {
-    const { searchVals } = useGameContext();
+    const { currView } = useGameContext();
     return(
         <div className="SearchResults">
-            {searchVals.title === '' ? 
+            {currView === 'games' ? 
                 <Table data={data} />
                 :
-                <TitledPlayerResults data={data}/>
+                <TitledPlayerResults data={data} />
             }
             
         </div>

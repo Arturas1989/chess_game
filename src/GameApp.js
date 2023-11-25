@@ -29,6 +29,8 @@ const GameApp = () => {
   const [boardBoundaries, setBoardBoundaries] = useState(null);
   const [apiData, setApiData] = useState([]);
   const [searchVals, setSearchVals] = useState({username : '', title : ''});
+  const [currView, setCurrView] = useState('board');
+  const [partname, setPartname] = useState('');
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
@@ -73,7 +75,11 @@ const GameApp = () => {
     setApiData,
     searchVals, 
     setSearchVals,
-    API_URL
+    API_URL,
+    currView, 
+    setCurrView,
+    partname, 
+    setPartname
   }
 
   return (
@@ -84,10 +90,10 @@ const GameApp = () => {
 }
 
 const GameContainer =  ({ isPromoting }) => {
-  const {apiData} = useGameContext();
+  const {apiData, currView} = useGameContext();
   
   return (
-    apiData.length !== 0 ?
+    currView !== 'board' ?
       <SearchResults data={apiData}/>
       :
       <div className="GameContainer">

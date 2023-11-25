@@ -1,4 +1,3 @@
-import React from 'react';
 import MoveList from './MoveList';
 import ButtonsContainer from '../Buttons/ButtonsContainer';
 

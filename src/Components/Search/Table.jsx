@@ -1,13 +1,11 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 import { Chess } from 'chess.js';
 import {getResult, getDate, getMoveLines} from '../../utilities/api.js';
 
 
 const Table = ( { data } ) => {
-    const { setChessVariants, setApiData, setCurrVariant } = useGameContext();
+    const { setChessVariants, setApiData, setCurrVariant, setCurrView } = useGameContext();
     const setGame = (e) => {
-        
         const chess = new Chess();
         chess.loadPgn(data[parseInt(e.currentTarget.id)].pgn)
         const [historyLines, moves] = getMoveLines(chess.history(), 'line1');
@@ -23,7 +21,9 @@ const Table = ( { data } ) => {
         setChessVariants(chessVariant);
         setCurrVariant({'currLine' : 'line1', 'currMove' : 0})
         setApiData([]);
+        setCurrView('board');
     }
+    
     const tableData = Array.from({length: data.length}, (_,i) =>
         (
             <tr key={i} id={i} onClick={(e) => setGame(e)}>

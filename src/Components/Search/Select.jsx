@@ -1,21 +1,10 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
+import { searchTitledPlayers } from '../../utilities/api.js';
 
 const API_URL = 'https://api.chess.com/pub/titled/';
 
 const Select = () => {
-    const {searchVals, setSearchVals, setApiData} = useGameContext();
-
-    const setData = async (e) => {
-        const response = await fetch(`${API_URL}${e.target.value}`);
-        if (!response.ok) {
-            console.error(`Error: ${response.status} - ${response.statusText}`);
-            return;
-        }
-        let data = await response.json();
-        setApiData(data.players);
-        setSearchVals({...searchVals, title : e.target.value})
-    }
+    const {setSearchVals, setApiData, setCurrView, partname} = useGameContext();
 
     return(
         <div className="select-group">
@@ -23,7 +12,7 @@ const Select = () => {
             <select 
                 name="titles" 
                 id="titles"
-                onChange={(e) => setData(e)}
+                onChange={(e) => searchTitledPlayers(e, API_URL, setApiData, setSearchVals, setCurrView, partname)}
             >
                 <option value=""></option>
                 <option value="GM">GM</option>

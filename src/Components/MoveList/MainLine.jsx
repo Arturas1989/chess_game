@@ -1,4 +1,3 @@
-import React from 'react';
 import { useGameContext } from '../../GameApp.js';
 import { getLinePriority } from '../../utilities/utilities.js';
 import { Move, MoveNumber } from './Move.jsx';

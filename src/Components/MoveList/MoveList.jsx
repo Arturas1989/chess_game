@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import MainLine from './MainLine.jsx';
 import { useGameContext } from '../../GameApp.js';
 
@@ -24,7 +24,7 @@ const MoveList = () => {
     return () => {
       observer.disconnect();
     };
-  }, []);
+  }, [currVariant.currLine]);
 
   return (
     <div className="MoveList" ref={MoveListRef}>

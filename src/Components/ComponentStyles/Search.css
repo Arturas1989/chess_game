@@ -15,23 +15,13 @@ input{
     border-radius: 20px;
 }
 
+input::placeholder{
+    font-size: 0.6rem;
+}
+
 .SearchBar > input {
     min-width: var(--searchInputWidth);
     height: var(--searchInputHeight);
-}
-
-input::placeholder{
-    font-size: 0.7rem;
-}
-
-input:focus, .select-group > select:focus{
-    outline:none;
-    box-shadow:0 0 10px lightblue;
-    border: blue;
-}
-
-.select-group>label{
-    margin-bottom: 3px;
 }
 
 .SearchBar{
@@ -55,6 +45,17 @@ input:focus, .select-group > select:focus{
     height: 50%;
 }
 
+input:focus, .select-group > select:focus{
+    outline:none;
+    box-shadow:0 0 10px lightblue;
+    border: blue;
+}
+
+.select-group>label{
+    margin-bottom: 3px;
+}
+
+
 .select-group{
     display: flex;
     flex-direction: column;
@@ -63,6 +64,8 @@ input:focus, .select-group > select:focus{
 .titled-players{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    margin: 10px;
+    gap: 10px;
 }
 
 .player-container, .goTo{
@@ -94,22 +97,16 @@ input:focus, .select-group > select:focus{
     display: grid;
     grid-template-columns: auto auto auto auto;
     min-height: 30px;
+    align-content: center;
     justify-content: center;
     gap: 20px;
-    margin: 20px
-    /* align-items: center; */
+    margin: 20px;
+    
 }
 
-.titled-search-container > .SearchButton{
-    display: grid;
-    justify-content: center;
-    position: static;
-    height: 40px;
-}
-
-.titled-search-container img{
-    height: 40px;
-    width: 40px;
+.titled-search-container + h1 {
+    text-align: center;
+    margin: 0 20px;
 }
 
 @media(max-width: 650px){

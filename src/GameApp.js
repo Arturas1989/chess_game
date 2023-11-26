@@ -31,6 +31,7 @@ const GameApp = () => {
   const [searchVals, setSearchVals] = useState({username : '', title : ''});
   const [currView, setCurrView] = useState('board');
   const [partname, setPartname] = useState('');
+  const [errors, setErrors] = useState({userSearchError: ''});
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
@@ -79,7 +80,9 @@ const GameApp = () => {
     currView, 
     setCurrView,
     partname, 
-    setPartname
+    setPartname,
+    errors, 
+    setErrors
   }
 
   return (

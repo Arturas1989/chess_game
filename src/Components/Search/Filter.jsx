@@ -15,6 +15,8 @@ const Filter = () => {
         <>
             <div className="SearchBar">
                 <input
+                    id="username"
+                    autoComplete='off'
                     onKeyDown={(e) => e.key === 'Enter' ? handleSearchButtonClick() : null} 
                     onChange={(e) => setPartname(e.target.value)}
                     value={partname}

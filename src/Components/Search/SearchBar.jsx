@@ -21,7 +21,9 @@ const SearchBar = () => {
 
     return (  
         <div className='SearchBar'>
-            <input  
+            <input
+                id="username"
+                autoComplete='off'  
                 placeholder='search by chess.com username'
                 value={username} 
                 onChange={(e) => setSearchVals({username : e.target.value, title: ''})}

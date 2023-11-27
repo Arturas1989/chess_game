@@ -102,6 +102,7 @@ input:focus, .select-group > select:focus{
 
 .select-group>label{
     margin-bottom: 3px;
+    font-size: 12px;
 }
 
 

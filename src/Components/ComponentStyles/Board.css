@@ -2,12 +2,28 @@
   user-select: none;
 }
 
+.BoardContainer{
+  margin: var(--board-margin);
+}
+
 .Board{
   display: flex;
   flex-wrap: wrap;
   width: var(--BoardWidth);
   height: var(--BoardWidth);
-  margin: var(--board-margin);
+}
+
+.Board-top, .Board-bottom{
+  display: flex;
+  width: 100%;
+  font-size: 15px;
+  gap: 5px;
+}
+
+
+
+.Result{
+  display: flex;
 }
   
 .promotion-board{

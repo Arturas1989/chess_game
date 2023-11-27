@@ -38,7 +38,8 @@ const searchByUserName = async (API_URL, username, setApiData, setErrors) => {
                 'whiteRating' : game.white.rating,
                 'blackUsername' : game.black.username,
                 'blackRating' : game.black.rating,
-                'pgn' : game.pgn
+                'pgn' : game.pgn,
+                'result' : getResult(game.pgn)
             };
 
             gameData.push(gameInfo);

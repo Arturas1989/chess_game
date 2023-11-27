@@ -9,6 +9,16 @@
     width: var(--searchContainerWidth);
 }
 
+.UsersResults > .SearchContainer{
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.UsersResults > .SearchContainer .SearchBar{
+    min-width: 30%;
+}
+
 input{
     padding: var(--searchInputPadding);
     border: var(--searchInputBorder);

@@ -45,11 +45,11 @@ body{
     align-self: center;
   }
 
-  .SearchContainer{
+ .SearchContainer{
     margin-left: 0;
   }
   
-  .SearchContainer > .select-group, .SearchContainer > .SearchBar{
+ .SearchContainer > .select-group, .SearchContainer > .SearchBar{
     min-width: 100%;
   }
 
@@ -75,7 +75,7 @@ body{
     min-width: 200px;
   }
 
-  .SearchContainer, .Board{
+ .SearchContainer, .Board{
     margin: var(--board-margin);
     margin-bottom: 0;
   }

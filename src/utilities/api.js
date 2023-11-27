@@ -1,19 +1,21 @@
 import { Chess } from 'chess.js';
 const cloneDeep = require('lodash/cloneDeep');
 
-const searchByUserName = async (API_URL, username, setApiData) => {
-    let response = await fetch(`${API_URL}${username}/games/archives`);
+const searchByUserName = async (API_URL, username, setApiData, setErrors) => {
+    const full_api_url = `${API_URL}${username}/games/archives`;
+    
+    let response = await fetch(full_api_url);
 
     if (!response.ok) {
-        console.error(`Error: ${response.status} - ${response.statusText}`);
-        return;
+        setErrors({userSearchError: `No such username: "${username}" found`})
+        return [];
     }
     let data = await response.json();
-     
+
     const monthsUrls = data.archives;
     if(!monthsUrls){
         console.error(`Error: no such property found: "archives"`);
-        return;
+        return [];
     }
 
     const gameLimit = 100
@@ -43,16 +45,26 @@ const searchByUserName = async (API_URL, username, setApiData) => {
             count++;
             if(count === gameLimit){
                 setApiData(gameData);
-                return;
+                return gameData;
             } 
         }
     }
     setApiData(gameData);
+    return gameData
+    
 }
 
-const searchChessGames = async (API_URL, searchVals, setApiData) => {
+const searchChessGames = async (API_URL, searchVals, setApiData, setErrors) => {
     const {username} = searchVals;
-    if(username) await searchByUserName(API_URL, username, setApiData);
+    if(username){
+        try {
+            const data = await searchByUserName(API_URL, username, setApiData, setErrors);
+            return data;
+        } catch(e) {
+            setErrors({userSearchError: `No such username: "${username}" found`});
+        }
+    } 
+    
 }
 
 const getResult = (pgn) => {

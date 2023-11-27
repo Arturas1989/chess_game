@@ -9,11 +9,23 @@
     width: var(--searchContainerWidth);
 }
 
+.UsersResults > .SearchContainer{
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+.UsersResults > .SearchContainer .SearchBar{
+    min-width: 30%;
+}
+
 input{
     padding: var(--searchInputPadding);
     border: var(--searchInputBorder);
     border-radius: 20px;
 }
+
+
 
 input::placeholder{
     font-size: 0.6rem;
@@ -28,6 +40,43 @@ input::placeholder{
     position: relative;
     min-width: 60%;
 }
+
+.error{
+    border: 1px solid;
+    margin: 10px var(--board-margin);
+    padding: 15px 10px 15px 50px;
+    color: #D8000C;
+    background-color: #FFBABA;
+    background-image: url('https://i.imgur.com/GnyDvKN.png');
+	background-repeat: no-repeat;
+	background-position: 10px center;
+    position: relative;
+    width: calc(var(--BoardWidth) - var(--board-margin) * 2);
+}
+
+.close-error{
+    display: flex;
+    color: black;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 3px solid black;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+}
+
+.close-error > div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
 
 .SearchButton{
     display: flex;
@@ -114,3 +163,4 @@ input:focus, .select-group > select:focus{
         grid-template-columns: auto;
     }
 }
+

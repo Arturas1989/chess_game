@@ -1,4 +1,4 @@
-import Table from './Table.jsx';
+import UsersResults from './UsersResults.jsx';
 import { useGameContext } from '../../GameApp.js';
 import TitledPlayerResults from './TitledPlayerResults.jsx';
 
@@ -7,7 +7,7 @@ const SearchResults = ({ data }) => {
     return(
         <div className="SearchResults">
             {currView === 'games' ? 
-                <Table data={data} />
+                <UsersResults data={data} />
                 :
                 <TitledPlayerResults data={data} />
             }

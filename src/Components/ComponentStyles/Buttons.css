@@ -38,3 +38,23 @@
     fill: #434343;
     stroke-width: 100;
 }
+
+.player-container, .goTo, .ButtonsContainer > .goTo{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    background-color: #3498db;
+    color: #ffffff;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.player-container:hover, .goTo:hover{
+    cursor: pointer;
+}
+
+.player-container:active, .goTo:active{
+    background-color: #2980b9;
+}

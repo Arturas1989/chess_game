@@ -8,7 +8,8 @@ import MoveContainer from './Components/MoveList/MoveContainer.jsx';
 import SearchContainer from './Components/Search/SearchContainer.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
-import SearchResults from './Components/Search/SearchResults.jsx'
+import SearchResults from './Components/Search/SearchResults.jsx';
+import PlayModal from './Components/Modal/PlayModal.jsx';
 
 const GameContext = createContext();
 const API_URL = 'https://api.chess.com/pub/player/'
@@ -35,6 +36,8 @@ const GameApp = () => {
   const [partname, setPartname] = useState('');
   const [errors, setErrors] = useState({userSearchError: ''});
   const [currGame, setCurrGame] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [playControls, setPlayControls] = useState({isPlaying: false});
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
@@ -87,7 +90,11 @@ const GameApp = () => {
     errors, 
     setErrors,
     currGame, 
-    setCurrGame
+    setCurrGame,
+    modalIsOpen, 
+    setModalIsOpen,
+    playControls, 
+    setPlayControls
   }
 
   return (
@@ -98,7 +105,7 @@ const GameApp = () => {
 }
 
 const GameContainer =  ({ isPromoting }) => {
-  const {apiData, currView, isReversed, currGame} = useGameContext();
+  const {apiData, currView, isReversed, currGame, modalIsOpen, playControls} = useGameContext();
   
   let player1class, player2class, player1, player2;
   if(currGame){
@@ -106,12 +113,14 @@ const GameContainer =  ({ isPromoting }) => {
     [player1class, player2class, player1, player2] = isReversed ? 
     ['blackPlayer', 'whitePlayer', blackUsername, whiteUsername] : ['whitePlayer', 'blackPlayer', whiteUsername, blackUsername];
   }
-  console.log(currGame)
+  console.log(playControls);
   return (
+    
     currView !== 'board' ?
       <SearchResults data={apiData}/>
       :
       <div className="GameContainer">
+        {modalIsOpen ? <PlayModal /> : ''}
         <SearchContainer />
         <div className="GameControls">
           <div className="BoardContainer">

@@ -4,6 +4,7 @@
 @import './Components/ComponentStyles/Buttons.css';
 @import './Components/ComponentStyles/Search.css';
 @import './Components/ComponentStyles/Table.css';
+@import './Components/ComponentStyles/Modal.css';
 
 body{
   font-family: 'FreeSerif', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;

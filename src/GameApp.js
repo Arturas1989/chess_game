@@ -2,11 +2,14 @@ import './App.css';
 import { useState, createContext, useContext } from 'react';
 import themes from './themes/themes.js';
 import { Board, PromotionBoard } from './Components/Board/Board.jsx';
+import Player from './Components/Board/Player.jsx';
+import Result from './Components/Board/Result.jsx';
 import MoveContainer from './Components/MoveList/MoveContainer.jsx';
 import SearchContainer from './Components/Search/SearchContainer.jsx';
 import { preComputed, setInitialStyles, promotionPieces } from './utilities/utilities.js';
 import { Chess } from 'chess.js';
-import SearchResults from './Components/Search/SearchResults.jsx'
+import SearchResults from './Components/Search/SearchResults.jsx';
+import PlayModal from './Components/Modal/PlayModal.jsx';
 
 const GameContext = createContext();
 const API_URL = 'https://api.chess.com/pub/player/'
@@ -32,6 +35,9 @@ const GameApp = () => {
   const [currView, setCurrView] = useState('board');
   const [partname, setPartname] = useState('');
   const [errors, setErrors] = useState({userSearchError: ''});
+  const [currGame, setCurrGame] = useState({});
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const [playControls, setPlayControls] = useState({isPlaying: false});
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
   
@@ -82,7 +88,13 @@ const GameApp = () => {
     partname, 
     setPartname,
     errors, 
-    setErrors
+    setErrors,
+    currGame, 
+    setCurrGame,
+    modalIsOpen, 
+    setModalIsOpen,
+    playControls, 
+    setPlayControls
   }
 
   return (
@@ -93,20 +105,38 @@ const GameApp = () => {
 }
 
 const GameContainer =  ({ isPromoting }) => {
-  const {apiData, currView} = useGameContext();
+  const {apiData, currView, isReversed, currGame, modalIsOpen, playControls} = useGameContext();
   
+  let player1class, player2class, player1, player2;
+  if(currGame){
+    const {whiteUsername, blackUsername} = currGame;
+    [player1class, player2class, player1, player2] = isReversed ? 
+    ['blackPlayer', 'whitePlayer', blackUsername, whiteUsername] : ['whitePlayer', 'blackPlayer', whiteUsername, blackUsername];
+  }
+  console.log(playControls);
   return (
+    
     currView !== 'board' ?
       <SearchResults data={apiData}/>
       :
       <div className="GameContainer">
+        {modalIsOpen ? <PlayModal /> : ''}
         <SearchContainer />
         <div className="GameControls">
-          {isPromoting ?
-            <PromotionBoard/>
-            :
-            <Board/>
-          }
+          <div className="BoardContainer">
+            <div className="Board-top">
+              <Player className={player2class} player={player2}/>
+              <Result resultText={currGame.result}/>
+            </div>
+            {isPromoting ?
+              <PromotionBoard/>
+              :
+              <Board/>
+            }
+            <div className="Board-bottom">
+              <Player className={player1class} player={player1} />
+            </div>
+          </div>
           <MoveContainer />
         </div>
       </div>

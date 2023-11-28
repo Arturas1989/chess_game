@@ -6,7 +6,7 @@
     --GameContainerMarginTop: 20px;
     --GameContainerMarginLeft: 13dvw;
     --GameContainerRemainingWidth: calc(100dvw - var(--GameContainerMarginLeft)*2);
-    --GameContainerHeight: 80dvh;
+    --GameContainerHeight: 75dvh;
     --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) 
     - var(--board-margin) * 2) - var(--searchBarMargin) - var(--searchBarMinHeight) );
     --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
@@ -34,5 +34,4 @@
     --searchInputBorder: 1px solid black;
     --searchInputWidth: calc(100% - var(--searchInputPadding) * 2);
     --searchInputHeight: calc(100% - var(--searchInputPadding) * 2 - 2px);
-    
 }

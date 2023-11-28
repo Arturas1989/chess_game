@@ -1,13 +1,21 @@
 import { useGameContext } from '../../GameApp.js';
 import { Chess } from 'chess.js';
-import {getResult, getDate, getMoveLines} from '../../utilities/api.js';
+import { getDate, getMoveLines } from '../../utilities/api.js';
 
 
 const Table = ( { data } ) => {
-    const { setChessVariants, setApiData, setCurrVariant, setCurrView } = useGameContext();
+    const { 
+        setChessVariants, 
+        setApiData, 
+        setCurrVariant, 
+        setCurrView, 
+        setCurrGame 
+    } = useGameContext();
+
     const setGame = (e) => {
         const chess = new Chess();
-        chess.loadPgn(data[parseInt(e.currentTarget.id)].pgn)
+        const id = parseInt(e.currentTarget.id);
+        chess.loadPgn(data[id].pgn)
         const [historyLines, moves] = getMoveLines(chess.history(), 'line1');
         const chessVariant = {
             'line1' : {
@@ -18,6 +26,7 @@ const Table = ( { data } ) => {
             'lastLine' : 1,
             'movesLines' : {...historyLines}
         }
+        setCurrGame(data[id]);
         setChessVariants(chessVariant);
         setCurrVariant({'currLine' : 'line1', 'currMove' : 0})
         setApiData([]);
@@ -33,7 +42,7 @@ const Table = ( { data } ) => {
                 <td>{data[i].whiteRating}</td>
                 <td>{data[i].blackUsername}</td>
                 <td>{data[i].blackRating}</td>
-                <td>{getResult(data[i].pgn)}</td>
+                <td>{data[i].result}</td>
             </tr>
         ) 
     )

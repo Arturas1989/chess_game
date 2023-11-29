@@ -10,6 +10,7 @@ import { preComputed, setInitialStyles, promotionPieces } from './utilities/util
 import { Chess } from 'chess.js';
 import SearchResults from './Components/Search/SearchResults.jsx';
 import PlayModal from './Components/Modal/PlayModal.jsx';
+import Clock from './Components/Board/Clock.jsx';
 
 const GameContext = createContext();
 const API_URL = 'https://api.chess.com/pub/player/'
@@ -107,13 +108,22 @@ const GameApp = () => {
 const GameContainer =  ({ isPromoting }) => {
   const {apiData, currView, isReversed, currGame, modalIsOpen, playControls} = useGameContext();
   
+  let ClockComponent1, ClockComponent2
+  if(playControls.isPlaying){
+    ClockComponent1 = <Clock color="white"/>
+    ClockComponent2 = <Clock color="black"/>
+    if(isReversed) [ClockComponent1, ClockComponent2] = [ClockComponent2, ClockComponent1];
+  };
+  
   let player1class, player2class, player1, player2;
   if(currGame){
     const {whiteUsername, blackUsername} = currGame;
     [player1class, player2class, player1, player2] = isReversed ? 
     ['blackPlayer', 'whitePlayer', blackUsername, whiteUsername] : ['whitePlayer', 'blackPlayer', whiteUsername, blackUsername];
   }
-  console.log(playControls);
+
+  console.log(1)
+
   return (
     
     currView !== 'board' ?
@@ -127,6 +137,7 @@ const GameContainer =  ({ isPromoting }) => {
             <div className="Board-top">
               <Player className={player2class} player={player2}/>
               <Result resultText={currGame.result}/>
+              {ClockComponent2}
             </div>
             {isPromoting ?
               <PromotionBoard/>
@@ -135,6 +146,7 @@ const GameContainer =  ({ isPromoting }) => {
             }
             <div className="Board-bottom">
               <Player className={player1class} player={player1} />
+              {ClockComponent1}
             </div>
           </div>
           <MoveContainer />

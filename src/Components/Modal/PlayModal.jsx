@@ -5,7 +5,14 @@ const TimeButton = ({ time }) => {
     const handleClick = () => {
         setModalIsOpen(false);
         const [mainTime, increment] = time.split('+').map(el=>parseInt(el));
-        setPlayControls({isPlaying: true, mainTime, increment})
+        const sec = mainTime * 60;
+        setPlayControls({
+            isPlaying: true, 
+            whiteMainTime: sec, 
+            whiteIncrement: increment,
+            blackMainTime: sec,
+            blackIncrement: increment,
+        });
     }
     return <button onClick={() => handleClick()} className="goTo">{time}</button>
 }

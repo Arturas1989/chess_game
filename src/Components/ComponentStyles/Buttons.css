@@ -2,9 +2,10 @@
 
 .ButtonsContainer{
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     box-shadow: inset 0 0 0 1px #000;
-    height: var(--MoveRowHeight);
+    min-height: var(--MoveRowHeight);
     width: calc(100% - var(--ButtonsContainerPadding)*2);
     padding: var(--ButtonsContainerPadding);
     gap: 10px;

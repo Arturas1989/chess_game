@@ -18,11 +18,12 @@
       );
     --MoveListContainerHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
     --ButtonsContainerPadding: 4px;
-    --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / 14);
+    --MoveRows: 14;
+    --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / var(--MoveRows));
     --RegularMoveFontSize: clamp(1rem, calc(var(--MoveRowHeight) * 0.5), 1.5rem);
     --VariantMoveFontSize: clamp(0.8rem, calc(var(--MoveRowHeight) * 0.4), 1.2rem);
     --FromLineFontSize: clamp(0.6rem, calc(var(--MoveRowHeight) * 0.3), 1rem);
-    --MoveListHeight: calc(var(--MoveRowHeight)*13 + 0.2px);
+    --MoveListHeight: calc(var(--MoveRowHeight) * (var(--MoveRows) - 1) + 0.2px);
     --moveRowPadding: 3px;
     --moveNumberColor: rgba(128, 128, 128, 0.3);
     --variantColor: rgba(128, 128, 128, 0.3);

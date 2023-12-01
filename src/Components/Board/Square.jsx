@@ -54,29 +54,28 @@ const Square = ({ index }) => {
   const [dragInfo, setDragInfo] = useState({ dragEnabled : false, isDragging : false});
   const [initialPos, setInitialPos] = useState({});
   
-
   const handlerArgs = {
-    initialStyles: initialStyles,
-    styles: styles, 
-    currVariant: currVariant,
-    setCurrVariant: setCurrVariant,
-    chessVariants: chessVariants,
-    setChessVariants: setChessVariants,
-    idToCoordList: idToCoordList,
-    coordToIdList: coordToIdList,
+    initialStyles,
+    styles, 
+    currVariant,
+    setCurrVariant,
+    chessVariants,
+    setChessVariants,
+    idToCoordList,
+    coordToIdList,
     themes: themes[theme.squares], 
     onStylesChange: setStyles, 
-    setDragInfo: setDragInfo, 
-    dragInfo: dragInfo, 
-    setInitialPos: setInitialPos, 
-    initialPos: initialPos,
+    setDragInfo, 
+    dragInfo, 
+    setInitialPos, 
+    initialPos,
     onPieceClick: setPieceClicked,
-    pieceClicked: pieceClicked,
-    squareWidth: squareWidth,
-    promotion: promotion,
+    pieceClicked,
+    squareWidth,
+    promotion,
     onPromotionChange: setPromotion,
-    preComputedMaps: preComputedMaps,
-    promotionPiecesList: promotionPiecesList,
+    preComputedMaps,
+    promotionPiecesList,
     squareClass: theme.squares + 'Square',
     draggingClass: theme.squares + 'Dragging',
     validMovesEmptyClass: theme.squares + 'ValidMovesEmpty',
@@ -89,40 +88,32 @@ const Square = ({ index }) => {
   return (
     <div
       id={pos}
-      className={`Square ${promotion.isPromoting ? ' .promotion-square' : ''} ${styles[pos]}`}
+      className={`Square${promotion.isPromoting ? ' promotion-square' : ''} ${styles[pos]}`}
       onClick={(e) => handleSquareClick(e, handlerArgs)}
       onMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
     >
-
-      {dragInfo.dragEnabled ?
-        <>
-          <ChessPiece
-            id={pos}
-            left={left}
-            right={right}
-            top={top}
-            bottom={bottom}
-            piece={source}
-            handleMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
-            handleDragStart={(e) => handleDragStart(e, handlerArgs)}
-            handleDragEnd={(e) => handleDragEnd(e, handlerArgs)}
-            handleDrag={(e) => handleDrag(e, handlerArgs)}
-          />
-          <SquareCoord id={pos} squareWidth={squareWidth}/>
-        </> 
-          
-        :
-        <>
-          <DragEnablingPiece
-            piece={source}
-            handlerArgs={handlerArgs}
-            handleMouseEnter={enableDrag}
-            pos={pos}
-          />
-          <SquareCoord id={pos} squareWidth={squareWidth}/>
-        </> 
-        
-      }
+      {dragInfo.dragEnabled ? (
+        <ChessPiece
+          id={pos}
+          left={left}
+          right={right}
+          top={top}
+          bottom={bottom}
+          piece={source}
+          handleMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
+          handleDragStart={(e) => handleDragStart(e, handlerArgs)}
+          handleDragEnd={(e) => handleDragEnd(e, handlerArgs)}
+          handleDrag={(e) => handleDrag(e, handlerArgs)}
+        />
+      ) : (
+        <DragEnablingPiece
+          piece={source}
+          handlerArgs={handlerArgs}
+          handleMouseOver={enableDrag}
+          pos={pos}
+        />
+      )}
+      <SquareCoord id={pos} squareWidth={squareWidth} />
     </div>
   );
 }

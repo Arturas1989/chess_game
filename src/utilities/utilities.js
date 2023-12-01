@@ -247,6 +247,47 @@ const setPromotionStyles = (initialStyles, square, preComputedMaps, promotionPie
   
 }
 
+function getRandomColor() {
+  const randomNum = Math.floor(Math.random() * 2);
+  return randomNum === 0 ? 'white' : 'black';
+}
+
+const playChessEngine = (playControls, chessVariants, setChessVariants, setPlayControls, setCurrVariant, setIsReversed) => {
+  
+  if(playControls.isPlaying){
+      const variants = cloneDeep(chessVariants);
+      const moves = variants.line1.moves;
+      const chess = moves[moves.length - 1];
+      const moveHistory = chess.history({ verbose: true});
+      const currTurn = moves.length % 2 === 1 ? 'white' : 'black';
+      const isHumanMove = currTurn === playControls.color;
+      if(!isHumanMove){
+        const engineGame = cloneDeep(playControls.game);
+        if(currTurn === 'white' && moves.length === 1){
+          engineGame.aiMove(3);
+          const engineMoveHistory = engineGame.getHistory();
+          const {from, to} = engineMoveHistory[engineMoveHistory.length - 1];
+          chess.move({from: from.toLowerCase(), to: to.toLowerCase()});
+        } else {
+          let {from, to} = moveHistory[moveHistory.length - 1];
+          engineGame.move(from, to);
+          engineGame.aiMove(3);
+          const engineMoveHistory = engineGame.getHistory();
+          from = engineMoveHistory[engineMoveHistory.length - 1].from.toLowerCase();
+          to = engineMoveHistory[engineMoveHistory.length - 1].to.toLowerCase();
+          chess.move({from, to});
+        }
+        
+        variants.line1.moves.push(chess);
+        setChessVariants(variants);
+        setPlayControls({...playControls, game: engineGame});
+        setCurrVariant({'currLine' : 'line1', 'currMove' : chess.history().length});
+        setIsReversed(playControls.color === 'black');
+  
+      }
+  }
+}
+
 export  {
   getTypeNotations, 
   promotionPieces, 
@@ -263,5 +304,7 @@ export  {
   setPromotionStyles,
   changePromotionStyles,
   setVariant,
-  getLinePriority
+  getLinePriority,
+  getRandomColor,
+  playChessEngine
  };

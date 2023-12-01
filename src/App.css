@@ -27,18 +27,16 @@ body{
   align-items: center;
 }
 
-@media (max-width: 85em){
+@media (max-width: 1360px){
   :root{
     --GameContainerMarginLeft: 20px;
   }
 }
 
-@media (max-width: 70em){
+@media (max-width: 1120px){
+  
   :root{
     --MoveListContainerHeight: var(--BoardWidth);
-    --MoveRows: 7;
-  }
-  :root{
     --MoveListWidth: calc(var(--GameContainerRemainingWidth) - 2 *  var(--MoveList-margin));
   }
 
@@ -67,9 +65,11 @@ body{
   }
 }
 
-@media (max-width: 20em){
-  
-  .Board{
+@media (max-width: 360px){
+  :root{
+    --MoveRows: 7;
+  }
+  /* .Board{
     min-height: 200px;
   }
 
@@ -89,7 +89,7 @@ body{
   .GameControls{
     min-width: 300px;
     align-items: normal;
-  }
+  } */
 }
 
 

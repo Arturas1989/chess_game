@@ -9,7 +9,7 @@
     --GameContainerHeight: 75dvh;
     --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) 
     - var(--board-margin) * 2) - var(--searchBarMargin) - var(--searchBarMinHeight) );
-    --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2));
+    --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2), 430px);
     --CoordFontSizeMinimum: max(calc(var(--BoardWidth) * 0.035), 8px);
     --CoordFontSize: min(var(--CoordFontSizeMinimum), 15px);
     --MoveListWidth: calc(
@@ -18,10 +18,10 @@
       );
     --MoveListContainerHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
     --ButtonsContainerPadding: 4px;
-    --MoveRows: 14;
+    --MoveRows: 12;
     --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / var(--MoveRows));
-    --RegularMoveFontSize: clamp(1rem, calc(var(--MoveRowHeight) * 0.5), 1.5rem);
-    --VariantMoveFontSize: clamp(0.8rem, calc(var(--MoveRowHeight) * 0.4), 1.2rem);
+    --RegularMoveFontSize: 16px;
+    --VariantMoveFontSize: 12px;
     --FromLineFontSize: clamp(0.6rem, calc(var(--MoveRowHeight) * 0.3), 1rem);
     --MoveListHeight: calc(var(--MoveRowHeight) * (var(--MoveRows) - 1) + 0.2px);
     --moveRowPadding: 3px;

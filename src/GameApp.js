@@ -11,6 +11,8 @@ import { Chess } from 'chess.js';
 import SearchResults from './Components/Search/SearchResults.jsx';
 import PlayModal from './Components/Modal/PlayModal.jsx';
 import Clock from './Components/Board/Clock.jsx';
+import useChessEngine from './hooks/useChessEngine.jsx';
+
 
 const GameContext = createContext();
 const API_URL = 'https://api.chess.com/pub/player/'
@@ -57,6 +59,10 @@ const GameApp = () => {
   }
 
   const [styles, setStyles] = useState({...initialStyles});
+
+  
+  useChessEngine(playControls, chessVariants, setChessVariants, setPlayControls, setCurrVariant, setIsReversed);
+  
 
   const GameContextValues = {
     themes,
@@ -107,11 +113,13 @@ const GameApp = () => {
 
 const GameContainer =  ({ isPromoting }) => {
   const {apiData, currView, isReversed, currGame, modalIsOpen, playControls} = useGameContext();
+
+  const [clock, setClock] = useState({'white' : 0, 'black' : 0});
   
   let ClockComponent1, ClockComponent2
   if(playControls.isPlaying){
-    ClockComponent1 = <Clock color="white"/>
-    ClockComponent2 = <Clock color="black"/>
+    ClockComponent1 = <Clock color="white" clock={clock} setClock={setClock} />
+    ClockComponent2 = <Clock color="black" clock={clock} setClock={setClock}/>
     if(isReversed) [ClockComponent1, ClockComponent2] = [ClockComponent2, ClockComponent1];
   };
   
@@ -122,7 +130,7 @@ const GameContainer =  ({ isPromoting }) => {
     ['blackPlayer', 'whitePlayer', blackUsername, whiteUsername] : ['whitePlayer', 'blackPlayer', whiteUsername, blackUsername];
   }
 
-  console.log(1)
+  
 
   return (
     
@@ -130,7 +138,7 @@ const GameContainer =  ({ isPromoting }) => {
       <SearchResults data={apiData}/>
       :
       <div className="GameContainer">
-        {modalIsOpen ? <PlayModal /> : ''}
+        {modalIsOpen ? <PlayModal setClock={setClock}/> : ''}
         <SearchContainer />
         <div className="GameControls">
           <div className="BoardContainer">
@@ -152,8 +160,6 @@ const GameContainer =  ({ isPromoting }) => {
           <MoveContainer />
         </div>
       </div>
-      
-      
   );
 }
 

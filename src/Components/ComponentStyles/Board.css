@@ -14,10 +14,11 @@
 }
 
 .Board-top, .Board-bottom{
+  /* display: grid; */
   display: flex;
+  flex-direction: column;
   width: 100%;
   font-size: 15px;
-  gap: 5px;
 }
 
 
@@ -43,18 +44,20 @@
   filter: grayscale(100%);
   transition: filter 0.3s;
   pointer-events: none;
-  z-index: 1;
 }
 
 .standardPromotionWhiteSideWhite,
 .standardPromotionBlackSideBlack,
 .standardPromotionWhiteSideBlack,
-.standardPromotionBlackSideBlack{
+.standardPromotionBlackSideBlack,
+.promotion-board::before,
+img{
   z-index: 1;
 }
 
 .Square{
   display: flex;
+  position: relative;
   width: 12.5%;
   height: 12.5%;
   /* z-index: -1; */
@@ -65,8 +68,17 @@ img{
   height: 100%;
 }
 
+.promotion-board > .Square > img {
+  z-index: 0;
+}
+
 .coordRow, .coordCol{
   position: absolute;
   font-size: var(--CoordFontSize);
-  /* z-index: -1; */
 }
+
+.coordCol{
+  bottom: 0;
+  right: 0;
+}
+

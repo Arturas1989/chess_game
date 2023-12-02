@@ -1,6 +1,10 @@
-const Player = ({ className, player }) => {
+const Player = ({ type, players, isReversed }) => {
+
+    let player;
+    player = (type === 'bottom' && !isReversed) || (type === 'top' && isReversed) ?  players['white'] : players['black'];
+
     return (
-        <div className={`Player ${className}`}>{player}</div>
+        <div className={`Player`}>{player}</div>
     )
 }
 

@@ -23,7 +23,7 @@ const SquareCoord = ({ id, squareWidth }) => {
         const right = squareWidth * 0.84;
         const down = squareWidth * 0.61;
         const colStyle = {
-            transform: `translate(${right}px,${down}px)`,
+            // transform: `translate(${right}px,${down}px)`,
             opacity: promotionIds[id] ? '0.3' : '1'
         }
         squareCoords.push(<span className={className} style={colStyle} key={1}>{idCol}</span>);

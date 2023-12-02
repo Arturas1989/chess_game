@@ -9,7 +9,8 @@ const Table = ( { data } ) => {
         setApiData, 
         setCurrVariant, 
         setCurrView, 
-        setCurrGame 
+        setCurrGame,
+        setPlayControls 
     } = useGameContext();
 
     const setGame = (e) => {
@@ -31,6 +32,7 @@ const Table = ( { data } ) => {
         setCurrVariant({'currLine' : 'line1', 'currMove' : 0})
         setApiData([]);
         setCurrView('board');
+        setPlayControls({isPlaying: false});
     }
     
     const tableData = Array.from({length: data.length}, (_,i) =>

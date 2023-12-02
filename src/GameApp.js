@@ -116,18 +116,16 @@ const GameContainer =  ({ isPromoting }) => {
 
   const [clock, setClock] = useState({'white' : 0, 'black' : 0});
   
-  let ClockComponent1, ClockComponent2
+  let ClockComponent1, ClockComponent2, players;
   if(playControls.isPlaying){
-    ClockComponent1 = <Clock color="white" clock={clock} setClock={setClock} />
-    ClockComponent2 = <Clock color="black" clock={clock} setClock={setClock}/>
+    ClockComponent1 = <Clock color="white" clock={clock} setClock={setClock} />;
+    ClockComponent2 = <Clock color="black" clock={clock} setClock={setClock} />;
+    players = playControls.color === 'white' ? 
+    {'white' : 'me', 'black' : 'chess engine'} : {'white' : 'chess engine', 'black' : 'me'};
     if(isReversed) [ClockComponent1, ClockComponent2] = [ClockComponent2, ClockComponent1];
-  };
-  
-  let player1class, player2class, player1, player2;
-  if(currGame){
+  } else if(currGame){
     const {whiteUsername, blackUsername} = currGame;
-    [player1class, player2class, player1, player2] = isReversed ? 
-    ['blackPlayer', 'whitePlayer', blackUsername, whiteUsername] : ['whitePlayer', 'blackPlayer', whiteUsername, blackUsername];
+    players = {'white' : whiteUsername, 'black' : blackUsername}
   }
 
   
@@ -143,7 +141,7 @@ const GameContainer =  ({ isPromoting }) => {
         <div className="GameControls">
           <div className="BoardContainer">
             <div className="Board-top">
-              <Player className={player2class} player={player2}/>
+              <Player type="top" players={players} isReversed={isReversed} />
               <Result resultText={currGame.result}/>
               {ClockComponent2}
             </div>
@@ -153,7 +151,7 @@ const GameContainer =  ({ isPromoting }) => {
               <Board/>
             }
             <div className="Board-bottom">
-              <Player className={player1class} player={player1} />
+              <Player type="bottom" players={players} isReversed={isReversed} />
               {ClockComponent1}
             </div>
           </div>

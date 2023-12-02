@@ -6,7 +6,7 @@
     --GameContainerMarginTop: 20px;
     --GameContainerMarginLeft: 13dvw;
     --GameContainerRemainingWidth: calc(100dvw - var(--GameContainerMarginLeft)*2);
-    --GameContainerHeight: 75dvh;
+    --GameContainerHeight: 70dvh;
     --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) 
     - var(--board-margin) * 2) - var(--searchBarMargin) - var(--searchBarMinHeight) );
     --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2), 430px);
@@ -18,7 +18,7 @@
       );
     --MoveListContainerHeight: calc(var(--GameContainerHeight) - 2 * var(--MoveList-margin));
     --ButtonsContainerPadding: 4px;
-    --MoveRows: 12;
+    --MoveRows: 10;
     --MoveRowHeight: calc((var(--MoveListContainerHeight) - var(--ButtonsContainerPadding) * 2 ) / var(--MoveRows));
     --RegularMoveFontSize: 16px;
     --VariantMoveFontSize: 12px;

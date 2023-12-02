@@ -1,16 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useGameContext } from "../../GameApp";
 
 
 const Clock = ({ color, clock, setClock }) => {
-    const { playControls, setPlayControls, chessVariants } = useGameContext();
+    const { chessVariants } = useGameContext();
     
     const sec = clock[color];
     const m = Math.floor(sec / 60).toString().padStart(2,'0');
     const s = (sec % 60).toString().padStart(2,'0');
     const turn = chessVariants.line1.moves.length % 2 === 1 ? 'white' : 'black';
-    
-
     
     useEffect(() => {
         if(turn === color){
@@ -23,7 +21,7 @@ const Clock = ({ color, clock, setClock }) => {
     })
     
     return (
-        <div>{m}:{s}</div>
+        <div className="Clock">{m}:{s}</div>
     )
 }
 

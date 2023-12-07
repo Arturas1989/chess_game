@@ -3,11 +3,11 @@ import { searchChessGames } from '../../utilities/api.js';
 import { useGameContext } from '../../GameApp.js';
 
 const TitledPlayerResults = ({ data }) => {
-    let { setCurrView, API_URL, setApiData, setSearchVals, searchVals } = useGameContext()
+    let { setCurrView, API_URL, setApiData, setPlayControls, setSearchVals, searchVals, setErrors } = useGameContext()
     
     const handleClick = async (e) => {
         searchVals = {username: e.currentTarget.id, title: ''};
-        await searchChessGames(API_URL, searchVals, setApiData);
+        await searchChessGames(API_URL, searchVals, setApiData, setPlayControls, setErrors);
         setSearchVals(searchVals);
         setCurrView('games');
     }

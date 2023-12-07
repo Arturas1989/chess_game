@@ -11,6 +11,7 @@ const ChessPiece = (props) => {
       top,
       bottom,
       piece,
+      dragInfo,
       id,
       handleMouseEnter,
       handleDragStart,
@@ -20,6 +21,7 @@ const ChessPiece = (props) => {
   
     return piece && (
       <motion.img
+        className={dragInfo.dragableId === id ? 'dragable' : ''}
         style={{ cursor: 'grab' }}
         drag
         dragConstraints={{

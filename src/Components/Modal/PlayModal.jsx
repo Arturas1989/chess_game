@@ -4,9 +4,9 @@ import { Chess } from 'chess.js';
 const jsChessEngine = require('js-chess-engine')
 
 const TimeButton = ({ time, setClock }) => {
-    const { setCurrGame, setModalIsOpen, setPlayControls, setChessVariants, setCurrVariant } = useGameContext();
+    const { setApiGame, setModalIsOpen, setPlayControls, setChessVariants, setCurrVariant } = useGameContext();
     const handleClick = () => {
-        setCurrGame({});
+        setApiGame({});
         setModalIsOpen(false);
         const [mainTime, increment] = time.split('+').map(el=>parseInt(el));
         const sec = mainTime * 60;
@@ -46,6 +46,7 @@ const PlayModal = ({ setClock }) => {
                     <h2>Select play time</h2>
                 </div>
                 <div className="modal-body">
+                    <TimeButton time="1+0" setClock={setClock}/>
                     <TimeButton time="3+0" setClock={setClock}/>
                     <TimeButton time="5+0" setClock={setClock}/>
                     <TimeButton time="10+0" setClock={setClock}/>

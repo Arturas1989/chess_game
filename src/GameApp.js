@@ -38,12 +38,12 @@ const GameApp = () => {
   const [currView, setCurrView] = useState('board');
   const [partname, setPartname] = useState('');
   const [errors, setErrors] = useState({userSearchError: ''});
-  const [currGame, setCurrGame] = useState({});
+  const [apiGame, setApiGame] = useState({});
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [playControls, setPlayControls] = useState({isPlaying: false});
+  const [playControls, setPlayControls] = useState({isPlaying: false, result: ''});
   
   const { coords, revCoords, coordToId, idToCoord, revCoordToId, revIdToCoord } = preComputed;
-  
+
   let initialStyles = {};
   setInitialStyles(coords, initialStyles, theme.squares + 'Square');
   
@@ -96,8 +96,8 @@ const GameApp = () => {
     setPartname,
     errors, 
     setErrors,
-    currGame, 
-    setCurrGame,
+    apiGame, 
+    setApiGame,
     modalIsOpen, 
     setModalIsOpen,
     playControls, 
@@ -112,23 +112,22 @@ const GameApp = () => {
 }
 
 const GameContainer =  ({ isPromoting }) => {
-  const {apiData, currView, isReversed, currGame, modalIsOpen, playControls} = useGameContext();
+  const {apiData, currView, isReversed, apiGame, modalIsOpen, playControls} = useGameContext();
 
   const [clock, setClock] = useState({'white' : 0, 'black' : 0});
-  
-  let ClockComponent1, ClockComponent2, players;
+
+  let ClockComponent1, ClockComponent2, players = {'white' : '', 'black' : ''};
   if(playControls.isPlaying){
     ClockComponent1 = <Clock color="white" clock={clock} setClock={setClock} />;
     ClockComponent2 = <Clock color="black" clock={clock} setClock={setClock} />;
     players = playControls.color === 'white' ? 
-    {'white' : 'me', 'black' : 'chess engine'} : {'white' : 'chess engine', 'black' : 'me'};
+    {'white' : 'you', 'black' : 'chess engine'} : {'white' : 'chess engine', 'black' : 'you'}; 
+    
     if(isReversed) [ClockComponent1, ClockComponent2] = [ClockComponent2, ClockComponent1];
-  } else if(currGame){
-    const {whiteUsername, blackUsername} = currGame;
+  } else if(Object.keys(apiGame).length){
+    const {whiteUsername, blackUsername} = apiGame;
     players = {'white' : whiteUsername, 'black' : blackUsername}
   }
-
-  
 
   return (
     
@@ -142,7 +141,7 @@ const GameContainer =  ({ isPromoting }) => {
           <div className="BoardContainer">
             <div className="Board-top">
               <Player type="top" players={players} isReversed={isReversed} />
-              <Result resultText={currGame.result}/>
+              <Result resultText={playControls.result}/>
               {ClockComponent2}
             </div>
             {isPromoting ?

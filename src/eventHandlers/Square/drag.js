@@ -49,7 +49,7 @@ const handleDragStart = (e, handlerArgs) => {
     
 
     onStylesChange(newStyles);
-    setDragInfo({...dragInfo, isDragging : true});
+    setDragInfo({...dragInfo, isDragging : true, dragableId: e.target.id});
     setInitialPos({
       ...initialPos,
       x : e.clientX,

@@ -9,7 +9,7 @@ const Table = ( { data } ) => {
         setApiData, 
         setCurrVariant, 
         setCurrView, 
-        setCurrGame,
+        setApiGame,
         setPlayControls 
     } = useGameContext();
 
@@ -27,12 +27,12 @@ const Table = ( { data } ) => {
             'lastLine' : 1,
             'movesLines' : {...historyLines}
         }
-        setCurrGame(data[id]);
+        setApiGame(data[id]);
         setChessVariants(chessVariant);
         setCurrVariant({'currLine' : 'line1', 'currMove' : 0})
         setApiData([]);
         setCurrView('board');
-        setPlayControls({isPlaying: false});
+        setPlayControls({isPlaying: false, result: data[id].result});
     }
     
     const tableData = Array.from({length: data.length}, (_,i) =>

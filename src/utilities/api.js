@@ -1,7 +1,7 @@
 import { Chess } from 'chess.js';
 const cloneDeep = require('lodash/cloneDeep');
 
-const searchByUserName = async (API_URL, username, setApiData, setErrors) => {
+const searchByUserName = async (API_URL, username, setApiData, setPlayControls, setErrors) => {
     const full_api_url = `${API_URL}${username}/games/archives`;
     
     let response = await fetch(full_api_url);
@@ -46,6 +46,7 @@ const searchByUserName = async (API_URL, username, setApiData, setErrors) => {
             count++;
             if(count === gameLimit){
                 setApiData(gameData);
+                setPlayControls({result: gameInfo.result});
                 return gameData;
             } 
         }
@@ -55,11 +56,11 @@ const searchByUserName = async (API_URL, username, setApiData, setErrors) => {
     
 }
 
-const searchChessGames = async (API_URL, searchVals, setApiData, setErrors) => {
+const searchChessGames = async (API_URL, searchVals, setApiData, setPlayControls, setErrors) => {
     const {username} = searchVals;
     if(username){
         try {
-            const data = await searchByUserName(API_URL, username, setApiData, setErrors);
+            const data = await searchByUserName(API_URL, username, setApiData, setPlayControls, setErrors);
             return data;
         } catch(e) {
             setErrors({userSearchError: `No such username: "${username}" found`});

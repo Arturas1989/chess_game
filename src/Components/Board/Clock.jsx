@@ -3,7 +3,7 @@ import { useGameContext } from "../../GameApp";
 
 
 const Clock = ({ color, clock, setClock }) => {
-    const { chessVariants } = useGameContext();
+    const { chessVariants, setPlayControls } = useGameContext();
     
     const sec = clock[color];
     const m = Math.floor(sec / 60).toString().padStart(2,'0');
@@ -12,8 +12,15 @@ const Clock = ({ color, clock, setClock }) => {
     
     useEffect(() => {
         if(turn === color){
+            if(sec === 0){
+                setPlayControls({
+                    isPlaying: false, 
+                    result: color === 'white' ? '0-1 black wins' : '1-0 white wins'
+                });
+                return;
+            }
             const interval = setInterval(() => {
-                setClock({...clock, [color] : sec - 1});
+                setClock((prevClock) => ( {...prevClock, [color]: prevClock[color] - 1} ));
             }, 1000)
     
             return () => clearInterval(interval);

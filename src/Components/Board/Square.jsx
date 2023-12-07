@@ -51,7 +51,7 @@ const Square = ({ index }) => {
   const top = (row + 0.3) * squareWidth * -1;
   const bottom = (7 - row + 0.3) * squareWidth;
   
-  const [dragInfo, setDragInfo] = useState({ dragEnabled : false, isDragging : false});
+  const [dragInfo, setDragInfo] = useState({ dragEnabled : false, isDragging : false, draggableId: ''});
   const [initialPos, setInitialPos] = useState({});
   
   const handlerArgs = {
@@ -100,6 +100,7 @@ const Square = ({ index }) => {
           top={top}
           bottom={bottom}
           piece={source}
+          dragInfo={dragInfo}
           handleMouseEnter={(e) => handleMouseEnter(e, handlerArgs)}
           handleDragStart={(e) => handleDragStart(e, handlerArgs)}
           handleDragEnd={(e) => handleDragEnd(e, handlerArgs)}

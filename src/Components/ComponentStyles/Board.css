@@ -51,8 +51,13 @@
 .standardPromotionWhiteSideBlack,
 .standardPromotionBlackSideBlack,
 .promotion-board::before,
-img{
+img
+{
   z-index: 1;
+}
+
+.dragable{
+  z-index: 2;
 }
 
 .Square{

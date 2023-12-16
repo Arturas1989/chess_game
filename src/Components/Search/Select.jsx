@@ -1,18 +1,27 @@
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { searchTitledPlayers } from '../../utilities/api.js';
+import React from 'react';
 
 const API_URL = 'https://api.chess.com/pub/titled/';
 
-const Select = () => {
-    const {setSearchVals, setApiData, setCurrView, partname} = useGameContext();
-
+const Select =({ setSearchVals }) => {
+    const { setApiData, setCurrView, partname, initialStyles, setStyles} = useGameContext();
+    const titledPlayersArgs = {
+        API_URL, 
+        setApiData, 
+        setSearchVals, 
+        setCurrView, 
+        partname, 
+        initialStyles, 
+        setStyles
+    }
     return(
         <div className="select-group">
             <label htmlFor="titles">Or choose a  player's title:</label>
             <select 
                 name="titles" 
                 id="titles"
-                onChange={(e) => searchTitledPlayers(e, API_URL, setApiData, setSearchVals, setCurrView, partname)}
+                onChange={(e) => searchTitledPlayers(e, titledPlayersArgs)}
             >
                 <option value=""></option>
                 <option value="GM">GM</option>

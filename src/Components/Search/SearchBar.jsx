@@ -1,23 +1,26 @@
 import SearchButton from './SearchButton.jsx'
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { searchChessGames } from '../../utilities/api.js';
 
-const SearchBar = () => {
+const SearchBar = ({ searchVals, setSearchVals }) => {
     const {
         setApiData, 
         API_URL, 
-        searchVals, 
-        setSearchVals, 
         setCurrView, 
         setErrors,
-        setPlayControls
+        setPlayControls,
+        initialStyles,
+        setStyles
     } = useGameContext();
 
-    const {username} = searchVals;
+    const { username } = searchVals;
 
     const handleSearchButtonClick = async () => {
         const data = await searchChessGames(API_URL, searchVals, setApiData, setPlayControls, setErrors);
-        if(searchVals.username && data.length !== 0) setCurrView('games');
+        if(searchVals.username && data.length !== 0){
+            setStyles({...initialStyles});
+            setCurrView('games');
+        } 
     }
 
     return (  

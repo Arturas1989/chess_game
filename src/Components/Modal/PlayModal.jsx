@@ -1,10 +1,19 @@
-import { useGameContext } from "../../GameApp";
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { getRandomColor } from "../../utilities/utilities.js"
 import { Chess } from 'chess.js';
-const jsChessEngine = require('js-chess-engine')
+const jsChessEngine = require('js-chess-engine');
 
 const TimeButton = ({ time, setClock }) => {
-    const { setApiGame, setModalIsOpen, setPlayControls, setChessVariants, setCurrVariant } = useGameContext();
+    const { 
+        setApiGame, 
+        setModalIsOpen, 
+        setPlayControls, 
+        setChessVariants, 
+        setCurrVariant, 
+        setStyles, 
+        initialStyles 
+    } = useGameContext();
+
     const handleClick = () => {
         setApiGame({});
         setModalIsOpen(false);
@@ -31,6 +40,7 @@ const TimeButton = ({ time, setClock }) => {
         })
 
         setCurrVariant({'currLine' : 'line1', 'currMove' : 0});
+        setStyles({...initialStyles});
     }
     return <button onClick={() => handleClick()} className="goTo">{time}</button>
 }

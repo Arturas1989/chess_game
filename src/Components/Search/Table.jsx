@@ -1,4 +1,4 @@
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { Chess } from 'chess.js';
 import { getDate, getMoveLines } from '../../utilities/api.js';
 

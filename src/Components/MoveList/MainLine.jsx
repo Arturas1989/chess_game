@@ -1,4 +1,4 @@
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { getLinePriority } from '../../utilities/utilities.js';
 import { Move, MoveNumber } from './Move.jsx';
 import Variants from './Variants.jsx';

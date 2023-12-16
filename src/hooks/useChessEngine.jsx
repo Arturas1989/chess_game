@@ -1,13 +1,13 @@
 import { useEffect } from 'react';
 import { playChessEngine } from '../utilities/utilities.js';
 
-const useChessEngine = (playControls, chessVariants, setChessVariants, setPlayControls, setCurrVariant, setIsReversed) => {
+const useChessEngine = (chessEngineArgs) => {
     useEffect(() => {
         const timeOut = setTimeout(()=>{
-            playChessEngine(playControls, chessVariants, setChessVariants, setPlayControls, setCurrVariant, setIsReversed);
+            playChessEngine(chessEngineArgs);
         },1000)
         return () => clearTimeout(timeOut);
-      }, [chessVariants, playControls, setChessVariants, setPlayControls, setCurrVariant, setIsReversed])
+      }, [chessEngineArgs])
 }
 
 

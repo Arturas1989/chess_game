@@ -1,4 +1,4 @@
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import Select from "./Select";
 import SearchButton from "./SearchButton";
 import { filterTitledPlayers } from '../../utilities/api.js';

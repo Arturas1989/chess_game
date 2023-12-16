@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import MainLine from './MainLine.jsx';
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 
 const MoveList = () => {
   const MoveListRef = useRef(null);

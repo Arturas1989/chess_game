@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useGameContext } from "../../GameApp";
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 
 
 const Clock = ({ color, clock, setClock }) => {

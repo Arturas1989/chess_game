@@ -1,9 +1,12 @@
-.Board, .promotion-board{
-  user-select: none;
+.BoardContainer{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: var(--BoardWidth);
 }
 
-.BoardContainer{
-  margin: var(--board-margin);
+.Board, .promotion-board{
+  user-select: none;
 }
 
 .Board{
@@ -11,14 +14,22 @@
   flex-wrap: wrap;
   width: var(--BoardWidth);
   height: var(--BoardWidth);
+  box-shadow: var(--sectionShadow);
 }
 
-.Board-top, .Board-bottom{
-  /* display: grid; */
+.Board-top, .Board-bottom, .Result{
   display: flex;
   flex-direction: column;
   width: 100%;
   font-size: 15px;
+  background: rgba(128, 128, 128, 0.3);
+  box-shadow: var(--sectionShadow);
+  line-height: 1.5;
+}
+
+.Result{
+  align-items: center;
+  line-height: 2.5;
 }
 
 

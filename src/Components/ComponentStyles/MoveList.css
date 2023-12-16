@@ -9,9 +9,11 @@
     display: flex;
     flex-direction: column;
     border: 1px solid black;
-    margin: var(--MoveList-margin);
+    margin-top: 10px;
+    margin-left: var(--MoveList-margin);
     min-height: var(--MoveListContainerHeight);
     width: min(var(--MoveListWidth), var(--BoardWidth));
+    box-shadow: var(--sectionShadow);
 }
 
 .MoveList{

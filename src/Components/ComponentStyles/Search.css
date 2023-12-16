@@ -2,10 +2,8 @@
 
 .SearchContainer{
     display: flex;
-    gap: 20px;
+    gap: 10px;
     min-height: var(--searchBarMinHeight);
-    margin-left: var(--board-margin);
-    margin-top: var(--board-margin);
     width: var(--searchContainerWidth);
 }
 
@@ -23,6 +21,10 @@ input{
     padding: var(--searchInputPadding);
     border: var(--searchInputBorder);
     border-radius: 20px;
+}
+
+input, select{
+    box-shadow: var(--searchShadow);
 }
 
 

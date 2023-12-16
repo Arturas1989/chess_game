@@ -264,8 +264,20 @@ const setResult = (chess, playControls, setPlayControls) => {
   }
 }
 
-const playChessEngine = (playControls, chessVariants, setChessVariants, setPlayControls, setCurrVariant, setIsReversed) => {
-  
+const playChessEngine = (chessEngineArgs) => {
+  const {
+    playControls, 
+    chessVariants, 
+    setChessVariants, 
+    setPlayControls, 
+    setCurrVariant, 
+    setIsReversed, 
+    initialStyles,
+    setStyles,
+    preComputedMaps,
+    className
+  } = chessEngineArgs
+
   if(playControls.isPlaying){
       const variants = cloneDeep(chessVariants);
       const moves = variants.line1.moves;
@@ -287,9 +299,17 @@ const playChessEngine = (playControls, chessVariants, setChessVariants, setPlayC
         
         engineGame.aiMove(3);
         const engineMoveHistory = engineGame.getHistory();
-        const {from, to} = engineMoveHistory[engineMoveHistory.length - 1];
-        chess.move({from: from.toLowerCase(), to: to.toLowerCase()});
-        
+        let {from, to} = engineMoveHistory[engineMoveHistory.length - 1];
+        [from, to] = [from, to].map(el=>el.toLowerCase());
+        chess.move({from, to});
+
+        const idToCoord = preComputedMaps[2];
+        const newStyles = {...initialStyles};
+        changeStyles(from, idToCoord, className, newStyles);
+        changeStyles(to, idToCoord, className, newStyles);
+        console.log(newStyles)
+        setStyles(newStyles);
+
         variants.line1.moves.push(chess);
         setChessVariants(variants);
         setPlayControls({...playControls, game: engineGame});

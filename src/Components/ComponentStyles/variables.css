@@ -6,7 +6,7 @@
     --GameContainerMarginTop: 20px;
     --GameContainerMarginLeft: 13dvw;
     --GameContainerRemainingWidth: calc(100dvw - var(--GameContainerMarginLeft)*2);
-    --GameContainerHeight: 70dvh;
+    --GameContainerHeight: 450px;
     --BoardMaximumWidth: calc( (var(--GameContainerRemainingWidth) 
     - var(--board-margin) * 2) - var(--searchBarMargin) - var(--searchBarMinHeight) );
     --BoardWidth: min(var(--BoardMaximumWidth), calc(var(--GameContainerHeight) - var(--board-margin) * 2), 430px);
@@ -29,10 +29,15 @@
     --variantColor: rgba(128, 128, 128, 0.3);
     --variantLinePadding: 5px;
     --variantLineWidth: calc( 100% - var(--variantLinePadding) * 2 );
-    --moveRowShadow: inset 0 0 0 1px #000;
+    --moveRowShadow: inset 0 0 0 0.5px #000;
     --searchContainerWidth: var(--BoardWidth);
     --searchInputPadding: 5px;
     --searchInputBorder: 1px solid black;
     --searchInputWidth: calc(100% - var(--searchInputPadding) * 2);
     --searchInputHeight: calc(100% - var(--searchInputPadding) * 2 - 2px);
+    --goToButtonBackground: #3498db;
+    --goToButtonTextColor: #ffffff;
+    --sectionShadow: rgba(0, 0, 0, 0.5) 0px 5px 10px;
+    --searchShadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    --gameContainerBackground: linear-gradient(to bottom right, #009245, #FCEE21);
 }

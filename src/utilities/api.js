@@ -103,7 +103,16 @@ const filterTitledPlayers = (players, partname) => {
     return players.filter(apiUsername => apiUsername.toLowerCase().includes(partNameLower));
 }
 
-const searchTitledPlayers = async (e, API_URL, setApiData, setSearchVals, setCurrView, partname) => {
+const searchTitledPlayers = async (e, titledPlayersArgs) => {
+    const {
+        API_URL, 
+        setApiData, 
+        setSearchVals, 
+        setCurrView, 
+        partname, 
+        initialStyles, 
+        setStyles
+    } = titledPlayersArgs;
     const response = await fetch(`${API_URL}${e.target.value}`);
     if (!response.ok) {
         console.error(`Error: ${response.status} - ${response.statusText}`);
@@ -114,6 +123,7 @@ const searchTitledPlayers = async (e, API_URL, setApiData, setSearchVals, setCur
     if(partname) players = filterTitledPlayers(players, partname);
     setApiData(players);
     setSearchVals({username: '', title: e.target.value})
+    setStyles({...initialStyles});
     if(e.target.value) setCurrView('title');
 }
 

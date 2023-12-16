@@ -1,4 +1,4 @@
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 
 const GoToPage = ({ page, innerText }) => {
     const { setCurrView, setApiData } = useGameContext();

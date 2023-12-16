@@ -1,5 +1,5 @@
 import UsersResults from './UsersResults.jsx';
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import TitledPlayerResults from './TitledPlayerResults.jsx';
 
 const SearchResults = ({ data }) => {

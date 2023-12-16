@@ -1,4 +1,4 @@
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { goToEnd } from '../../eventHandlers/Buttons/click.js'
 
 const EndPosition = () => {

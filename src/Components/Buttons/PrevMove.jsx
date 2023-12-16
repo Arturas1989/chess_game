@@ -1,5 +1,5 @@
 import useKeyPress from '../../hooks/useKeyPress.jsx';
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { goToPrevMove } from '../../eventHandlers/Buttons/click.js'
 
 const PrevMove = () => {

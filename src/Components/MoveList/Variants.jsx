@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGameContext } from '../../GameApp.js';
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { VariantMove } from './Move.jsx';
 import FromLine from './FromLine.jsx';
 

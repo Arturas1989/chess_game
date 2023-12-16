@@ -1,5 +1,5 @@
 import { useRef, useEffect, useCallback} from 'react';
-import { useGameContext } from '../GameApp.js';
+import { useGameContext } from '../context/GameContextProvider';
 
 const useBoardRef = () => {
 

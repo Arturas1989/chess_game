@@ -1,4 +1,4 @@
-import { useGameContext } from "../../GameApp"
+import { useGameContext } from '../../context/GameContextProvider.jsx';
 
 const PlayGame = () => {
     const { setModalIsOpen } = useGameContext();

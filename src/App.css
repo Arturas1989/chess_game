@@ -12,19 +12,25 @@ body{
 
 .GameContainer{
   display: flex;
-  flex-direction: column;
   border: 1px solid black;
-  margin-top: var(--GameContainerMarginTop);
-  margin-bottom: var(--GameContainerMarginTop);
-  margin-left: var(--GameContainerMarginLeft);
-  margin-right: var(--GameContainerMarginLeft);
+  margin: var(--GameContainerMarginTop) var(--GameContainerMarginLeft);
   width: var(--GameContainerRemainingWidth);
   min-height: var(--GameContainerHeight);
+}
+
+.GameWrap{
+  display: flex;
+  flex-direction: column;
+  margin: var(--board-margin);
+  width: 100%;
+  height: 100%;
+  gap: 25px;
 }
 
 .GameControls{
   display: flex;
   align-items: center;
+  gap: var(--board-margin);
 }
 
 @media (max-width: 1360px){
@@ -42,6 +48,10 @@ body{
 
   .GameControls, .SearchContainer{
     flex-direction: column;
+  }
+
+  .MoveContainer{
+    margin:0;
   }
 
   .Board, .SearchContainer{
@@ -69,30 +79,7 @@ body{
   :root{
     --MoveRows: 7;
   }
-  .MoveContainer{
-    margin-top:0;
-  }
-  /* .Board{
-    min-height: 200px;
-  }
-
-  .Board, .SearchContainer{
-    align-self: normal;
-  }
-
-  .Board, .MoveContainer, .MoveList, .SearchContainer{
-    min-width: 200px;
-  }
-
- .SearchContainer, .Board{
-    margin: var(--board-margin);
-    margin-bottom: 0;
-  }
-
-  .GameControls{
-    min-width: 300px;
-    align-items: normal;
-  } */
+  
 }
 
 

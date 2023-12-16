@@ -4,11 +4,12 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    box-shadow: inset 0 0 0 1px #000;
+    box-shadow: var(--moveRowShadow);
     min-height: var(--MoveRowHeight);
     width: calc(100% - var(--ButtonsContainerPadding)*2);
     padding: var(--ButtonsContainerPadding);
     gap: 10px;
+    background: white;
 }
 
 .ButtonsContainer>button{
@@ -54,6 +55,11 @@
 
 .player-container:hover, .goTo:hover{
     cursor: pointer;
+}
+
+.goTo:hover{
+    background-color: rgba(0,0,0,0.8);
+    color: #3498db
 }
 
 .player-container:active, .goTo:active{

@@ -1,3 +1,5 @@
+import {getMoveLines} from './api'
+
 const cloneDeep = require('lodash/cloneDeep');
 
 const preComputed = {
@@ -295,6 +297,7 @@ const playChessEngine = (chessEngineArgs) => {
         if( !(currTurn === 'white' && moves.length === 1) ){
           let {from, to} = moveHistory[moveHistory.length - 1];
           engineGame.move(from, to);
+          
         }
         
         engineGame.aiMove(3);
@@ -302,15 +305,19 @@ const playChessEngine = (chessEngineArgs) => {
         let {from, to} = engineMoveHistory[engineMoveHistory.length - 1];
         [from, to] = [from, to].map(el=>el.toLowerCase());
         chess.move({from, to});
+        const historyText = chess.history().join('');
+        variants.movesLines[historyText] = 'line1';
 
         const idToCoord = preComputedMaps[2];
         const newStyles = {...initialStyles};
         changeStyles(from, idToCoord, className, newStyles);
         changeStyles(to, idToCoord, className, newStyles);
-        console.log(newStyles)
         setStyles(newStyles);
 
-        variants.line1.moves.push(chess);
+        const [historyLines, chessMoves] = getMoveLines(chess.history(), 'line1');
+        variants.line1.moves = [...chessMoves];
+        variants.moveLines = {...historyLines};
+        
         setChessVariants(variants);
         setPlayControls({...playControls, game: engineGame});
         setCurrVariant({'currLine' : 'line1', 'currMove' : chess.history().length});

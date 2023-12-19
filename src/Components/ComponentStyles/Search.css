@@ -1,10 +1,14 @@
 @import './variables.css';
 
-.SearchContainer{
+.SearchContainer, .SearchErrorContainer{
     display: flex;
     gap: 10px;
     min-height: var(--searchBarMinHeight);
     width: var(--searchContainerWidth);
+}
+
+.SearchErrorContainer{
+    flex-direction: column;
 }
 
 .UsersResults > .SearchContainer{
@@ -53,6 +57,8 @@ input::placeholder{
 	background-repeat: no-repeat;
 	background-position: 10px center;
     position: relative;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .close-error{

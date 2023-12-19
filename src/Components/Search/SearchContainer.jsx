@@ -13,18 +13,18 @@ const SearchContainer = () => {
 } = useGameContext();
 
 const [searchVals, setSearchVals] = useState({username : '', title : ''});
-// const [errors, setErrors] = useState({userSearchError: ''});
 const {userSearchError} = errors;
 
   return (
-    <>
+    <div className="SearchErrorContainer">
+      {userSearchError && <Error setErrors={setErrors} errorMessage={userSearchError}/>}
       <div className="SearchContainer">
-        {userSearchError && <Error setErrors={setErrors} errorMessage={userSearchError}/>}
         <SearchBar searchVals={searchVals} setSearchVals={setSearchVals} />
         <Select searchVals={searchVals} setSearchVals={setSearchVals} />
         {currView === 'games' ? <GoToPage page="board" innerText="return to board view"/> : null}
       </div>
-    </>
+    </div>
+    
     
   )
 }

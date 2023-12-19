@@ -9,6 +9,7 @@ import SearchContainer from './Components/Search/SearchContainer.jsx';
 import SearchResults from './Components/Search/SearchResults.jsx';
 import PlayModal from './Components/Modal/PlayModal.jsx';
 import Clock from './Components/Board/Clock.jsx';
+
 import {
     GameContextProvider,
     useGameContext,

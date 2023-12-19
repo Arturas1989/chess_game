@@ -45,7 +45,7 @@ input::placeholder{
 
 .error{
     border: 1px solid;
-    margin: 10px var(--board-margin);
+    margin: 10px 0;
     padding: 15px 10px 15px 50px;
     color: #D8000C;
     background-color: #FFBABA;
@@ -53,7 +53,6 @@ input::placeholder{
 	background-repeat: no-repeat;
 	background-position: 10px center;
     position: relative;
-    width: calc(var(--BoardWidth) - var(--board-margin) * 2);
 }
 
 .close-error{
@@ -68,6 +67,11 @@ input::placeholder{
     top: 0;
     right: 0;
     background-color: #fff;
+}
+
+.close-error:hover{
+    background-color: rgba(255,255,255,0.6);
+    
 }
 
 .close-error > div{

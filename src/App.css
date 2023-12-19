@@ -54,7 +54,7 @@ body{
     margin:0;
   }
 
-  .Board, .SearchContainer{
+  .Board, .SearchErrorContainer{
     align-self: center;
   }
 

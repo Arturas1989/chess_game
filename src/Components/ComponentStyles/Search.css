@@ -11,13 +11,29 @@
     flex-direction: column;
 }
 
-.UsersResults > .SearchContainer{
-    width: 100%;
-    justify-content: center;
-    margin-bottom: 30px;
+.UsersResults{
+    display: flex;
+    flex-direction: column;
 }
 
-.UsersResults > .SearchContainer .SearchBar{
+.UsersResults > .SearchErrorContainer{
+    display: flex;
+    min-width: 50%;
+    margin-bottom: 30px;
+    align-self: center;
+    box-sizing: border-box;
+}
+
+.UsersResults .SearchContainer{
+    justify-content: center;
+    width: 100%;
+}
+
+.UsersResults input{
+    width: 30%;
+}
+
+.UsersResults > .SearchErrorContainer .SearchBar{
     min-width: 30%;
 }
 

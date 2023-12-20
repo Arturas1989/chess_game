@@ -37,8 +37,6 @@ const GameContainer = () => {
 
     const [clock, setClock] = useState({ white: 0, black: 0 });
 
-    console.log(playControls)
-
     let ClockComponent1,
         ClockComponent2,
         players = { white: '', black: '' },

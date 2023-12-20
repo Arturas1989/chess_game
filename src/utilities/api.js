@@ -45,14 +45,15 @@ const searchByUserName = async (API_URL, username, setApiData, setPlayControls, 
             gameData.push(gameInfo);
             count++;
             if(count === gameLimit){
-                setApiData(gameData);
-                setPlayControls({result: gameInfo.result});
-                return gameData;
+                const userData = {username, gameData};
+                setApiData(userData);
+                return userData;
             } 
         }
     }
-    setApiData(gameData);
-    return gameData
+    const userData = {username, gameData};
+    setApiData(userData);
+    return userData;
     
 }
 

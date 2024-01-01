@@ -22,11 +22,11 @@ Welcome! This is the description of the Chess Game project.
 
 - **Move list. It includes:**
     - Move control buttons. They include:
-        - Button to move forward (or press the right arrow key).
-        - Button to move backward (or press the left arrow key).
-        - Button to move to the end position.
-        - Button to move to the start position.
-        - Reverse board button.
+        - Move forward (or press the right arrow key).
+        - Move backward (or press the left arrow key).
+        - Move to the end position.
+        - Move to the start position.
+        - Reverse board.
     - Current move highlighting.
     - Move variants. The ability to make move variants within chess moves.
 

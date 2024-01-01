@@ -1,33 +1,37 @@
-# Project chess_game
+# Project: Chess Game
 
-Welcome! This is the description of the chess_game project.
+Welcome! This is the description of the Chess Game project.
 
-- Project published at: [chess_game](https://arturas1989.github.io/chess_game/)
+- **Project published at:** [Chess Game](https://arturas1989.github.io/chess_game/)
 
-Project includes:
+**Project includes:**
 
-- Fetching data from an chess.com API:
-    - Search by chess.com username (ex. hikaru). Result is a list of games, wrapped in a table. Clicking on a table row returns a selected game.
-    - Search by player titles. Result is a list of players wrapped in buttons. Clicking on them returns a game list of a selected player.
-- Chess board. It includes:
-    - Pieces movement:
-        - By clicking the start and the end square.
+- **Fetching data from the chess.com API:**
+    - Search by chess.com username (e.g., hikaru). The result is a list of games wrapped in a table. Clicking on a table row returns a selected game.
+    - Search by player titles. The result is a list of players wrapped in buttons. Clicking on them returns a game list of the selected player.
+
+- **Chessboard. It includes:**
+    - Piece movement:
+        - By clicking the start and end square.
         - By dragging from the start to the end square.
     - Piece move highlights.
     - Valid move highlights.
     - Promotion styles.
     - Responsive board layout.
     - Board coordinates.
-- Move list. It includes:
-    - Move control butttons. It includes:
-        - Button to move forward. (or pressing arrow key right)
-        - Button to move backwards. (or pressing arrow key left)
-        - Button to move to the end position
-        - Button to move to the start position
+
+- **Move list. It includes:**
+    - Move control buttons. They include:
+        - Button to move forward (or press the right arrow key).
+        - Button to move backward (or press the left arrow key).
+        - Button to move to the end position.
+        - Button to move to the start position.
         - Reverse board button.
     - Current move highlighting.
     - Move variants. The ability to make move variants within chess moves.
-- The ability to play chess engine by clicking on a play button. It opens a play modal, where you can select time controls. Color is random.
+
+- **The ability to play against a chess engine by clicking on a play button. It opens a play modal where you can select time controls. The color is random.**
+
 
     
 

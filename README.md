@@ -45,20 +45,26 @@ Before you begin, ensure you have met the following requirements:
 
 To get a local copy up and running follow these simple steps:
 
-### Clone the Repository and install node modules
+### Clone the Repository and Install Node Modules
 
-```bash
-git clone https://github.com/Arturas1989/chess_game.git
-```
+- Clone the `chess_game` repository:
+    ```bash
+    git clone https://github.com/Arturas1989/chess_game.git
+    ```
 
+- Navigate to the `chess_game` repository:
+    ```bash
+    cd chess_game
+    ```
 
-```
-npm i
-```
+- Install Node modules inside the `chess_game` repository:
+    ```bash
+    npm install
+    ```
 
-## Libraries and frameworks instalation
+## Other libraries and frameworks instalation
 
-Install the following libraries on your machine. Click on the headings if you want to visit official documentation pages:
+Install the following libraries on your machine. If you want to visit official documentation pages, click on the headings:
 
 ## [chess.js](https://github.com/jhlywa/chess.js/blob/master/README.md)
 ```

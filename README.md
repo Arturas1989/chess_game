@@ -45,10 +45,15 @@ Before you begin, ensure you have met the following requirements:
 
 To get a local copy up and running follow these simple steps:
 
-### Clone the Repository
+### Clone the Repository and install node modules
 
 ```bash
 git clone https://github.com/Arturas1989/chess_game.git
+```
+
+
+```
+npm i
 ```
 
 ## Libraries and frameworks instalation
@@ -73,14 +78,7 @@ npm i --save lodash
 ## [Getting Started with Create React App](https://github.com/facebook/create-react-app)
 
 ## Available Scripts
-
-Install node modules:
-
-```
-npm i
-```
-
-Then, you can run:
+You can run:
 
 ```
 npm start

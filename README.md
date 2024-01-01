@@ -21,7 +21,7 @@ Welcome! This is the description of the Chess Game project.
     - Board coordinates.
 
 - **Move list. It includes:**
-    - Move control buttons. They include:
+    - Move control buttons. They include the functionality to:
         - Move forward (or press the right arrow key).
         - Move backward (or press the left arrow key).
         - Move to the end position.

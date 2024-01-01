@@ -1,21 +1,86 @@
-# Project published at:
+# Project chess_game
 
-[chess_game](https://arturas1989.github.io/chess_game/)
+Welcome! This is the description of the chess_game project.
 
-## Libraries and frameworks
+- Project published at: [chess_game](https://arturas1989.github.io/chess_game/)
 
-- React.js
-- Chess.js
-- lodash
+Project includes:
 
-## Getting Started with Create React App
+- Fetching data from an chess.com API:
+    - Search by chess.com username (ex. hikaru). Result is a list of games, wrapped in a table. Clicking on a table row returns a selected game.
+    - Search by player titles. Result is a list of players wrapped in buttons. Clicking on them returns a game list of a selected player.
+- Chess board. It includes:
+    - Pieces movement:
+        - By clicking the start and the end square.
+        - By dragging from the start to the end square.
+    - Piece move highlights.
+    - Valid move highlights.
+    - Promotion styles.
+    - Responsive board layout.
+    - Board coordinates.
+- Move list. It includes:
+    - Move control butttons. It includes:
+        - Button to move forward. (or pressing arrow key right)
+        - Button to move backwards. (or pressing arrow key left)
+        - Button to move to the end position
+        - Button to move to the start position
+        - Reverse board button.
+    - Current move highlighting.
+    - Move variants. The ability to make move variants within chess moves.
+- The ability to play chess engine by clicking on a play button. It opens a play modal, where you can select time controls. Color is random.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+    
+
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+
+- [Node.js](https://nodejs.org/) installed on your machine.
+
+## Getting Started
+
+To get a local copy up and running follow these simple steps:
+
+### Clone the Repository
+
+```bash
+git clone https://github.com/Arturas1989/chess_game.git
+```
+
+## Libraries and frameworks instalation
+
+Install the following libraries on your machine. Click on the headings if you want to visit official documentation pages:
+
+## [chess.js](https://github.com/jhlywa/chess.js/blob/master/README.md)
+```
+npm install chess.js
+```
+
+## [js-chess-engine](https://github.com/josefjadrny/js-chess-engine)
+```
+npm i js-chess-engine --save
+```
+
+## [lodash](https://lodash.com/)
+```
+npm i --save lodash
+```
+
+## [Getting Started with Create React App](https://github.com/facebook/create-react-app)
 
 ## Available Scripts
 
-In the project directory, you can run:
+Install node modules:
 
+```
+npm i
+```
+
+Then, you can run:
+
+```
+npm start
+```
 ### `npm start`
 
 Runs the app in the development mode.\
@@ -23,11 +88,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm run build`
 
@@ -49,32 +109,4 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

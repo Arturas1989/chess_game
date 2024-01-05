@@ -62,7 +62,7 @@ To get a local copy up and running follow these simple steps:
     npm install
     ```
 
-## Other libraries and frameworks instalation
+## Libraries
 
 Install the following libraries on your machine. If you want to visit official documentation pages, click on the headings:
 

@@ -42,6 +42,7 @@ const GameContextProvider = ({ children }) => {
         currMove: 0,
     });
     const [isReversed, setIsReversed] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [pieceClicked, setPieceClicked] = useState({});
     const [boardBoundaries, setBoardBoundaries] = useState(null);
     const [apiData, setApiData] = useState([]);
@@ -132,6 +133,8 @@ const GameContextProvider = ({ children }) => {
         setModalIsOpen,
         playControls,
         setPlayControls,
+        loading,
+        setLoading
     };
 
     return (

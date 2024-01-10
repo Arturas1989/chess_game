@@ -10,17 +10,20 @@ const SearchBar = ({ searchVals, setSearchVals }) => {
         setErrors,
         setPlayControls,
         initialStyles,
-        setStyles
+        setStyles,
+        setLoading
     } = useGameContext();
 
     const { username } = searchVals;
 
     const handleSearchButtonClick = async () => {
+        setLoading(true);
         const data = await searchChessGames(API_URL, searchVals, setApiData, setPlayControls, setErrors);
         if(searchVals.username && data.length !== 0){
             setStyles({...initialStyles});
             setCurrView('games');
         } 
+        setLoading(false);
     }
 
     return (  

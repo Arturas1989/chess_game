@@ -4,11 +4,14 @@ import SearchButton from "./SearchButton";
 import { filterTitledPlayers } from '../../utilities/api.js';
 
 const Filter = () => {
-    const {apiData, setApiData, partname, setPartname} = useGameContext();
+    
+    const {apiData, setApiData, partname, setPartname, setLoading} = useGameContext();
 
     const handleSearchButtonClick = () => {
+        setLoading(true);
         const newApiData = filterTitledPlayers(apiData, partname);
         setApiData([...newApiData]);
+        setLoading(false);
     }
 
     return (

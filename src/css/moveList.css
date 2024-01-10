@@ -1,6 +1,6 @@
 @font-face{
     font-family: 'FreeSerif';
-    src: url('../../fonts/FreeSerif/FreeSerif-4aeK.ttf');
+    src: url('../fonts/FreeSerif/FreeSerif-4aeK.ttf');
 }
 
 @import './variables.css';

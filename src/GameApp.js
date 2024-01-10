@@ -1,14 +1,15 @@
 import './App.css';
 import { useState } from 'react';
-import { Board, PromotionBoard } from './Components/Board/Board.jsx';
-import Player from './Components/Board/Player.jsx';
-import PlayerContainer from './Components/Board/PlayerContainer.jsx';
-import Result from './Components/Board/Result.jsx';
-import MoveContainer from './Components/MoveList/MoveContainer.jsx';
-import SearchContainer from './Components/Search/SearchContainer.jsx';
-import SearchResults from './Components/Search/SearchResults.jsx';
-import PlayModal from './Components/Modal/PlayModal.jsx';
-import Clock from './Components/Board/Clock.jsx';
+import { Board, PromotionBoard } from './components/Board/Board.jsx';
+import Player from './components/Board/Player.jsx';
+import PlayerContainer from './components/Board/PlayerContainer.jsx';
+import Result from './components/Board/Result.jsx';
+import MoveContainer from './components/MoveList/MoveContainer.jsx';
+import SearchContainer from './components/Search/SearchContainer.jsx';
+import SearchResults from './components/Search/SearchResults.jsx';
+import PlayModal from './components/Modal/PlayModal.jsx';
+import Clock from './components/Board/Clock.jsx';
+import { Loading } from './components/Search/Loading.jsx';
 
 import {
     GameContextProvider,
@@ -32,6 +33,7 @@ const GameContainer = () => {
         modalIsOpen,
         playControls,
         promotion,
+        loading
     } = useGameContext();
     const isPromoting = promotion.isPromoting;
 
@@ -63,6 +65,10 @@ const GameContainer = () => {
         const { whiteUsername, blackUsername } = apiGame;
         players = { white: whiteUsername, black: blackUsername };
         displayPlayerContainer = true;
+    }
+
+    if(loading){
+        return <Loading />
     }
 
     return currView !== 'board' ? (

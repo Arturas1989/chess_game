@@ -4,7 +4,7 @@ import { useGameContext } from '../../context/GameContextProvider.jsx';
 import { useState } from 'react';
 
 const TitledPlayerResults = ({ data }) => {
-    let { setCurrView, API_URL, setApiData, setPlayControls, setSearchVals, searchVals, setErrors } = useGameContext()
+    let { setCurrView, API_URL, setApiData, setPlayControls, setSearchVals, searchVals, setErrors, setLoading } = useGameContext()
     
     const  [isFetchFinished, setIsFetchFinished] = useState(true);
     
@@ -13,9 +13,11 @@ const TitledPlayerResults = ({ data }) => {
         setIsFetchFinished(prev => !prev);
 
         if(isFetchFinished) {
+            setLoading(true);
             await searchChessGames(API_URL, searchVals, setApiData, setPlayControls, setErrors);
             setSearchVals(searchVals);
             setCurrView('games');
+            setLoading(false);
         }
          
         setIsFetchFinished(prev => !prev);

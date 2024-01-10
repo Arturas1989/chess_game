@@ -13,7 +13,7 @@ const Table = ( { data } ) => {
         setPlayControls 
     } = useGameContext();
 
-    const {username, gameData} = data;
+    const { gameData } = data;
 
     const setGame = (e) => {
         const chess = new Chess();

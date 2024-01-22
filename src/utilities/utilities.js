@@ -327,6 +327,12 @@ const playChessEngine = (chessEngineArgs) => {
   }
 }
 
+const isInputValid = (value) => {
+  const regex = /[<>\[\]{},!&=`~@%;'"()^+*$|]/g;
+  const match = value.match(regex);
+  return !match
+}
+
 export  {
   getTypeNotations, 
   promotionPieces, 
@@ -346,5 +352,6 @@ export  {
   getLinePriority,
   getRandomColor,
   playChessEngine,
-  setResult
+  setResult,
+  isInputValid
  };

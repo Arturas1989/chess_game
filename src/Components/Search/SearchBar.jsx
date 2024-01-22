@@ -25,12 +25,13 @@ const SearchBar = ({ searchVals, setSearchVals }) => {
 
         if(!isInputValid(username)){
             setErrors({userSearchError: `Invalid username "${username}"`});
+            setSearchVals({username: ''})
             return;
         }
 
         setLoading(true);
         const data = await searchChessGames(API_URL, searchVals, setApiData, setPlayControls, setErrors);
-        
+
         if(!data || data.length === 0 || data.gameData.length === 0){
             setErrors({userSearchError: `No such username: "${username}" found`});
             setLoading(false);

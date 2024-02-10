@@ -62,25 +62,6 @@ To get a local copy up and running follow these simple steps:
     npm install
     ```
 
-## Libraries
-
-Install the following libraries on your machine. If you want to visit official documentation pages, click on the headings:
-
-## [chess.js](https://github.com/jhlywa/chess.js/blob/master/README.md)
-```
-npm install chess.js
-```
-
-## [js-chess-engine](https://github.com/josefjadrny/js-chess-engine)
-```
-npm i js-chess-engine --save
-```
-
-## [lodash](https://lodash.com/)
-```
-npm i --save lodash
-```
-
 ## [Getting Started with Create React App](https://github.com/facebook/create-react-app)
 
 ## Available Scripts

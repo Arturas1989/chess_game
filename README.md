@@ -2,7 +2,7 @@
 
 Welcome! This is the description of the Chess Game project.
 
-- **Project published at:** [Chess Game](https://arturas1989.github.io/chess_game/)
+- **Project is published at:** [Chess Game](https://arturas1989.github.io/chess_game/)
 
 **Project includes:**
 

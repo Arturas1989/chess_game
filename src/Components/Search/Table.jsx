@@ -36,8 +36,7 @@ const Table = ( { data } ) => {
         setCurrView('board');
         setPlayControls({isPlaying: false, result: gameData[id].result});
     }
-    
-    const tableData = Array.from({length: gameData.length}, (_,i) =>
+    const tableData = gameData && Array.from({length: gameData.length}, (_,i) =>
         (
             <tr key={i} id={i} onClick={(e) => setGame(e)}>
                 <td>{i+1}</td>
@@ -48,7 +47,7 @@ const Table = ( { data } ) => {
                 <td>{gameData[i].blackRating}</td>
                 <td>{gameData[i].result}</td>
             </tr>
-        ) 
+        )
     )
 
     return (

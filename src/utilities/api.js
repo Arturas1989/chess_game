@@ -114,6 +114,8 @@ const searchTitledPlayers = async (e, titledPlayersArgs) => {
         initialStyles, 
         setStyles
     } = titledPlayersArgs;
+
+    
     const response = await fetch(`${API_URL}${e.target.value}`);
     if (!response.ok) {
         console.error(`Error: ${response.status} - ${response.statusText}`);
@@ -123,7 +125,7 @@ const searchTitledPlayers = async (e, titledPlayersArgs) => {
     let players = data.players;
     if(partname) players = filterTitledPlayers(players, partname);
     setApiData(players);
-    setSearchVals({username: '', title: e.target.value})
+    setSearchVals({username: '', title: ''});
     setStyles({...initialStyles});
     if(e.target.value) setCurrView('title');
 }

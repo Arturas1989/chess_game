@@ -14,7 +14,6 @@ const SearchContainer = () => {
 
 const [searchVals, setSearchVals] = useState({username : '', title : ''});
 const {userSearchError} = errors;
-
   return (
     <div className="SearchErrorContainer">
       {userSearchError && <Error setErrors={setErrors} errorMessage={userSearchError}/>}

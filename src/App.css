@@ -35,6 +35,8 @@ body{
   gap: var(--board-margin);
 }
 
+
+
 @media (max-width: 1360px){
   :root{
     --GameContainerMarginLeft: 20px;
@@ -60,18 +62,18 @@ body{
     align-self: center;
   }
 
- .SearchContainer{
+  .SearchContainer{
     margin-left: 0;
   }
   
- .SearchContainer > .select-group, .SearchContainer > .SearchBar{
+  .SearchContainer > .select-group, .SearchContainer > .SearchBar{
     min-width: 100%;
   }
 
   .SearchContainer > input{
     min-width: calc(100% - var(--searchInputBorder) * 2 - var(--searchInputPadding) * 2)
   }
-
+  
   .select-group > select{
     height: 25px;
   }
@@ -81,8 +83,76 @@ body{
   :root{
     --MoveRows: 7;
   }
-  
 }
+
+@media only screen and (max-device-width: 767px) and (orientation: landscape){
+  :root{
+    --BoardWidth: 220px;
+    --MoveRows: 6;
+  }
+  .apiGame{
+    min-height: 248px;
+  }
+  .GameContainer{
+    margin: 0;
+    width: 100%;
+    justify-content: center;
+    min-height: 100dvh;
+    border: none;
+  }
+
+  .GameContainer * {
+    font-size: 0.8rem;
+  }
+
+  .GameContainer .select-group{
+    flex-direction: row;
+    gap: 10px;
+    width: auto;
+  }
+
+  .GameContainer .SearchBar{
+    min-width: var(--BoardWidth);
+  }
+
+  .GameContainer .select-group> label{
+    /* font-size: 1rem; */
+  }
+
+  .GameContainer .select-group> select{
+    min-width: 120px;
+  }
+  .GameWrap, .MoveContainer, .SearchContainer{
+    width: auto;
+  }
+  .GameWrap{
+    gap: 15px;
+  }
+  .GameControls, .SearchContainer{
+    flex-direction: row;
+    gap: 20px;
+  }
+
+  .SearchErrorContainer{
+    align-self: auto;
+    margin-top: 10px;
+  }
+  .GameControls{
+    align-items: stretch;
+  }
+  .BoardContainer{
+    gap: 0;
+  }
+  .SearchErrorContainer, .UsersResults input {
+    width: auto;
+  }
+
+  .UsersResults .select-group {
+    min-width: 150px;
+  }
+
+}
+
 
 
 

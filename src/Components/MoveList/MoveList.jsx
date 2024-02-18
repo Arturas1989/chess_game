@@ -4,7 +4,7 @@ import { useGameContext } from '../../context/GameContextProvider.jsx';
 
 const MoveList = () => {
   const MoveListRef = useRef(null);
-  const { currVariant } = useGameContext();
+  const { currVariant, apiGame } = useGameContext();
 
   useEffect(() => {
     const scrollToBottom = () => {
@@ -22,8 +22,13 @@ const MoveList = () => {
     };
   }, [currVariant.currLine]);
 
+  console.log(apiGame)
+
+  let moveListClass = 'MoveList';
+  if(Object.keys(apiGame).length !== 0) moveListClass += ' apiGame';
+
   return (
-    <div className="MoveList" ref={MoveListRef}>
+    <div className={moveListClass} ref={MoveListRef}>
       <MainLine />
     </div>
   );

@@ -47,6 +47,10 @@ const SearchBar = ({ searchVals, setSearchVals }) => {
         setLoading(false);
     }
 
+    const handleChange = (e) => {
+        setSearchVals({username : e.target.value, title: ''})
+    }
+
     return (  
         <div className='SearchBar'>
             <input
@@ -54,7 +58,7 @@ const SearchBar = ({ searchVals, setSearchVals }) => {
                 autoComplete='off'  
                 placeholder='search by chess.com username'
                 value={username} 
-                onChange={(e) => setSearchVals({username : e.target.value, title: ''})}
+                onChange={(e) => handleChange(e)}
                 onKeyDown={(e) => e.key === 'Enter' ? handleSearchButtonClick() : null}
             />
             <SearchButton handleClick={handleSearchButtonClick} />

@@ -4,21 +4,21 @@ import React from 'react';
 
 const API_URL = 'https://api.chess.com/pub/titled/';
 
-const Select =({ setSearchVals }) => {
-    const { setApiData, setCurrView, partname, initialStyles, setStyles} = useGameContext();
+const Select =({ setSearchVals, searchVals }) => {
+    const { setApiData, setCurrView, initialStyles, setStyles} = useGameContext();
     const titledPlayersArgs = {
         API_URL, 
         setApiData, 
         setSearchVals, 
-        setCurrView, 
-        partname, 
+        setCurrView,
+        partname: searchVals.username, 
         initialStyles, 
         setStyles
     }
     return(
         <div className="select-group">
             <label htmlFor="titles">Or choose a  player's title:</label>
-            <select 
+            <select
                 name="titles" 
                 id="titles"
                 onChange={(e) => searchTitledPlayers(e, titledPlayersArgs)}

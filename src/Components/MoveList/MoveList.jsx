@@ -22,8 +22,6 @@ const MoveList = () => {
     };
   }, [currVariant.currLine]);
 
-  console.log(apiGame)
-
   let moveListClass = 'MoveList';
   if(Object.keys(apiGame).length !== 0) moveListClass += ' apiGame';
 
